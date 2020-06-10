@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { baseDefaultProps } from '../base/component';
 import Icon from '../icon';
-import { KZUIComponent } from '../../../types';
+import { KZUIComponent } from '../../../types/base';
 import { useState } from 'react';
 import './style.less';
 

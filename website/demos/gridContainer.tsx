@@ -1,9 +1,7 @@
 
 import * as React from "react";
-import Button from 'packages/kzui/src/components/button';
 import GridContainer from 'packages/kzui/src/components/grid-container';
 import { DemoDisplayCard } from '../components'
-import JsxParser from 'react-jsx-parser'
 import { ReactMarkdown } from '../components/react-markdown-wrap/index'
 import docContent from '../docs/grid-container.md';
 
@@ -54,12 +52,7 @@ const GridContainerDemo = () => (
             code={demo.code}
             key={index}
           >
-            {demo.reactCode ? demo.reactCode() : (
-              <JsxParser 
-                components={{ Button }}
-                jsx={demo.code}
-              />
-            )}
+            {demo.reactCode()}
           </DemoDisplayCard>
         ))
       }

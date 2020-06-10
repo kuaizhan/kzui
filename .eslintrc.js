@@ -4,6 +4,13 @@ module.exports = {
         ecmascript: 6,
         sourceType: 'module',
     },
+    settings: {
+        'import/resolver': {
+            webpack: {
+                config: path.join(__dirname, './webpack.config.js'),
+            },
+        },
+    },
     env: {
         browser: true,
         node: true
@@ -35,5 +42,6 @@ module.exports = {
                 'initStateFromProps',
             ],
         }],
-    }
+    },
+    
 };

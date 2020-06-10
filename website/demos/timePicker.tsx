@@ -3,7 +3,6 @@ import { useState } from 'react';
 import TimePicker from 'packages/kzui/src/components/time-picker'
 import { DemoDisplayCard } from '../components'
 import { ReactMarkdown } from '../components/react-markdown-wrap/index'
-import { formatTime } from '/packages/utils/format-time'
 // @ts-ignore
 import docContent from '../docs/date-picker.md'
 

@@ -1,10 +1,7 @@
 
 import * as React from "react";
-import { useState } from 'react';
-import Button from 'packages/kzui/src/components/button';
 import FileSelect from 'packages/kzui/src/components/file-select';
 import { DemoDisplayCard, message } from '../components'
-import JsxParser from 'react-jsx-parser'
 import { ReactMarkdown } from '../components/react-markdown-wrap/index'
 import docContent from '../docs/file-select.md';
 
@@ -41,12 +38,7 @@ const FileSelectDemo = () => (
             code={demo.code}
             key={index}
           >
-            {demo.reactCode ? demo.reactCode() : (
-              <JsxParser 
-                components={{ Button }}
-                jsx={demo.code}
-              />
-            )}
+            {demo.reactCode()}
           </DemoDisplayCard>
         ))
       }

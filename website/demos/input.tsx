@@ -3,7 +3,6 @@ import * as React from "react";
 import Button from 'packages/kzui/src/components/button';
 import {Input} from 'packages/kzui/src';
 import { DemoDisplayCard } from '../components'
-import JsxParser from 'react-jsx-parser'
 import { ReactMarkdown } from '../components/react-markdown-wrap/index'
 import docContent from '../docs/input.md';
 
@@ -66,12 +65,7 @@ const InputDemo = () => (
             code={demo.code}
             key={index}
           >
-            {demo.reactCode ? demo.reactCode() : (
-              <JsxParser 
-                components={{ Button }}
-                jsx={demo.code}
-              />
-            )}
+            {demo.reactCode()}
           </DemoDisplayCard>
         ))
       }

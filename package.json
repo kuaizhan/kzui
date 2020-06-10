@@ -64,6 +64,12 @@
     "build": "lerna exec --parallel -- babel src -d dist --ignore src/__tests__/ --extensions .ts,.tsx"
   },
   "dependencies": {
+    "@testing-library/jest-dom": "^5.9.0",
+    "@testing-library/react": "^10.2.1",
+    "classnames": "^2.2.6",
+    "react": "^16.13.1",
+    "react-copy-to-clipboard": "^5.0.2",
+    "react-dom": "^16.13.1",
     "react-jsx-parser": "^1.25.1",
     "react-markdown": "^4.3.1",
     "react-router-dom": "^5.2.0",

@@ -4,7 +4,6 @@ import { Tab } from "packages/kzui/src";
 import { DemoDisplayCard } from '../components';
 import { ReactMarkdown } from '../components/react-markdown-wrap/index';
 import docContent from '../docs/tab.md';
-// import Tab from 'packages/kzui/src/components/tab';
 
 const demoList = [
   {

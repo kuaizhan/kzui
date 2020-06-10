@@ -3,11 +3,10 @@
  */
 import * as React from 'react';
 import { useRef } from 'react';
+import { useHover } from '@kzui/hooks';
 import classNames from 'classnames';
 import Icon from '../icon/index';
 import './image-card.less';
-
-import { useHover } from '../../../../hooks/userHover'
 
 const ImageCard = (props) => {
     const clsPrefix = 'kui-image-card';
@@ -16,7 +15,7 @@ const ImageCard = (props) => {
     const imageStyle = {
         width: '104px',
         height: '104px',
-        objectFit: 'none'
+        objectFit: 'none',
     };
 
     const ref = useRef(null)

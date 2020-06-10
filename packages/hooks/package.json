@@ -1,5 +1,5 @@
 {
-  "name": "hooks",
+  "name": "@kzui/hooks",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "konglx <konglx90@gmail.com>",
@@ -17,7 +17,5 @@
   "publishConfig": {
     "registry": "http://npm.kuaizhan.sohuno.com/"
   },
-  "scripts": {
-    "build": "babel "
-  }
+  "scripts": {}
 }

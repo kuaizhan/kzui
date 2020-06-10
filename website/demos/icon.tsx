@@ -1,9 +1,7 @@
 
 import * as React from "react";
-import Button from 'packages/kzui/src/components/button';
 import Icon from 'packages/kzui/src/components/icon';
 import { DemoDisplayCard } from '../components'
-import JsxParser from 'react-jsx-parser'
 import { ReactMarkdown } from '../components/react-markdown-wrap/index'
 // @ts-ignore
 import docContent from '../docs/icon.md';
@@ -53,12 +51,7 @@ const IconDemo = () => (
             code={demo.code}
             key={index}
           >
-            {demo.reactCode ? demo.reactCode() : (
-              <JsxParser 
-                components={{ Button }}
-                jsx={demo.code}
-              />
-            )}
+            {demo.reactCode()}
           </DemoDisplayCard>
         ))
       }

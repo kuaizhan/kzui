@@ -3,7 +3,7 @@
 ## Usage
 
 ```
-npm install @@kzui/core
+npm install @kzui/core
 ```
 
 ## Dev
