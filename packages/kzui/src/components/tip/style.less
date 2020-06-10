@@ -1,0 +1,71 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-tip: ~"@{css-prefix}-tip";
+
+.@{css-prefix-tip} {
+    display: inline-block;
+    font-size: 12px;
+    min-height: 12px;
+    line-height: 12px;
+    padding: 9px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    color: rgba(0,0,0,0.65);
+
+    .@{css-prefix}-icon {
+        .icon-box(12px);
+        margin-right: 9px;
+        vertical-align: top;
+    }
+
+    &-info {
+        border-color: @color-info-bd;
+        background-color: @color-info-bg;
+        .@{css-prefix}-icon {
+            color: rgba(84,161,251,1);
+        }
+    }
+
+    &-warn {
+        border-color: @color-warn-bd;
+        background-color: @color-warn-bg;
+
+        .@{css-prefix}-icon {
+            color: rgba(255,191,0,1);
+        }
+    }
+
+    &-error {
+        border-color: @color-fail-bd;
+        background-color: @color-fail-bg;
+
+        .@{css-prefix}-icon {
+            color: rgba(247,105,95,1);
+        }
+    }
+
+    &-success {
+        border-color: @color-success-bd;
+        background-color: @color-success-bg;
+
+        .@{css-prefix}-icon {
+            color: rgba(50,197,123,1);
+        }
+    }
+
+    &-inline {
+        color: @color-tip;
+        padding: 0;
+
+        .@{css-prefix}-icon {
+            .icon-box(16px);
+            margin-right: 7px;
+            color: rgba(221,221,221,1);
+            vertical-align: middle;
+        }
+    }
+    &-text {
+        vertical-align: middle;
+        display: inline-block;
+    }
+}

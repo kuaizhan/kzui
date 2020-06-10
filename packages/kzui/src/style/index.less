@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+@import "../components/base/index";
+@import "reset";
+@import "animation";
+
+
+audio, canvas, video {
+	display:inline-block;
+}
+button, input, select, textarea {
+    border: 0;
+    margin: 0;
+    padding: 0;
+	border-radius: 0;
+}
+
+button, input[type="button"], input[type="reset"], input[type="submit"] {
+	cursor: pointer;
+	appearance: button;
+}
+
+/*取消移动端浏览器可点击元素的高亮颜色*/
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+	color: @default-color;
+	text-size-adjust: 100%;
+    font-size: @default-font-size;
+	font-family: @default-font-family;
+}
+
+body {
+    font-size: @default-font-size;
+}
+
+a {
+	color: @default-color;
+	text-decoration: none;
+}
+
+:focus {
+    outline: none;
+}

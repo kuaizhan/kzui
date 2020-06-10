@@ -1,0 +1,115 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-time-picker: ~"@{css-prefix}-time-picker";
+
+.@{css-prefix-time-picker} {
+    display: inline-block;
+    position: relative;
+
+    &-time-display {
+        position: relative;
+
+        input {
+            .input-style;
+        }
+
+        .@{css-prefix}-icon {
+            /* TODO 需要处理前缀*/
+            .icon-box(14px);
+            position: absolute;
+            right: 10px;
+            top: 7px;
+            color: rgba(207,206,212,1);
+        }
+    }
+
+    span {
+        display: inline-block;
+        user-select: none;
+    }
+
+    &-time-popover {
+        .overlay-style;
+        display: none;
+        position: absolute;
+        overflow-y: auto;
+        width: fit-content;
+        left: 0;
+        z-index: 9999;
+    }
+
+    &-time-panel {
+        width: 197px;
+
+
+    }
+    &-panel-header {
+        padding: 0 10px;
+        line-height: 32px;
+
+        &-title{
+            color: #CFCED4;
+            font-size: 12px;
+        }
+        .@{css-prefix}-icon{
+            color: #CFCED4;
+            cursor: pointer;
+            float: right;
+            font-size: 14px;
+            line-height: inherit;
+        }
+        .@{css-prefix}-icon:hover {
+            color: red;
+        }
+    }
+    &-panel-body {
+        box-sizing: content-box;
+        height: 168px;
+        overflow: hidden;
+
+        &-item {
+            box-sizing: border-box;
+            border-left: 1px solid #E0DFE7;
+            float: left;
+            height: 168px;
+            overflow: hidden;
+            position: relative;
+            width: 33%;
+
+            .scrollbar();
+
+            .@{css-prefix-time-picker}-item-container {
+                padding-bottom: 140px;
+                width: 65px;
+
+                span {
+                    color: #565656;
+                    cursor: pointer;
+                    display: block;
+                    font-size: 14px;
+                    line-height: 28px;
+                    text-align: center;
+                }
+
+                span.@{css-prefix-time-picker}-active {
+                    background-color: rgba(0, 0, 0, 0.15);
+                    color: #000;
+                    font-weight: bold;
+                }
+
+                span:hover {
+                    background-color: #e7f6ff;
+                }
+            }
+
+        }
+
+        &-item:hover {
+            overflow-y: auto;
+        }
+
+        &-item:first-child {
+            border: none;
+        }
+    }
+}

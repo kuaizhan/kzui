@@ -1,0 +1,32 @@
+{
+  "author": {
+    "name": "kzfe"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "description": "kuaizhan UI",
+  "directories": {
+    "doc": "docs/"
+  },
+  "keywords": [
+    "UI",
+    "kuaizhan"
+  ],
+  "license": "ISC",
+  "main": "src/index.js",
+  "name": "@kuaizhan/kui2",
+  "publishConfig": {
+    "registry": "http://npm.kuaizhan.sohuno.com"
+  },
+  "scripts": {
+    "fixed": "eslint config/** src/** test/**/** ./*.js --fix",
+    "test": "jest"
+  },
+  "version": "2.0.3",
+  "typings": "types/index.d.ts"
+}

@@ -1,0 +1,35 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-toast: ~"@{css-prefix}-toast";
+
+.@{css-prefix-toast} {
+    position: absolute;
+    display: none;
+    background: #333;
+    border-radius: 4px;
+    padding: 12px 24px;
+    font-size: 12px;
+    color: #fff;
+    line-height: 16px;
+    vertical-align: middle;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+
+    &-warning-icon {
+        margin-right: 6px;
+        vertical-align: middle;
+    }
+
+    &-warning-content {
+        vertical-align: middle;
+    }
+
+    &-hide {
+        opacity: 0;
+    }
+
+    &-visible {
+        display: block;
+        z-index: 10;
+    }
+}

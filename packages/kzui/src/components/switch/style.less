@@ -1,0 +1,57 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-switch: ~"@{css-prefix}-switch";
+
+.@{css-prefix-switch} {
+    display: block;
+    height: @form-row-height;
+    line-height: @form-row-height;
+    user-select: none;
+    font-size: 0;
+
+    span {
+        vertical-align: middle;
+    }
+
+    &-label {
+        display: inline-block;
+        height: @form-row-height;
+        line-height: @form-row-height;
+        font-size: 14px;
+        margin-right: 14px;
+        color: rgba(51,51,51,1);
+    }
+
+    &-indicator {
+        display: inline-block;
+        width: 44px;
+        height: 22px;
+        background-color: rgba(207,206,212,1);
+        border-radius: 11px;
+        position: relative;
+        cursor: pointer;
+
+        &:before {
+            position: absolute;
+            left: 2px;
+            top: 2px;
+            display: block;
+            content: ' ';
+            width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            background-color: white;
+        }
+    }
+
+    &-checked {
+        .@{css-prefix-switch}-indicator {
+            background-color: rgba(151,209,102,1);
+
+            &::before {
+                left: auto;
+                right: 2px;
+            }
+        }
+    }
+}

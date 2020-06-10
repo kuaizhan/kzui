@@ -1,0 +1,233 @@
+@charset "UTF-8";
+@import '../base/index.less';
+
+@css-prefix-color-picker: ~"@{css-prefix}-color-picker";
+@simplePickerWidth: 246px;
+@simplePickerHeight: 293px;
+@fullPickerWidht: 230px;
+@fullPickerHeight: 437px;
+
+/* palette */
+.@{css-prefix-color-picker} {
+    canvas {
+        cursor: crosshair;
+    }
+
+    &-cpe-main {
+        position: relative;
+    }
+
+    &-cpe-cursor {
+        background: #fff;
+        border-radius: 1px;
+        left: 0;
+        pointer-events: none;
+        position: absolute;
+    }
+
+    &-cpe-row {
+        position: relative;
+        user-select: none;
+        margin: 4px 0;
+    }
+
+    &-cpe-full {
+        padding: 14px 10px 0;
+
+        .@{css-prefix-color-picker}-cpe-cursor {
+            border: 1px solid #d4d4d4;
+            height: 16px;
+            margin-left: -4px;
+            top: -3px;
+            width: 6px;
+        }
+
+        .@{css-prefix-color-picker}-cpe-row {
+            margin: 10px 0;
+        }
+    }
+
+    &-cpe-simple {
+        padding: 14px 16px 0;
+
+        .@{css-prefix-color-picker}-cpe-cursor {
+            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .5);
+            height: 12px;
+            margin-left: -2px;
+            top: 0;
+            width: 4px;
+        }
+
+        .@{css-prefix-color-picker}-cpe-title {
+            border-bottom: 1px solid #eaeaea;
+            border-top: 1px solid #eaeaea;
+            box-sizing: border-box;
+            color: #5c5c5c;
+            font-size: 14px;
+            height: 40px;
+            padding: 0 10px;
+            line-height: 40px;
+        }
+    }
+    &-cpe-point {
+        background: transparent;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        box-sizing: border-box;
+        display: block;
+        height: 8px;
+        left: 0;
+        margin: -4px 0 0 -4px;
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        width: 8px;
+    }
+}
+
+/* list */
+.@{css-prefix-color-picker} {
+    &-clt-full {
+
+        .@{css-prefix-color-picker}-clt-list {
+            padding: 6px 10px;
+        }
+
+        .@{css-prefix-color-picker}-clt-item {
+            height: 16px;
+            margin: 4px;
+            width: 16px;
+            &:nth-child(9n + 1) {
+                margin-left: 0;
+            }
+            &:nth-child(9n) {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &-clt-simple {
+        .@{css-prefix-color-picker}-clt-list {
+            padding: 6px 16px;
+        }
+
+        .@{css-prefix-color-picker}-clt-item {
+            height: 18px;
+            margin: 5px;
+            width: 18px;
+            &:nth-child(8n + 1) {
+                margin-left: 0;
+            }
+            &:nth-child(8n) {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &-clt-title {
+        border-bottom: 1px solid #eaeaea;
+        border-top: 1px solid #eaeaea;
+        font-size: 12px;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 10px;
+        text-align: left;
+    }
+
+    &-clt-body {
+        box-sizing: border-box;
+    }
+
+    &-clt-list {
+        overflow: hidden;
+
+        .@{css-prefix-color-picker}-clt-item {
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+            cursor: pointer;
+            float: left;
+        }
+    }
+}
+
+/* input */
+.@{css-prefix-color-picker} {
+    &-clear {
+        .clear;
+    }
+    &-cin-full {
+
+        .@{css-prefix-color-picker}-cin-full-cell {
+            float: left;
+            text-align: center;
+        }
+
+        .@{css-prefix-color-picker}-cin-full-hex {
+            width: 56px;
+            margin: 5px 11px 0 0;
+        }
+
+        .@{css-prefix-color-picker}-cin-full-rgba {
+            width: 32px;
+            margin: 5px 5px 0 0;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+        .@{css-prefix-color-picker}-cin-full-txt {
+            color: #666;
+            line-height: 1;
+            margin: 5px 0 12px;
+        }
+    }
+
+    &-cin-simple {
+        margin-top: 10px;
+    }
+
+    &-cin-input {
+        .input-style;
+
+        &.@{css-prefix-color-picker}-cin-input-small {
+            padding: 0 2px;
+            text-align: center;
+        }
+    }
+}
+
+.@{css-prefix-color-picker} {
+    line-height: 0;
+    position: absolute;
+
+    &-hide {
+        display: none;
+    }
+
+    &-title {
+        border-top: 1px solid #eaeaea;
+        border-bottom: 1px solid #eaeaea;
+        color: #5c5c5c;
+        font-size: 14px;
+        height: 40px;
+        line-height: 40px;
+        text-indent: 16px;
+        text-align: left;
+    }
+
+    &-cpr-container {
+        background: #fff;
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, .2);
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    &-cpr-simple {
+        height: @simplePickerHeight;
+        width: @simplePickerWidth;
+    }
+    &-cpr-full {
+        height: @fullPickerHeight;
+        width: @fullPickerWidht;
+    }
+}
+

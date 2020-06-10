@@ -1,0 +1,59 @@
+@import '../base/index.less';
+
+// 输入框样式
+.input-style() {
+    font-size: @form-font-size;
+    height: @form-row-height;
+    line-height: @form-row-height;
+    margin: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    width: 100%;
+    border-radius: 3px;
+    border: @form-input-border;
+    -webkit-appearance: none;
+    transition: box-shadow 0.3s;
+
+    &:disabled,
+    input:disabled,
+    textarea:disabled {
+        color: #d9d9d9;
+    }
+
+    &::placeholder,
+    input::placeholder,
+    textarea::placeholder {
+        color: #cfced4;
+    }
+
+    &-small {
+        height: @form-row-height-small;
+    }
+
+    &-large {
+        font-size: @form-font-size-large;
+        height: @form-row-height-large;
+    }
+
+    &:hover {
+        border-color: @color-theme;
+    }
+
+    &:focus {
+        border-color: @color-theme;
+        box-shadow: 0 0 3px @color-theme;
+    }
+
+    &-error {
+        border-color: @color-fail;
+        &:focus {
+            box-shadow: 0 0 3px @color-fail;
+        }
+    }
+
+    &-disabled {
+        border-color: #E0DFE7;
+        background-color: #F4f4f4;
+    }
+}

@@ -1,0 +1,10 @@
+@css-prefix-animation: ~"@{css-prefix}-animation";
+.keyframes(@name, @rules) {
+    @keyframes @name {
+        @rules();
+    }
+}
+.keyframes(~"@{css-prefix-animation}-circle", {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+});

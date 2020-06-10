@@ -1,0 +1,23 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-tag-dynamic: ~"@{css-prefix}-tag-dynamic";
+
+.@{css-prefix-tag-dynamic} {
+    display: inline-block;
+    width: 84px;
+    height: 28px;
+
+    input {
+        width: 71px;
+    }
+
+    &-toggle-wrapper {
+        display: inline-block;
+        vertical-align: middle;
+/* 
+ *         .@{css-prefix-tag-dynamic}-text {
+ *             width: 71px;
+ *             height: 28px;
+ *         } */
+    }
+}

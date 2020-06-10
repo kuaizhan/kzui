@@ -1,0 +1,35 @@
+@charset "UTF-8";
+@import '../base/index.less';
+
+@css-prefix-date-picker: ~"@{css-prefix}-date-picker";
+.@{css-prefix-date-picker} {
+    display: inline-block;
+    position: relative;
+
+    &-date-display {
+        position: relative;
+
+        input {
+            .input-style;
+        }
+
+        .@{css-prefix}-icon {
+            .icon-box(14px);
+            position: absolute;
+            right: 10px;
+            top: 7px;
+            color: rgba(207,206,212,1);
+        }
+    }
+
+    // REVIEW for poptip change
+    // &-date-popover {
+    //     position: absolute;
+    // }
+
+    &-date-header span {
+        float: left;
+        padding-left: 20px;
+        color: #B2B2B2;
+    }
+}

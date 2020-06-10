@@ -1,0 +1,119 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-tab: ~"@{css-prefix}-tab";
+
+.@{css-prefix-tab}-bar {
+    border-bottom: 1px solid #e8e8e8;
+    border-top: 1px solid white;
+    display: block;
+    position: relative;
+
+    &-item {
+        box-sizing: border-box;
+        color: #666;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 16px;
+        height: 50px;
+        line-height: 50px;
+        list-style: none;
+        vertical-align:top;
+        text-align: center;
+        min-width: 125px;
+        padding: 0 10px;
+
+        &.@{css-prefix-tab}-cur {
+            & a {
+                color: #3b9bf5;
+            }
+        }
+    }
+}
+
+.@{css-prefix-tab}-bar--card {
+  border-bottom: none;
+  border-top: none;
+
+  & .@{css-prefix-tab}-bar-item {
+    border: 1px solid #dbdbdc;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: none;
+    position: relative;
+    margin-bottom: -1px;
+    margin-right: 10px;
+    color: #666;
+    background-color: #d0d0d0;
+    
+    
+    &.@{css-prefix-tab}-cur {
+      background-color: #fff;
+      & a {
+          color: #666;
+      }
+    }
+  }
+}
+
+.@{css-prefix-tab}-slider {
+    background: #3b9bf5;
+    bottom: 0;
+    display: none;
+    height: 3px;
+    position: absolute;
+    transition: all 0.3s ease;
+    width: 100px;
+}
+
+.@{css-prefix-tab}-nav {
+    display: block;
+    border-bottom: 1px solid #e8e8e8;
+    border-top: 1px solid white;
+
+    li {
+        display: inline-block;
+        list-style: none;
+        vertical-align:top;
+
+        a {
+            color: #666;
+            font-size: 16.8px;
+            padding: 0 20px;
+            display: inline-block;
+            vertical-align: middle;
+            text-decoration: none;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        &.@{css-prefix-tab}-cur {
+            margin-bottom: -3px;
+            border-bottom-style: solid;
+            border-color: #3b9bf5;
+            border-width: 0 0 3px 0;
+            padding-bottom: 0;
+            padding-top: 0;
+
+            a {
+                color: #111;
+            }
+        }
+    }
+}
+
+.@{css-prefix-tab}-panels {
+    .@{css-prefix-tab}-content {
+        display: none;
+        height: 100%;
+
+        &.@{css-prefix-tab}-cur {
+            display: block;
+        }
+    }
+
+    &--card {
+      border: 1px solid #dbdbdc;
+      border-radius: 4px;
+      border-top-left-radius: 0;
+    }
+}

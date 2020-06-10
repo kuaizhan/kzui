@@ -1,0 +1,25 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-select: ~"@{css-prefix}-select";
+
+.@{css-prefix-select} {
+
+    &-with-search {
+        .@{css-prefix-select}-search-input {
+            margin: 5px;
+        }
+    }
+
+    &-options-panel {
+        .overlay-style;
+        display: none;
+        position: absolute;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+    }
+
+    & .options-panel-visible {
+        display: block;
+    }
+}

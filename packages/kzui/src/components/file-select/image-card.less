@@ -1,0 +1,23 @@
+@charset "UTF-8";
+@import '../base/index.less';
+
+.@{css-prefix}-image-card {
+    position: relative;
+
+    &-cover {
+        display: none;
+        .position-center();
+        background: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+
+        &:hover {
+            display: block;
+        }
+    }
+
+    &-delete {
+        .position-center();
+        color: white;
+    }
+}

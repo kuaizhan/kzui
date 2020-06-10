@@ -1,0 +1,63 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-dialog: ~"@{css-prefix}-dialog";
+.@{css-prefix-dialog} {
+    .overlay-style;
+    position: absolute;
+    height: auto;
+    visibility: hidden;
+    // top: @dialog-top;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 64px 64px 54px;
+    transform: translate(-50%,-50%);
+    top: 50%;
+
+    &-bottom {
+        bottom: 0;
+        top: auto;
+    }
+
+    &-header {
+        border-bottom: 1px solid #edecf0;
+        box-sizing: border-box;
+        font-size: 14px;
+        height: 50px;
+        line-height: 50px;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 20px;
+
+        i {
+            display: inline-block;
+            font-size: 12px;
+            line-height: inherit;
+            margin-right: 12px;
+            cursor: pointer;
+            width: 20px;
+        }
+
+    }
+
+    &-body {
+        overflow-y: auto;
+        padding: 10px;
+        min-height: @dialog-min-height;
+        min-width: @dialog-min-width;
+    }
+
+    &-footer {
+        border-top: 1px solid #edecf0;
+        box-sizing: border-box;
+        height: 72px;
+        line-height: 72px;
+        vertical-align: middle;
+
+        &-buttons {
+            line-height: 72px;
+            float: right;
+            margin-right: 10px;
+        }
+    }
+}

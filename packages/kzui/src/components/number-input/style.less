@@ -1,0 +1,94 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-number-input: ~"@{css-prefix}-number-input";
+
+.controls-size(@height) {
+    .@{css-prefix-number-input}-controls {
+        .@{css-prefix-number-input}-increase {
+            height: @height / 2 - 1px;
+        }
+
+        .@{css-prefix-number-input}-decrease {
+            height: @height / 2;
+        }
+
+        .@{css-prefix}-icon {
+            line-height: @height / 2 - 1px;
+            &:before {
+                vertical-align: top;
+            }
+        }
+    }
+}
+
+.@{css-prefix-number-input} {
+    .input-style;
+    position: relative;
+
+    input {
+        width: 100%;
+        height: 100%;
+        vertical-align: top;
+        background: transparent;
+    }
+
+    .@{css-prefix}-icon {
+        .icon-box(9px);
+        vertical-align: top;
+    }
+
+    &-controls {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 24px;
+        height: 100%;
+        overflow: hidden;
+        border-left: 1px solid @color-input-bd;
+        text-align: center;
+        color: rgba(155, 155, 155, 1);
+
+        .@{css-prefix-number-input}-increase,
+        .@{css-prefix-number-input}-decrease {
+            &:not(.disabled):active {
+                color: #68aeff;
+            }
+
+            &.@{css-prefix-number-input}-disabled {
+                color: #e0dfe7;
+            }
+        }
+
+        .@{css-prefix-number-input}-increase {
+            cursor: pointer;
+            border-bottom: 1px solid @color-input-bd;
+        }
+
+        .@{css-prefix-number-input}-decrease {
+            cursor: pointer;
+        }
+    }
+
+    .controls-size(@form-row-height);
+
+    &-small {
+        .controls-size(@form-row-height-small);
+    }
+
+    &-large {
+        .controls-size(@form-row-height-large);
+    }
+
+    &:hover {
+        .@{css-prefix-number-input}-controls {
+            display: block;
+        }
+
+        &.@{css-prefix-number-input}-disabled {
+            .@{css-prefix-number-input}-controls {
+                display: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+@charset "UTF-8";
+@import '../base/index.less';
+
+@css-prefix-notification: ~"@{css-prefix}-notification";
+
+.@{css-prefix-notification} {
+    position: fixed;
+    top: 64px;
+    width: 100%;
+    pointer-events: none;
+    text-align: center;
+    z-index: @z-index-notification;
+}

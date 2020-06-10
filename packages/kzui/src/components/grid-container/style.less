@@ -1,0 +1,21 @@
+@charset "UTF-8";
+@import '../base/index.less';
+
+.loop(@counter) when (@counter <= @grid-columns) {
+
+    &.span-@{counter} {
+        .grid-span(@counter);
+    }
+    .loop((@counter + 1));
+}
+
+.@{css-prefix}-grid-container {
+    display: inline-block;
+    vertical-align: top;
+
+    .loop(1);
+
+    &.last {
+        margin-right: 0;
+    }
+}

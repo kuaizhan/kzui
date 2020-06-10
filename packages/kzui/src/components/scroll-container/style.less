@@ -1,0 +1,21 @@
+@charset "UTF-8";
+@import '../base/index.less';
+
+.@{css-prefix}-scroll-container {
+    display: block;
+    vertical-align: top;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .scrollbar();
+
+    &.x-scroll {
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    &.y-scroll {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}

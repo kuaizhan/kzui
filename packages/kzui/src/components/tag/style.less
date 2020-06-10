@@ -1,0 +1,75 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-tag: ~"@{css-prefix}-tag";
+
+.@{css-prefix-tag} {
+    display: inline-block;
+    margin-right: 12px;
+    font-size: 12px;
+    color: @color-tag;
+    border-radius: 3px;
+    border: 1px solid @color-input-bd;
+    padding: 2px 12px;
+    cursor: pointer;
+    height: 22px;
+    line-height: 22px;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
+    &-active {
+        color: @body-background;
+        border: 1px solid @color-theme;
+        background: @color-theme;
+    }
+
+    &-multi.@{css-prefix-tag}-active {
+        position: relative;
+        border: 1px solid @color-theme-dark;
+        color: @color-theme-dark;
+        background: @body-background;
+        &:before {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 12px solid @color-theme-dark;
+            border-left: 12px solid transparent;
+        }
+        .@{css-prefix}-icon {
+            position: absolute;
+            transform: scale(.5);
+            right: -3px;
+            bottom: -3px;
+            color: @body-background;
+        }
+    }
+    &:not(.@{css-prefix-tag}-active):hover {
+        border: 1px solid @color-theme;
+        color: @color-theme;
+        background: @body-background;
+    }
+
+    &-disabled {
+        background: @color-disabled-bg;
+        color: @color-disabled;
+        border: 1px solid @color-disabled-bd;
+        pointer-events: none;
+    }
+
+    &-showOnly {
+        background: @color-disabled-bg;
+        border: @border-none;
+        pointer-events: none;
+    }
+
+    &-removeAble {
+        .@{css-prefix}-icon {
+            transform: scale(.6);
+        }
+    }
+}

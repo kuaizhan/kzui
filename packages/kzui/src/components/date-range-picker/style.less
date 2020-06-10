@@ -1,0 +1,26 @@
+@charset 'UTF-8';
+@import '../base/index.less';
+@css-prefix-date-picker: ~"@{css-prefix}-date-picker";
+
+/* TODO hover效果不对 */
+.@{css-prefix-date-picker}-date-range-panel {
+
+    .@{css-prefix-date-picker}-date-panel {
+        display: inline-block;
+
+        &:first-child {
+            margin-right: 20px;
+        }
+    }
+
+    .@{css-prefix-date-picker}-date-panels {
+        display: flex;
+    }
+}
+
+.@{css-prefix-date-picker}-date-display {
+    width: 200px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}

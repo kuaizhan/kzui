@@ -1,0 +1,100 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-spin: ~"@{css-prefix}-spin";
+
+.@{css-prefix-spin} {
+    display: inline-block;
+
+    &-spinning-container {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+
+        &::after {
+            content: '';
+            height: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+
+    &-container {
+        opacity: 1;
+    }
+
+    &-note {
+        display: inline-block;
+        vertical-align: middle;
+
+        .spin-tip {
+            display: block;
+            padding-top: 10px;
+            color: @color-theme;
+        }
+    }
+
+    &-large {
+        .@{css-prefix-spin}-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .@{css-prefix-spin}-note {
+            font-size: 14px;
+        }
+    }
+
+    &-normal {
+        .@{css-prefix-spin}-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .@{css-prefix-spin}-note {
+            font-size: 14px;
+        }
+    }
+
+    &-small {
+        .@{css-prefix-spin}-icon {
+            width: 14px;
+            height: 14px;
+        }
+
+        .@{css-prefix-spin}-note {
+            font-size: 12px;
+        }
+    }
+
+
+
+    &-nested.@{css-prefix-spin}-spinning {
+        position: relative;
+
+        .@{css-prefix-spin}-spinning-container {
+            position: absolute;
+            z-index: 1;
+        }
+
+        .@{css-prefix-spin}-container {
+            opacity: .3;
+        }
+    }
+
+
+    // spin-icon
+    &-icon {
+        display: inline-block;
+        animation: ~"@{css-prefix-animation}-circle" 1s linear infinite;
+        transform-origin:center center;
+
+        i {
+            display: block;
+            background-image: url('./images/loading.png');
+            background-size: 100%;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+}

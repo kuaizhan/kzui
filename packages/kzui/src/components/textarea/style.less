@@ -1,0 +1,35 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-textarea: ~"@{css-prefix}-textarea";
+
+.@{css-prefix-textarea} {
+    position: relative;
+    width: 100%;
+    min-width: 300px;
+
+    &-input {
+        .input-style;
+
+        width: 100%;
+        height: 110px;
+        resize: none;
+    }
+    &-counter {
+        float: right;
+        width: 100%;
+        text-align: right;
+        position: relative;
+        margin-top: -31px;
+        padding-right: 12px;
+        font-size: 12px;
+        color: #86858d;
+
+        &--error {
+          color: @color-fail;
+        }
+    }
+
+    &-error {
+        border-color: @color-fail;
+    }
+}

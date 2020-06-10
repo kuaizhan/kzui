@@ -1,0 +1,29 @@
+@charset "UTF-8";
+@import '../base/index.less';
+
+
+.loop(@counter) when (@counter <= @grid-columns) {
+    .kui-col-@{counter} {
+        width: 100% * @counter/@grid-columns;
+        flex: 0 0 auto;
+    }
+
+    .kui-col-offset-@{counter} {
+        margin-left: 100% * (@counter / @grid-columns);
+    }
+
+    .loop((@counter + 1));
+}
+
+.@{css-prefix}-col {
+    box-sizing: border-box;
+    display: block;
+}
+
+.@{css-prefix}-row {
+    display: flex;
+    width: 100%;
+    margin: 8px 0;
+
+    .loop(1);
+}

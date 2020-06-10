@@ -1,0 +1,34 @@
+@charset "UTF-8";
+@import '../base/index.less';
+@css-prefix-switcher: ~"@{css-prefix}-switcher";
+
+.@{css-prefix-switcher} {
+    display: inline-block;
+
+    &-item {
+        display: inline-block;
+        width: 120px;
+        text-align: center;
+        font-size: 14px;
+        color: @color-disable-text;
+        line-height: 34px;
+        border: 1px solid @color-input-bd;
+        border-left-width: 0;
+        cursor: pointer;
+
+        &:first-child {
+            border-radius: 4px 0 0 4px;
+            border-left-width: 1px;
+        }
+
+        &:last-child {
+            border-radius: 0 4px 4px 0;
+        }
+
+        &.@{css-prefix-switcher}-cur {
+            color: #fff;
+            background: @color-theme;
+            border-color: @color-theme;
+        }
+    }
+}
