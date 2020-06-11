@@ -28,7 +28,7 @@
     "fixed": "eslint config/** src/** test/**/** ./*.js --fix",
     "test": "jest"
   },
-  "version": "0.0.4",
+  "version": "0.0.5",
   "typings": "types/index.d.ts",
   "gitHead": "346ad2a8f56f8a713f387e332c869c5271d8461b"
 }
