@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import '@kuaizhan/kedit-font';
+import '@kzui/font';
 import KZUIComponent, { baseDefaultProps } from '../base/component';
 import { IconTypes } from '../../../types/base/icon-types';
 

@@ -1,7 +1,7 @@
 /**
  * @description UI库组件主入口
  */
-import '@kuaizhan/kedit-font';
+import '@kzui/font';
 import KZUIComponent from './components/base/component';
 import GridContainer from './components/grid-container/index';
 import { Row, Col } from './components/grid/index';
