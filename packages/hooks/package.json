@@ -15,8 +15,8 @@
     "lib"
   ],
   "publishConfig": {
-    "registry": "http://npm.kuaizhan.sohuno.com/"
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {},
-  "gitHead": "ecbb83a12f4c66469d4921d1d88ed75ec8e6c5e9"
+  "gitHead": "8e4c74118066f9b090c8bdb8c3de2e488cac8201"
 }
