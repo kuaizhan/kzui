@@ -17,7 +17,7 @@ interface RichTextEditorProps {
   ) => void //执行组件内部方法的回调函数
   onChange?: ({ name, value }: { name: string; value: string }) => void //编辑框change事件
   onKeyPress?: (e: React.KeyboardEvent) => void //编辑框keyPress事件
-  onPaste?: (e: any) => void // 编辑框paste事件
+  onPaste?: (e: any) => void // 编辑框paste事件 
 }
 
 const getCurrentRange = () => {
