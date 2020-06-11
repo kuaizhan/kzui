@@ -32,12 +32,15 @@ const demo = {
   },
   code: _code,
   reactCode: () => {
-    const [ chosenTime, setChosenTime ] = useState<string>()
+    const [ chosenTime, setChosenTime ] = useState<{
+      hour: number
+      minute: number
+      second: number
+    }>()
 
     function handleTimeChange(value) {
       const { hour, minute, second } = value;
-      const timeStr = `${hour}:${minute}:${second}`
-      setChosenTime(timeStr)
+      setChosenTime({ hour, minute, second })
     }
     return (
       <>

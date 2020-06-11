@@ -56,7 +56,7 @@ const demoList = [
 \`\`\`
     `,
     reactCode: () => {
-      const command = useRef((command, value?) => null)
+      const command = useRef((command, value?:any) => null)
       function handleAfterInit(commander){
         command.current = commander;
       }

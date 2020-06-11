@@ -23,7 +23,7 @@ const demoList = [
     reactCode: () => {
       return (
         <>
-            <FileSelect>上传图片</FileSelect>
+            <FileSelect fileList={['']}>上传图片</FileSelect>
         </>
       )
     }

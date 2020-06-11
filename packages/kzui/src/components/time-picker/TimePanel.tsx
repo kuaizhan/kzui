@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 // import classNames from 'classnames';
-import Icon from '../icon/index.tsx';
-import KZUIComponent from '../base/index';
+import Icon from '../icon';
+import KZUIComponent from '../base/component';
 
 const animateScrollTop = (element, value, duration) => {
     const targetDom = element;
@@ -27,8 +26,27 @@ const animateScrollTop = (element, value, duration) => {
 
 const paddingZero = number => (number < 10 ? `0${number}` : `${number}`);
 
-class TimePanel extends KZUIComponent {
-    constructor(props) {
+interface TimePanelProps {
+    hour: number,
+    minute: number,
+    second: number,
+    onChange: (value: { hour: number } | { minute: number } | { second: number }) => void,
+    onClose: () => void,
+}
+
+class TimePanel extends KZUIComponent<TimePanelProps, {
+    hour: number,
+    minute: number,
+    second: number,
+}> {
+    hours: number[];
+    minutes: number[];
+    seconds: number[];
+    hourParent: HTMLElement;
+    minuteParent: HTMLElement;
+    secondParent: HTMLElement;
+
+    constructor(props: TimePanelProps) {
         super(props);
         this.autoBind('handleClose', 'handleHourClick', 'handleMinuteClick', 'handleSecondClick');
 
@@ -58,28 +76,28 @@ class TimePanel extends KZUIComponent {
     }
 
     handleClose() {
-        this.props.onClose();
+        this.props.onClose?.();
     }
 
-    handleHourClick(value) {
+    handleHourClick(value: number) {
         this.setState({
             hour: value,
         });
-        this.props.onChange({ hour: value });
+        this.props.onChange?.({ hour: value });
     }
 
-    handleMinuteClick(value) {
+    handleMinuteClick(value: number) {
         this.setState({
             minute: value,
         });
-        this.props.onChange({ minute: value });
+        this.props.onChange?.({ minute: value });
     }
 
-    handleSecondClick(value) {
+    handleSecondClick(value: number) {
         this.setState({
             second: value,
         });
-        this.props.onChange({ second: value });
+        this.props.onChange?.({ second: value });
     }
 
     render() {
@@ -134,15 +152,13 @@ class TimePanel extends KZUIComponent {
 
 }
 
-TimePanel.propTypes = {
-    hour: PropTypes.number.isRequired,
-    minute: PropTypes.number.isRequired,
-    second: PropTypes.number.isRequired,
-    onChange: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
-};
+interface PickItemProps {
+  active: boolean,
+  value: number,
+  onClick: ( value: PickItemProps['value']) => void,
+}
 
-const PickItem = ({ active, value, onClick }) => {
+const PickItem: React.FC<PickItemProps> = ({ active, value, onClick }) => {
     const handleClick = () => {
         onClick(value);
     };
@@ -150,12 +166,6 @@ const PickItem = ({ active, value, onClick }) => {
         return <span className="active" onClick={handleClick}>{paddingZero(value)}</span>;
     }
     return <span onClick={handleClick}>{paddingZero(value)}</span>;
-};
-
-PickItem.propTypes = {
-    active: PropTypes.bool.isRequired,
-    value: PropTypes.number.isRequired,
-    onClick: PropTypes.func.isRequired,
 };
 
 export default TimePanel;

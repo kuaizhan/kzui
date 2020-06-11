@@ -125,10 +125,12 @@ component: InputDemo
 }, {
   text: 'pop-confirm',
   component: PopConfirmDemo
-}, {
-  text: '_pop-tip',
-  component: PopTipDemo
-}, {
+}, 
+// {
+//   text: '_pop-tip',
+//   component: PopTipDemo
+// }, 
+{
   text: 'portal',
   component: PortalDemo
 }, {

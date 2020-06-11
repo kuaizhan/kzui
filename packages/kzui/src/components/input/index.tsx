@@ -1,8 +1,8 @@
-import * as React from 'react';
-import classNames from 'classnames';
-import KZUIComponent, { baseDefaultProps } from '../base/component';
-import { UiSizeType } from '../../../types/base';
-import './style.less';
+import * as React from 'react'
+import { useState } from 'react'
+import classNames from 'classnames'
+import { UiSizeType } from '../../../types/base'
+import './style.less'
 
 interface InputProps {
   type?: 'text' | 'password' //输入类型,
@@ -12,106 +12,95 @@ interface InputProps {
   name?: string //表单输入项名,
   value?: string //初始值,
   placeholder?: string //输入默认显示
-  onChange?: (e: { value: string, name?: string }) => void
-  uncontroled?: boolean
+  onChange?: (e: { value: string; name?: string }) => void
+  control?: boolean
   onKeyPress?: (e: any, value: string) => void
-  onBlur?: (e: { value: string, name?: string }) => void
+  onBlur?: (e: { value: string; name?: string }) => void
+  style?: React.CSSProperties
+  className?: string
 }
 
-class Input extends KZUIComponent<InputProps, {
-  value?: string,
-}> {
-    textInput: any;
-    static defaultProps = {
-        ...baseDefaultProps,
-        type: 'text',
-        size: 'normal',
-        disabled: false,
-        error: false,
-        name: '',
-        placeholder: '',
-        uncontroled: false,
-        value: '',
-        onBlur: null,
-        onChange: null,
-        onKeyPress: null,
-        style: {},
-    }
-  
-    constructor(props) {
-        super(props);
-        this.autoBind('handleChange', 'handleKeyPress', 'handleBlur', 'toFocus');
+const clsPrefix = 'kui-input'
+const Input: React.FC<InputProps> = ({
+  type,
+  size,
+  disabled,
+  error,
+  name,
+  value,
+  placeholder,
+  onChange,
+  control,
+  onKeyPress,
+  onBlur,
+  style,
+  className
+}) => {
+  const [stateValue, setStateValue] = useState(value)
+  const [prevValue, setPrevValue] = useState(value)
 
-        if (props.uncontroled) {
-            this.state = {
-                value: props.value,
-            };
-        }
-    }
+  if (prevValue !== value && control) {
+    // 如果受控，stateValue 是用不上的
+    setPrevValue(value)
+  }
 
-    toFocus() {
-        this.textInput.focus();
-    }
+  const realValue = control ? value || '' : stateValue
 
-    initStateFromProps(props) {
-        if (props.uncontroled) return undefined;
+  function handleKeyPress (event: React.KeyboardEvent<HTMLInputElement>) {
+    onKeyPress?.(event, realValue)
+  }
+  function handleBlur (event: React.FocusEvent<HTMLInputElement>) {
+    onBlur?.({ value: event.target.value, name })
+  }
 
-        return {
-            value: props.value,
-        };
+  function handleChange (e: React.ChangeEvent<HTMLInputElement>) {
+    if (!control) {
+      setStateValue(e.target.value)
     }
 
-    handleBlur(event) {
-        if (this.props.onBlur) {
-            this.props.onBlur({ value: event.target.value, name: this.props.name });
-        }
-    }
-    handleChange(event) {
-        this.setState({ value: event.target.value });
-        if (this.props.onChange) {
-            this.props.onChange({ value: event.target.value, name: this.props.name });
-        }
-    }
+    onChange?.({ value: e.target.value, name })
+  }
 
-    handleKeyPress(event) {
-        if (this.props.onKeyPress) {
-            this.props.onKeyPress(event, this.state.value);
-        }
-    }
-    render() {
-        const clsPrefix = 'kui-input';
-        const {
-            type,
-            disabled,
-            placeholder,
-            error,
-            name,
-            className,
-            style,
-        } = this.props;
-        const cls = classNames({
-            [clsPrefix]: true,
-            [`${clsPrefix}-disabled`]: !!disabled,
-            [`${clsPrefix}-error`]: !!error,
-            [`${clsPrefix}-${this.props.size}`]: true,
-        }, className);
+  const cls = classNames(
+    {
+      [clsPrefix]: true,
+      [`${clsPrefix}-disabled`]: !!disabled,
+      [`${clsPrefix}-error`]: !!error,
+      [`${clsPrefix}-${size}`]: true
+    },
+    className
+  )
 
-        return (
-            <input
-                className={cls}
-                type={type}
-                name={name}
-                value={this.state.value}
-                placeholder={placeholder}
-                disabled={disabled}
-                onBlur={this.handleBlur}
-                onChange={this.handleChange}
-                onKeyDown={this.handleKeyPress}
-                ref={(input) => { this.textInput = input; }}
-                style={style}
-            />
-        );
-    }
+  return (
+    <input
+      className={cls}
+      type={type}
+      name={name}
+      value={realValue}
+      placeholder={placeholder}
+      disabled={disabled}
+      onBlur={handleBlur}
+      onChange={handleChange}
+      onKeyDown={handleKeyPress}
+      style={style}
+    />
+  )
 }
 
-export default Input;
+Input.defaultProps = {
+  type: 'text',
+  size: 'normal',
+  disabled: false,
+  error: false,
+  name: '',
+  placeholder: '',
+  control: true,
+  onBlur: null,
+  onChange: null,
+  onKeyPress: null,
+  style: {},
+  className: '',
+  value: ''
+}
+
+export default Input

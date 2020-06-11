@@ -10,4 +10,4 @@ const usePrevious = <T>(state: T): T | undefined => {
   return ref.current;
 };
 
-export default usePrevious;
+export { usePrevious };

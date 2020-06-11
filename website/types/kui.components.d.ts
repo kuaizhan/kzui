@@ -46,3 +46,4 @@ export { KZUIComponent } from './base/index'
 
 export { Switch } from './switch'
 export { Switcher } from './switcher'
+export { NumberInput } from './number-input'

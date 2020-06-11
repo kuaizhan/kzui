@@ -9,7 +9,7 @@ import docContent from '../docs/input.md';
 const demoList = [
   {
     description: {
-      title: 'input',
+      title: '非受控',
       content: ''
     },
     code: `

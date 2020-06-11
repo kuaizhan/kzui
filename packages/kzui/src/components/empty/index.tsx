@@ -1,13 +1,12 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import './style.less';
+import { KZUIComponent } from '../../../types/base';
 // @ts-ignore
 const EmptyImage = require('./images/empty-image.jpg')
 
-export interface EmptyProps {
+export interface EmptyProps extends KZUIComponent {
   emptyText?: string
-  style?: React.CSSProperties,
-  className?: string,
   emptyImg?: string
 }
 

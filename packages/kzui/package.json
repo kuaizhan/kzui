@@ -18,7 +18,7 @@
     "kuaizhan"
   ],
   "license": "ISC",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "name": "@kzui/core",
   "publishConfig": {
     "registry": "http://npm.kuaizhan.sohuno.com"

@@ -1,15 +1,44 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import classNames from 'classnames';
-import KZUIComponent from '../base/index';
-import Icon from '../icon/index.tsx';
+import KZUIComponent, { baseDefaultProps } from '../base/component';
+import Icon from '../icon';
 import TimePanel from './TimePanel';
 import './style.less';
 
 const paddingZero = number => (number < 10 ? `0${number}` : `${number}`);
 
-class TimePicker extends KZUIComponent {
-    constructor(props) {
+interface TimePickerProps {
+    name?: string,
+    value?: {
+        hour: number,
+        minute: number,
+        second: number,
+    }
+    onChange?: (Props: { name: TimePickerProps['name'], value: TimePickerProps['value'] }) => void, 
+    size?: string,
+    disabled?: boolean
+    error?: boolean
+}
+
+class TimePicker extends KZUIComponent<TimePickerProps, {
+  hide: boolean,
+  hour: number,
+  minute: number,
+  second: number
+}> {
+    static defaultProps = {
+        ...baseDefaultProps,
+        size: 'normal',
+        name: '',
+        value: {
+            hour: new Date().getHours(),
+            minute: new Date().getMinutes(),
+            second: new Date().getSeconds(),
+        },
+        onChange: null,
+    };
+
+    constructor(props: TimePickerProps) {
         super(props);
         this.autoBind('handleClick', 'handleTimeSelect', 'handleClose');
     }
@@ -79,26 +108,5 @@ class TimePicker extends KZUIComponent {
     }
 }
 
-TimePicker.propTypes = {
-    name: PropTypes.string,
-    value: PropTypes.shape({
-        hour: PropTypes.number,
-        minute: PropTypes.number,
-        second: PropTypes.number,
-    }),
-    onChange: PropTypes.func,
-    size: PropTypes.string,
-};
-
-TimePicker.defaultProps = {
-    size: 'normal',
-    name: '',
-    value: {
-        hour: new Date().getHours(),
-        minute: new Date().getMinutes(),
-        second: new Date().getSeconds(),
-    },
-    onChange: null,
-};
 
 export default TimePicker;

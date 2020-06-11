@@ -4,7 +4,7 @@ import { KZUIComponent, ScrollContainer } from '@kzui/core';
 import { Link } from 'react-router-dom';
 import './style.less';
 
-const SideNavSection = ({ items, title, noDivider, cur }) => (
+const SideNavSection = ({ items, title, noDivider, cur, onClick }) => (
     <section className="side-nav-section">
         {noDivider ? null : <div className="side-section-divider" />}
         <h1>{title}</h1>
@@ -18,6 +18,7 @@ const SideNavSection = ({ items, title, noDivider, cur }) => (
                             key={`${key}`}
                             className={(item.cur || item.name === cur) ? 'cur' : ''}
                             to={item.href}
+                            onClick={onClick}
                         >{item.text}</Link>
                     );
                 }
@@ -69,6 +70,8 @@ class SideNav extends KZUIComponent {
                             items={section.items}
                             noDivider={!headerContent}
                             cur={innerCur}
+                            // TODO Review
+                            onClick={() => this.forceUpdate()}
                         />
                     ))}
                     <footer className="side-footer">{footerContent}</footer>

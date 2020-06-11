@@ -1,28 +1,29 @@
-export const validateHEX = (hex) => {
+export const validateHEX = (hex: string) => {
     const reg = /^#?[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$/;
     return reg.test(hex);
 };
 
-export const validateRGB = ([r, g, b]) => {
+export const validateRGB = (props: [number, number, number]) => {
+    const [r, g, b] = props;
     const reg = /^\d{1,3}$/;
-    return reg.test(r) &&
-            reg.test(g) &&
-            reg.test(b) &&
-            parseInt(r, 10) <= 255 &&
-            parseInt(g, 10) <= 255 &&
-            parseInt(b, 10) <= 255;
+    return reg.test(String(r)) &&
+            reg.test(String(g)) &&
+            reg.test(String(b)) &&
+            parseInt(String(r), 10) <= 255 &&
+            parseInt(String(g), 10) <= 255 &&
+            parseInt(String(b), 10) <= 255;
+  };
+
+export const validateA = (v: string | number) => {
+    const reg = /^\d{1,3}$/;
+    return reg.test(String(v)) && parseInt(String(v), 10) <= 100;
 };
 
-export const validateA = (v) => {
-    const reg = /^\d{1,3}$/;
-    return reg.test(v) && parseInt(v, 10) <= 100;
-};
-
-export const formatHEX = hex => (
+export const formatHEX = (hex: string) => (
     hex.charAt(0) === '#' ? hex : `#${hex}`
 );
 
-export const RGBToHEX = ([r, g, b]) => (
+export const RGBToHEX = ([r, g, b]: [number, number, number]): string => (
     [
         '#',
         r < 16 ? `0${r.toString(16)}` : r.toString(16),
@@ -31,10 +32,10 @@ export const RGBToHEX = ([r, g, b]) => (
     ].join('').toUpperCase()
 );
 
-export const HEXToRGB = (hex) => {
-    let r;
-    let g;
-    let b;
+export const HEXToRGB = (hex: string): [number, number, number] => {
+    let r: number;
+    let g: number;
+    let b: number;
     let innerHex = hex;
     if (hex.charAt(0) === '#') {
         innerHex = hex.slice(1);

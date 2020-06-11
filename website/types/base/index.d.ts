@@ -15,6 +15,7 @@ export interface OptionType {
   text: string | React.ReactNode,
   selected?: boolean
   disabled?: boolean
+  className?: string
 }
 
 export type OptionListType = Array<OptionType>
