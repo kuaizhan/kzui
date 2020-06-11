@@ -62,7 +62,7 @@
     "prestart": "npm install",
     "dev:website": "webpack-dev-server --config webpack.config.js --inline --content-base website/public/ --history-api-fallback",
     "build": "lerna exec --parallel -- babel src -d dist --ignore src/__tests__/ --extensions .ts,.tsx,.js",
-    "publish": "lerna publish --public"
+    "publish": "lerna publish"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.9.0",

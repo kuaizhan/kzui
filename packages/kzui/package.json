@@ -21,7 +21,8 @@
   "main": "dist/index.js",
   "name": "@kzui/core",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "scripts": {
     "fixed": "eslint config/** src/** test/**/** ./*.js --fix",
