@@ -27,6 +27,6 @@
     "fixed": "eslint config/** src/** test/**/** ./*.js --fix",
     "test": "jest"
   },
-  "version": "2.0.3",
+  "version": "0.0.1",
   "typings": "types/index.d.ts"
 }
