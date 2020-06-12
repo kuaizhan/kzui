@@ -17,7 +17,7 @@
 
 可以在npm网站上获取 [npm package](https://www.npmjs.com/package/kzui/core).
 
-**[文档版 v1](http://cloud.kuaizhan.com/kzui)**
+**[稳定版](http://cloud.kuaizhan.com/kzui)**
 ```sh
 // 使用 npm
 npm install @kzui/core
