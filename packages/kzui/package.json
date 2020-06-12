@@ -5,6 +5,7 @@
   "dependencies": {
     "@kzui/font": "^0.0.7",
     "@kzui/hooks": "^0.0.7",
+    "@kzui/utils": "^0.0.7",
     "classnames": "^2.2.5"
   },
   "peerDependencies": {
