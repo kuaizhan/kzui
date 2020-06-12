@@ -29,7 +29,7 @@ yarn add @kzui/core
 ## 谁支持了kzui?
 
 <p style="display: flex; justify-content: center;">
-  <a data-ga-event-category="sponsor" data-ga-event-action="logo" data-ga-event-label="sencha" href="http://www.kuaizhan.com" rel="noopener sponsored" target="_blank" style="margin-right: 16px;"><img height="80" src="https://www.kuaizhan.com/v3/homepage/images/logo-kz.f6c18915.png" alt="sencha" title="UI Components for Productive Dev Teams" loading="lazy" /></a>
+  <a href="http://www.kuaizhan.com" rel="noopener" target="_blank" style="margin-right: 16px;"><img height="80" src="https://www.kuaizhan.com/v3/homepage/images/logo-kz.f6c18915.png" alt="kuaizhan" title="UI Components for Productive Dev Teams" loading="lazy" /></a>
 </p>
 
 ## 使用

@@ -4,6 +4,7 @@ const lessConfig = require('./config/less');
 const assertsRules = require('./config/asserts');
 const TerserPlugin = require('terser-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     mode: 'production', // development
@@ -22,6 +23,7 @@ module.exports = {
             hash: false,
             inject: true,
         }),
+        new ExtractTextPlugin("styles.css"),
     ],
 
     // Enable sourcemaps for debugging webpack's output.
