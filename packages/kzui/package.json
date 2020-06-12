@@ -3,7 +3,7 @@
     "name": "kzfe"
   },
   "dependencies": {
-    "@kzui/hooks": "^0.0.5",
+    "@kzui/hooks": "^0.0.6",
     "classnames": "^2.2.5"
   },
   "peerDependencies": {
@@ -29,7 +29,7 @@
     "test": "jest",
     "tsc": "tsc -p tsconfig.build.json"
   },
-  "version": "0.0.5",
+  "version": "0.0.6",
   "typings": "dist/index.d.ts",
   "gitHead": "346ad2a8f56f8a713f387e332c869c5271d8461b"
 }
