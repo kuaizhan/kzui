@@ -1,5 +1,5 @@
 {
-  "name": "font",
+  "name": "@kzui/font",
   "version": "0.0.6",
   "description": "> TODO: description",
   "author": "konglx <konglx90@gmail.com>",
@@ -26,5 +26,6 @@
   },
   "bugs": {
     "url": "https://github.com/kuaizhan/kzui/issues"
-  }
+  },
+  "gitHead": "8c914936a5ec53ecf5197e5291b06aab6a3c21ba"
 }
