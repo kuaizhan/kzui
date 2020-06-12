@@ -61,6 +61,9 @@
     "prestart": "npm install",
     "dev:website": "webpack-dev-server --config webpack.config.js --inline --content-base website/public/ --history-api-fallback",
     "build": "lerna exec --parallel -- babel src -d dist --ignore src/__tests__/ --extensions .ts,.tsx,.js",
+    "tsc": "lerna run tsc --parallel",
+    "clean": "lerna exec --parallel -- rimraf -rf ./dist",
+    "prepublish": "npm run build && npm run tsc",
     "publish": "lerna publish"
   },
   "dependencies": {

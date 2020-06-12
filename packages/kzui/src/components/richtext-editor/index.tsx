@@ -1,7 +1,7 @@
 import * as React from 'react'
 import KZUIComponent from '../base/component'
 import './style.less'
-import { baseDefaultProps } from 'packages/kzui/dist/components/base/component'
+import { baseDefaultProps } from '../../components/base/component'
 
 const emptyFunc = () => {}
 

@@ -3,6 +3,7 @@
     "name": "kzfe"
   },
   "dependencies": {
+    "@kzui/hooks": "^0.0.5",
     "classnames": "^2.2.5"
   },
   "peerDependencies": {
@@ -25,10 +26,10 @@
     "access": "public"
   },
   "scripts": {
-    "fixed": "eslint config/** src/** test/**/** ./*.js --fix",
-    "test": "jest"
+    "test": "jest",
+    "tsc": "tsc -p tsconfig.build.json"
   },
   "version": "0.0.5",
-  "typings": "types/index.d.ts",
+  "typings": "dist/index.d.ts",
   "gitHead": "346ad2a8f56f8a713f387e332c869c5271d8461b"
 }

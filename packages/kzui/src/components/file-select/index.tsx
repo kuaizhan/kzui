@@ -8,7 +8,7 @@ import Icon from '../icon/index'
 import Button from '../button/index'
 import ImageCard from './image-card'
 import './style.less'
-import { IconTypes } from 'packages/kzui/types/base/icon-types'
+import { IconTypes } from '../../../types/base/icon-types'
 
 interface FileSelectProps {
   disabled?: boolean //是否禁用,

@@ -25,7 +25,6 @@ import ColorPicker from './components/color-picker/index';
 import Tip from './components/tip/index';
 import Search from './components/search/index';
 import Checkbox from './components/checkbox/index';
-import types from './components/base/types';
 import Table from './components/table/index';
 import Tab from './components/tab/index';
 import TabBar from './components/tab/TabBar';
@@ -51,8 +50,6 @@ import notification from './components/notification/index';
 import Empty from './components/empty/index';
 import './style/index.less';
 
-const TextInput = Input;
-
 export {
     Tab,
     TabBar,
@@ -64,7 +61,6 @@ export {
     Form,
     FormRow,
     Input,
-    TextInput,
     TextArea,
     Select,
     Option,
@@ -84,7 +80,6 @@ export {
     Tip,
     Search,
     Checkbox,
-    types,
     Table,
     FileSelect,
     Tag,
