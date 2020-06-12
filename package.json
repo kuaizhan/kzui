@@ -24,7 +24,7 @@
     "eslint-config-kuaizhan": "1.0.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.9.0",
-    "extract-text-webpack-plugin": "^3.0.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.5",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-inline-source-plugin": "0.0.9",
