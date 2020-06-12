@@ -1,17 +1,18 @@
 {
   "name": "@kzui/font",
   "version": "0.0.7",
-  "description": "> TODO: description",
+  "description": "快站B端字体库",
   "author": "konglx <konglx90@gmail.com>",
   "homepage": "https://github.com/kuaizhan/kzui#readme",
   "license": "ISC",
   "main": "dist/index.js",
   "directories": {
-    "lib": "lib",
+    "dist": "dist",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "dist",
+    "style.css"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
