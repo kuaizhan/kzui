@@ -12,12 +12,19 @@
         height: 100%;
 
         &:hover {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center
         }
     }
 
-    &-delete {
-        .position-center();
-        color: white;
+    &-edit {
+        margin-right: 12px;
     }
+
+    &-delete,
+    &-edit {
+        color: #fff;
+    }
+
 }

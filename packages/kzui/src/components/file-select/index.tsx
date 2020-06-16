@@ -34,7 +34,9 @@ const getBase64 = file => {
   })
 }
 
-class FileSelect extends KZUIComponent<FileSelectProps> {
+class FileSelect extends KZUIComponent<FileSelectProps,{
+  editIndex?: number,
+}> {
   fileInput: HTMLInputElement
 
   static defaultProps = {
@@ -54,7 +56,8 @@ class FileSelect extends KZUIComponent<FileSelectProps> {
   
   constructor (props) {
     super(props)
-    this.autoBind('handleChange', 'handleClick', 'handleDelete')
+    this.autoBind('handleChange', 'handleClick', 'handleDelete', 'handleEdit')
+    this.state = {}
   }
 
   handleClick () {
@@ -65,7 +68,10 @@ class FileSelect extends KZUIComponent<FileSelectProps> {
 
   handleChange () {
     const files = this.fileInput.files
-    if (this.props.multiple && files.length > this.props.maxFileCount) {
+    const { editIndex } = this.state;
+    const isEdit = (typeof editIndex === 'number')
+
+    if (this.props.multiple && files.length > this.props.maxFileCount && !isEdit) {
       return this.raiseError(1, '超过文件选择上限')
     }
 
@@ -85,8 +91,19 @@ class FileSelect extends KZUIComponent<FileSelectProps> {
         getBase64(file).then(url => (arrayFiles[index].url = url))
       )
     ).then(() => {
+      let newFileList = [...this.props.fileList]
+      if (isEdit) {
+          newFileList.splice(editIndex, arrayFiles.length, ...arrayFiles)
+      } else {
+        newFileList = [...this.props.fileList, ...arrayFiles]
+      }
+
+      this.setState({
+          editIndex: null
+      })
+
       if (this.props.onChange) {
-        this.props.onChange([...this.props.fileList, ...arrayFiles])
+          this.props.onChange(newFileList)
       }
     })
   }
@@ -97,6 +114,13 @@ class FileSelect extends KZUIComponent<FileSelectProps> {
     this.props.onChange(newArrayFiles)
   }
 
+  handleEdit(index) {
+    this.fileInput.click();
+    this.setState({
+      editIndex: index
+    })
+  }
+
   render () {
     const clsPrefix = 'kui-file-select'
     const {
@@ -105,28 +129,33 @@ class FileSelect extends KZUIComponent<FileSelectProps> {
       iconClass,
       type,
       buttonText,
-      fileList
+      fileList,
+      maxFileCount
     } = this.props
     const cls = classNames(clsPrefix, className)
     return (
       <div className={cls} style={style}>
-        {fileList.map((file, index) => (
+        {Array.isArray(fileList) && fileList.map((file, index) => (
           <ImageCard
             className={`${clsPrefix}-upload`}
             url={file.url}
             onDelete={() => this.handleDelete(index)}
+            onEdit={() => this.handleEdit(index)}
           />
         ))}
-        <div onClick={this.handleClick} className={`${clsPrefix}-upload`}>
-          {this.props.children ? (
-            this.props.children
-          ) : (
-            <Button type='confirm' last={this.props.last}>
-              {iconClass && <Icon iconClass={iconClass} type={type} />}
-              {buttonText}
-            </Button>
-          )}
-        </div>
+        { (!fileList || fileList.length < maxFileCount) && (
+            <div onClick={this.handleClick} className={`${clsPrefix}-upload`}>
+              {this.props.children ? (
+                this.props.children
+              ) : (
+                <Button type='confirm' last={this.props.last}>
+                  {iconClass && <Icon iconClass={iconClass} type={type} />}
+                  {buttonText}
+                </Button>
+              )}
+            </div>
+          )
+        }
         <input
           className={`${clsPrefix}-input`}
           ref={this.storeRef('fileInput')}
