@@ -67,6 +67,7 @@
     "publish": "lerna publish"
   },
   "dependencies": {
+    "@kzui/hooks": "0.0.8",
     "@testing-library/jest-dom": "^5.9.0",
     "@testing-library/react": "^10.2.1",
     "classnames": "^2.2.6",

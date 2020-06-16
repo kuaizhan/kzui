@@ -21,39 +21,51 @@ type Notification = {
 let notificationInst = null;
 
 const getNotificationInst = () => {
-    if (!notificationInst) {
-        const div = document.createElement('div');
-        document.body.appendChild(div);
-        notificationInst = render(<NotificationContainer />, div);
-    }
-
-    return notificationInst;
+    return new Promise((resolve) => {
+        if (!notificationInst) {
+            const div = document.createElement('div');
+            document.body.appendChild(div);
+    
+            // render will be async
+            render(
+                <NotificationContainer ref={el => {
+                    notificationInst = el
+                    resolve()
+                }} />, 
+                div
+            );    
+        } else {
+            resolve()
+        }
+    })
 };
 
 const notification: Notification = {
     success: (config, duration) => {
-        const inst = getNotificationInst();
-
-        inst.add({
-            content: typeof config === 'string' ? config : config.content,
-            duration: typeof config === 'object' ? config.duration : duration,
-            type: 'success',
+        getNotificationInst().then(() => {
+            notificationInst.add({
+                content: typeof config === 'string' ? config : config.content,
+                duration: typeof config === 'object' ? config.duration : duration,
+                type: 'success',
+            });
         });
     },
     warn: (config, duration) => {
-        const inst = getNotificationInst();
-        inst.add({
-            content: typeof config === 'string' ? config : config.content,
-            duration: typeof config === 'object' ? config.duration : duration,
-            type: 'warn',
+        getNotificationInst().then(() => {
+            notificationInst.add({
+                content: typeof config === 'string' ? config : config.content,
+                duration: typeof config === 'object' ? config.duration : duration,
+                type: 'warn',
+            });
         });
     },
     error: (config, duration) => {
-        const inst = getNotificationInst();
-        inst.add({
-            content: typeof config === 'string' ? config : config.content,
-            duration: typeof config === 'object' ? config.duration : duration,
-            type: 'error',
+        getNotificationInst().then(() => {
+            notificationInst.add({
+                content: typeof config === 'string' ? config : config.content,
+                duration: typeof config === 'object' ? config.duration : duration,
+                type: 'error',
+            });
         });
     },
 };

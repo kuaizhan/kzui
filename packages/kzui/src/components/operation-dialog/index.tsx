@@ -12,6 +12,8 @@ interface OperationDialogProps {
   destoryOnClose?: boolean
   portal?: boolean
   actions?: Array<React.ReactNode>
+  confirmText?: string
+  cancelText?: string
 }
 
 interface OperationDialogStates {
@@ -64,7 +66,7 @@ class OperationDialog extends KZUIComponent<OperationDialogProps, OperationDialo
 
     render() {
         const { hide } = this.state;
-        const { children, title, center, destoryOnClose, portal, actions } = this.props;
+        const { children, title, center, destoryOnClose, portal, actions, confirmText, cancelText } = this.props;
 
         let _actions: DialogProps['actions'] = [
                 <Button
@@ -72,7 +74,7 @@ class OperationDialog extends KZUIComponent<OperationDialogProps, OperationDialo
                     size="large"
                     onClick={this.handleCancel}
                 >
-                    取消
+                    {cancelText || '取消'}
             </Button>,
                 <Button
                     key="confirm"
@@ -81,7 +83,7 @@ class OperationDialog extends KZUIComponent<OperationDialogProps, OperationDialo
                     type="confirm"
                     status="normal"
                 >
-                    确定
+                    {confirmText || '确定'}
             </Button>,
         ];
         if (actions) {
