@@ -12,7 +12,6 @@ interface SpinProps  {
   spinning?: boolean //是否为加载状态
 }
 
-
 const SpinIcon: React.FC<{ className?: string }> = ({
   className = ''
 }) => (
