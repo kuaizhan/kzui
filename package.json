@@ -64,7 +64,7 @@
     "build:website": "webpack --config webpack.config.js",
     "tsc": "lerna run tsc --parallel",
     "clean": "lerna exec --parallel -- rimraf -rf ./dist",
-    "prepublish": "npm run clean && npm run build && npm run tsc && npm run style",
+    "prepublish": "npm run clean && cp -r packages/kzui/src packages/kzui/dist && npm run build && npm run tsc && npm run style",
     "publish": "lerna publish",
     "style": "cross-env BUILD_MODE=style npm run build:website && mv public/dist/styles.css packages/kzui/dist"
   },
