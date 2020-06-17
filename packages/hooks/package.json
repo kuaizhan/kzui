@@ -6,13 +6,12 @@
   "homepage": "",
   "license": "ISC",
   "main": "dist/index.js",
-  "module": "src/index.ts",
   "directories": {
-    "lib": "lib",
+    "dist": "dist",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",

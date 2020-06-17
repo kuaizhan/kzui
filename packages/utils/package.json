@@ -5,13 +5,13 @@
   "author": "konglx <konglx90@gmail.com>",
   "homepage": "https://github.com/kuaizhan/kzui#readme",
   "license": "ISC",
-  "main": "lib/utils.js",
+  "main": "dist/index.js",
   "directories": {
-    "lib": "lib",
+    "dist": "dist",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
