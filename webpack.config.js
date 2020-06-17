@@ -6,12 +6,13 @@ const TerserPlugin = require('terser-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
+const BUILD_MODE = process.env.BUILD_MODE || ''
+
 module.exports = {
     mode: 'production', // development
 
-    entry: './website/index.tsx',
+    entry: BUILD_MODE === 'style' ? './packages/kzui/src/index.ts' : './website/index.tsx',
     output: {
-        // publicPath: path.resolve(__dirname, 'public'),
         path: path.resolve(__dirname, 'public/dist'),
         filename: 'bundle.js',
     },

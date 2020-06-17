@@ -40,11 +40,12 @@ yarn add @kzui/core
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from '@kzui/core';
+import '@kzui/core/dist/styles.css';
  
 function App() {
   return (
     <Button type="primary">
-      Hello World0
+      Hello World
     </Button>
   );
 }
