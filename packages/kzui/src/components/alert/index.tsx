@@ -10,7 +10,7 @@ interface AlertProps {
     buttonText?: string //显示内容,
     onClick?: () => void //点击回调
     position?: string
-  }
+}
 
 export default class Alert extends KZUIComponent<AlertProps> {
 
