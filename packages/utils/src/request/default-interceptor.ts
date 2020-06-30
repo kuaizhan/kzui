@@ -1,4 +1,4 @@
-import { RequestConfig, StringObject, Response } from "./index";
+import { RequestConfig, StringObject, Response } from "./types";
 
 /**
  * 
