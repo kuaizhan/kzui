@@ -12,6 +12,7 @@ import { KZUIComponent } from '../../../types/base'
 interface ImageCardProps extends KZUIComponent {
   url?: string
   onDelete?: () => void
+  onEdit?: () => void
 }
 
 const ImageCard = (props: ImageCardProps) => {
@@ -21,23 +22,33 @@ const ImageCard = (props: ImageCardProps) => {
   const imageStyle: React.CSSProperties = {
     width: '104px',
     height: '104px',
-    objectFit: 'none'
+    objectFit: 'cover'
   }
 
   const ref = useRef(null)
   const hover = useHover(ref)
 
   function handleDelete () {
-    props?.onDelete()
+    props?.onDelete?.()
   }
+
+  function handleEdit() {
+      props?.onEdit?.()
+  }
+
 
   return (
     <div ref={ref} className={cls} style={style}>
-      <img style={imageStyle} src={url} />
+      <img className={`${clsPrefix}-thumb`} style={imageStyle} src={url} />
       <div
         className={`${clsPrefix}-cover`}
         style={{ display: hover ? 'block' : 'none' }}
       >
+        {
+          props.onEdit
+            ? <Icon onClick={handleEdit} className={`${clsPrefix}-edit`} type="edit" />
+            : null
+        }
         <Icon
           onClick={handleDelete}
           className={`${clsPrefix}-delete`}
