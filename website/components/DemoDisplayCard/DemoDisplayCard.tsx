@@ -1,9 +1,13 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { ReactMarkdown } from '../react-markdown-wrap/index';
+import Prism from "prismjs"
+import "prismjs/themes/prism.css"
+// import './prism.css'
 import {Icon, notification} from 'packages/kzui/src'
 import './style.less'
+
+console.log(Prism, 'Prism')
 
 interface DemoDisplayCardProps {
   children: React.ReactNode | React.ReactElement,
@@ -25,9 +29,14 @@ const DemoDisplayCard = ({
     return cur ? acc += `${cur}` + '\n': acc
   }, '');
 
+  useEffect(() => {
+    setTimeout(() => Prism.highlightAll(), 0)
+  }, [isCodeDisplay])
+
   function handleCodeDisplay() {
     setIsCodeDisplay((isCodeDisplay) => !isCodeDisplay)
   }
+
   return (
     <div className={clsPrefix}>
       <div className={`${clsPrefix}__effect`}> {/* 示例效果 */}
@@ -49,13 +58,12 @@ const DemoDisplayCard = ({
           <Icon type="copy" />
         </p>
       </div>
-        <div className={`${clsPrefix}__code`} style={{ display: isCodeDisplay ? 'block' : 'none' }}>  {/* 代码 */}
-          {/* {code.split('  ').map((phrase: string, index: number) => (
-            <pre key={index}>
-              <code>{phrase}</code>
-            </pre>
-          ))} */}
-          <ReactMarkdown source={code} />
+        <div className={`${clsPrefix}__code`} style={{ display: isCodeDisplay ? 'block' : 'block' }}>  {/* 代码 */}
+          <pre className="line-numbers">
+            <code className="language-tsx">
+              {code}
+            </code>
+          </pre>
         </div>
     </div>
   )

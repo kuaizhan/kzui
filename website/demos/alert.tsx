@@ -15,21 +15,19 @@ const AlertDemo = () => {
       content: '点击按钮展示警告。'
     },
     code: `
-\`\`\`js
-  const [isHide, setIsHide] = useState(true)
-  return (
-    <>
-      <Button onClick={() => setIsHide(false)}>点击按钮</Button>
-      <Alert 
-        hide={isHide}
-        buttonText="确认"
-        onClick={() => setIsHide(false)}
-      >  
-        This is an Alert!
-      </Alert>
-    </>
-  )
-\`\`\`
+const [isHide, setIsHide] = useState(true)
+return (
+  <>
+    <Button onClick={() => setIsHide(false)}>点击按钮</Button>
+    <Alert 
+      hide={isHide}
+      buttonText="确认"
+      onClick={() => setIsHide(false)}
+    >  
+      This is an Alert!
+    </Alert>
+  </>
+)
     `,
     reactCode: () => {
       const [isHide, setIsHide] = useState(true)
