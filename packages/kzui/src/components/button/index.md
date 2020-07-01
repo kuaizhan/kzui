@@ -1,7 +1,44 @@
 # Button - 按钮组件
 
 
-* Button
+```jsx
+/**
+ * title: 按钮尺寸
+ * desc: 按钮有特大、大、中、小四种尺寸。通过设置 size 为 huge large small 分别把按钮设为特大、大、小尺寸。若不设置 size，则尺寸为中。
+ */
+
+
+import React from 'react';
+import { Button } from '@kzui/core';
+
+export default () => (
+  <>
+    <Button size='small'>小型按钮</Button>
+    <Button size='large'>大号按钮</Button>
+    <Button size='huge'>特大按钮</Button>
+  </>
+);
+```
+
+```jsx
+/**
+ * title: 按钮类型
+ * desc: 除了默认类型，按钮还有确认、危险、虚线边框。通过设置 type 为 confirm danger dashed 分别把按钮设为确认、危险、虚线边框类型。若不设置 type，则类型为普通。
+ */
+
+
+import React from 'react';
+import { Button } from '@kzui/core';
+
+export default () => (
+  <>
+    <Button type='confirm'>确认按钮</Button>
+    <Button type='danger'>危险按钮</Button>
+    <Button type='dashed'>虚线边框按钮</Button>
+  </>
+);
+```
+
 
 ## 属性
 
