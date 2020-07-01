@@ -69,7 +69,6 @@
     "style": "cross-env BUILD_MODE=style npm run build:website && mv public/dist/styles.css packages/kzui/dist"
   },
   "dependencies": {
-    "@kzui/hooks": "0.0.8",
     "@testing-library/jest-dom": "^5.9.0",
     "@testing-library/react": "^10.2.1",
     "classnames": "^2.2.6",
