@@ -66,12 +66,16 @@
     "clean": "lerna exec --parallel -- rimraf -rf ./dist",
     "prepublish": "npm run clean && cp -r packages/kzui/src packages/kzui/dist && npm run build && npm run tsc && npm run style",
     "publish": "lerna publish",
-    "style": "cross-env BUILD_MODE=style npm run build:website && mv public/dist/styles.css packages/kzui/dist"
+    "style": "cross-env BUILD_MODE=style npm run build:website && mv public/dist/styles.css packages/kzui/dist",
+    "docs:build": "dumi build",
+    "docs:deploy": "gh-pages -d docs-dist",
+    "deploy": "npm run docs:build && npm run docs:deploy"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.9.0",
     "@testing-library/react": "^10.2.1",
     "classnames": "^2.2.6",
+    "gh-pages": "^3.1.0",
     "react": "^16.13.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
