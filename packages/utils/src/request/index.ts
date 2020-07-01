@@ -7,7 +7,7 @@ import { RequestEngine, RequestConfig, Interceptors } from "./types"
 
 /**
  * 1. 致力于统一前端请求的API
- * 2. 与平台无关, 主要兼容 weapp 和 web
+ * 2. 与平台无关, 主要兼容 weapp 和 web 
  * 
  * weapp https://developers.weixin.qq.com/miniprogram/dev/api/network/request/wx.request.html
  * web https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
