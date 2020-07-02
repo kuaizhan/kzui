@@ -34,7 +34,7 @@ const request = new Request((config) => {
       data: body,
     }
   })
-}, {}, {
+}, { baseUrl: '/baseUrl' }, {
   request: [function(config) {
     // 在请求发起之前，处理config
     return config
@@ -74,7 +74,7 @@ const request = new Request((config) => {
       data,
     }
   })
-}, {}, {
+}, { baseUrl: '/baseUrl' }, {
   request: [function(config) {
     // 在请求发起之前，处理config
     return config
