@@ -24,8 +24,8 @@ footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](http
 
 ## utils
 
-丰富的前端工具方案和一线实践 [查看](components/utils)
+丰富的前端工具方案和一线实践 [查看](utils/request)
 
 ## hooks
 
-通用逻辑抽象，专注业务逻辑 [查看](components/hooks)
+通用逻辑抽象，专注业务逻辑 [查看](hooks/use-request)
