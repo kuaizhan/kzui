@@ -20,7 +20,7 @@ footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](http
 
 ## kzui/core
 
-简单高效的B端组件库 [查看](components)
+简单高效的B端组件库 [查看](components/getstart)
 
 ## utils
 
