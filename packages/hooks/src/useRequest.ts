@@ -3,8 +3,6 @@ import { Request } from '@kzui/utils'
 import { RequestConfig } from '@kzui/utils/dist/request/types';
 import { encodeQueryString } from './tools';
 
-// TODO 迁出到 @kzui/hooks 里去
-
 interface ResponseData<T> {
     data?: T
     error: any
@@ -35,16 +33,13 @@ const request = new Request((config) => {
   // 按照 fetch 发起请求
   return fetch(config.url, {
     method: config.method,
-    body: config.payload,
+    body: (config.method === 'GET' || config.method === 'DELETE') ? undefined : config.payload,
     headers: config.headers
-  }).then(res => res.json()).then(res => {
-    const { body, status } = res;
-    return {
-      status,
-      data: body,
-    }
+  }).then(res =>{ 
+    console.log(res, '1')
+    return res?.json()
   })
-}, { baseUrl: '/baseUrl' }, {
+}, { baseUrl: '' }, {
   request: [function(config) {
     // 在请求发起之前，处理config
     let _config = {}
@@ -60,8 +55,8 @@ const request = new Request((config) => {
     return _config
   }],
   response: [[function(response) {
-      // 统一对请求做处理
-      return response
+    return response
+
   }, function(error) {
     // 统一对异常处理 *默认: 如果 status 不在 [100, 300) 之间就走这里 
     return Promise.reject(error);
@@ -131,6 +126,6 @@ const createUseRequest = (request) => {
 
 
 // 默认提供 request 为 fetch 的 useRequest
-export const useRequest = createUseRequest(request)
+export const useRequest = createUseRequest(request.run.bind(request))
 
 export default createUseRequest;
