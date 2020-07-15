@@ -21,7 +21,7 @@ import { RequestEngine, RequestConfig, Interceptors } from "./types"
  */
 export class Request {
 
-  config: Partial<RequestConfig> = { baseUrl: '' }
+  config: Partial<RequestConfig> = { baseUrl: '', method: 'GET' }
   requestEngine: RequestEngine
   interceptors: Interceptors
   
@@ -41,16 +41,18 @@ export class Request {
 
   run(config: Partial<RequestConfig>) {
 
-    // 执行拦截器
-    const newConfig = 
-      this.interceptors.request.reduce((config, interceptor) => interceptor(config), config)
+    let mergedConfig = { ...this.config, ...config }
 
-    newConfig.headers = {
-      ...newConfig.headers,
+    // 执行拦截器
+    mergedConfig = 
+      this.interceptors.request.reduce((config, interceptor) => interceptor(mergedConfig), mergedConfig)
+
+    mergedConfig.headers = {
+      ...mergedConfig.headers,
       ...config.headers,
     }
 
-    return this.requestEngine((newConfig as any)).then(response => {
+    return this.requestEngine((mergedConfig as any)).then(response => {
       return this.interceptors.response.reduce((response, interceptor) => {
         return response.then(interceptor[0]).catch(interceptor[1])
       }, Promise.resolve(response))

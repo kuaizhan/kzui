@@ -56,7 +56,7 @@ export function defaultRequestInterceptor(config: Partial<RequestConfig>) {
     _url = _url.slice(0, -1)
 
     // 不需要了
-    _payload = {}
+    _payload = undefined
   }
 
   return {

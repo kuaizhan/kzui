@@ -17,7 +17,17 @@ export interface Interceptors {
   response: [ResponseInterceptor, ErrorInterceptor][],
 }
 
-export type RequestEngine = <T>(config: Partial<RequestConfig> & { url: string }) => Promise<Response<T>>
+export interface RequestEngineConfig {
+  url: string,                             // 请求路径
+  payload: any                            // 请求参数 被转换后可能是适应各种平台的各种类型
+  method: HttpMethods,                     // 请求方法
+  headers: Headers                         // 请求header #对应 weapp header
+  transformRequest: TransformRequestFunc[] // 支持方法 'PUT', 'POST', 'PATCH' and 'DELETE'
+  transformResponse: TransformResponseFunc[] // 转换response
+  baseUrl: string
+}
+
+export type RequestEngine = <T>(config: Partial<RequestEngineConfig> & { url: string }) => Promise<Response<T>>
  
 export interface BaseRequestConfig {
   url: string,                             // 请求路径
