@@ -1,5 +1,27 @@
 # Steps - 步骤导航组件
 
+```jsx
+/**
+ * title: 步骤导航组件基本用法
+ */
+
+
+import React from 'react';
+import { Steps, Button } from '@kzui/core';
+
+export default () => {
+    const [step, setStep] = React.useState(1)
+    return (
+        <>
+            <Steps size={"normal"} curStep={step} stepTitles={['step1', 'step2']}>
+            <div style={{border: '1px solid #000'}}>content1</div>
+            <div style={{border: '1px solid #000'}}>content2</div>
+            </Steps>
+            <Button style={{marginTop: '10px'}} onClick={() => setStep(2)}>下一步</Button>
+        </>
+    )
+}
+```
 
 * Steps
 
