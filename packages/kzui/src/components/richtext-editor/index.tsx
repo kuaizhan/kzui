@@ -3,7 +3,7 @@ import KZUIComponent from '../base/component'
 import './style.less'
 import { baseDefaultProps } from '../../components/base/component'
 
-const emptyFunc = () => {}
+const emptyFunc = () => { }
 
 interface RichTextEditorProps {
   name?: string //组件名,
@@ -17,7 +17,10 @@ interface RichTextEditorProps {
   ) => void //执行组件内部方法的回调函数
   onChange?: ({ name, value }: { name: string; value: string }) => void //编辑框change事件
   onKeyPress?: (e: React.KeyboardEvent) => void //编辑框keyPress事件
-  onPaste?: (e: any) => void // 编辑框paste事件 
+  onPaste?: (e: any) => void // 编辑框paste事件
+  onBlur?: (e:any, range: Range) => void
+  onMouseUp?: (e: any) => void
+  lineBreak?: 1 | 0 // 0 Crtl+Enter换行， 1 Enter换行
 }
 
 const getCurrentRange = () => {
@@ -62,107 +65,107 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
     name: 'INSERT_HTML' | 'GET_HTML' | 'CLEAR_HTML',
     args: any
   ) => void
-  constructor (props) {
-    super(props)
-    this.autoBind(
-      'handleBlur',
-      'commander',
-      'handleChange',
-      'handleKeyPress',
-      'handlePaste'
-    )
-  }
 
   static defaultProps = {
-      ...baseDefaultProps,
-      name: '',
-      value: '',
-      afterInit: emptyFunc,
-      onChange: emptyFunc,
-      onKeyPress: emptyFunc,
-      onPaste: emptyFunc,
+    ...baseDefaultProps,
+    name: '',
+    value: '',
+    afterInit: emptyFunc,
+    onChange: emptyFunc,
+    onKeyPress: emptyFunc,
+    onPaste: emptyFunc,
+    onBlur: emptyFunc,
+    onMouseUp: emptyFunc,
+    lineBreak: 0,
   }
 
-  shouldComponentUpdate (nextProps) {
-    return nextProps.value !== this.props.value
+  constructor(props) {
+    super(props);
+    this.autoBind('handleBlur', 'commander', 'handleChange', 'handleKeyPress', 'handlePaste');
   }
 
-  componentDidMount () {
-    const wrp = this.wrp
+  shouldComponentUpdate(nextProps) {
+    return nextProps.value !== this.props.value;
+  }
+
+  componentDidMount() {
+    const wrp = this.wrp;
     // init range
-    this.selectedRange = initRange(wrp)
-    const { afterInit } = this.props
+    this.selectedRange = initRange(wrp);
+    const { afterInit } = this.props;
 
     this.commander = (name, args) => {
-      let selectRange
-      const currentRange = getCurrentRange()
+      let selectRange;
+      const currentRange = getCurrentRange();
       if (currentRange && wrp.contains(currentRange.commonAncestorContainer)) {
-        selectRange = currentRange
+        selectRange = currentRange;
       } else {
-        selectRange = this.selectedRange
+        selectRange = this.selectedRange;
       }
       switch (name) {
         case 'INSERT_HTML': {
           // 在这里操作DOM
-          const { html } = args
-          insetHTML(selectRange, html)
+          const { html } = args;
+          insetHTML(selectRange, html);
           // 触发change事件
-          this.handleChange()
-          break
+          this.handleChange();
+          break;
         }
 
         case 'GET_HTML': {
-          if (typeof args !== 'function') return
-          args(wrp.innerHTML)
-          break
+          if (typeof args !== 'function') return;
+          args(wrp.innerHTML);
+          break;
         }
 
         case 'CLEAR_HTML': {
-          wrp.innerHTML = ''
+          wrp.innerHTML = '';
           // 触发change事件
-          this.handleChange()
-          break
+          this.handleChange();
+          break;
         }
         default:
       }
-    }
-    afterInit(this.commander)
+    };
+    afterInit(this.commander, this.wrp);
   }
 
-  handleBlur () {
+  handleBlur(e) {
     // 保存光标位置信息
-    this.selectedRange = getCurrentRange()
+    this.selectedRange = getCurrentRange();
+    this.props.onBlur(e, this.selectedRange);
   }
-  handleKeyPress (e) {
+  handleKeyPress(e) {
+    const { lineBreak } = this.props;
     if (e.charCode === 13) {
-      e.preventDefault()
+      lineBreak === 1 && insetHTML(getCurrentRange(), '<br>');
+      e.preventDefault();
     }
     if (e.ctrlKey && e.charCode === 13) {
-      insetHTML(getCurrentRange(), '<br>')
-
-      // 触发onChange事件
-      this.handleChange()
+      lineBreak === 0 && insetHTML(getCurrentRange(), '<br>');
+      e.preventDefault();
     }
-    this.props.onKeyPress(e)
+    this.handleChange();
+    this.props.onKeyPress(e);
   }
-  handleChange () {
-    const wrp = this.wrp
-    const { name } = this.props
-    const html = wrp.innerHTML
+  handleChange() {
+    const wrp = this.wrp;
+    const { name } = this.props;
+    const html = wrp.innerHTML;
     if (html !== this.lastHtml) {
       this.props.onChange({
         name,
-        value: html
-      })
+        value: html,
+      });
     }
-    this.lastHtml = html
+    this.lastHtml = html;
   }
-  handlePaste (e) {
-    this.props.onPaste(e)
+  handlePaste(e) {
+    this.props.onPaste(e);
   }
 
-  render () {
-    const className = this.classname('richtext-editor', {})
+  render() {
+    const className = this.classname('richtext-editor', { [this.props.className]: true });
 
     return (
       <div
@@ -174,8 +177,9 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
         onInput={this.handleChange}
         onPaste={this.handlePaste}
         onKeyPress={this.handleKeyPress}
+        onMouseUp={this.props.onMouseUp}
       />
-    )
+    );
   }
 }
 
