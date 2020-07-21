@@ -1,7 +1,33 @@
 # Select - 下拉选择组件
 
+```jsx
+/**
+ * title: 选择框
+ * desc: 选择框的基本使用方法
+ */
 
-* Select
+
+import React from 'react';
+import { Select, notification } from '@kzui/core';
+
+const options = [
+	{value: 1, text: '1'},
+	{value: 2, text: '2'},
+	{value: 3, text: '3'}
+]
+
+export default () => (
+  <Select 
+    defaultText= '请选择'
+    value={null}
+    options={options}
+    onChange={(e) => notification.success(JSON.stringify(e))}
+    disabled={false}
+    size='large'
+    onExpand={() => console.log('onExpand')}
+  />
+);
+```
 
 ## 属性
 

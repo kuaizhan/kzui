@@ -27,6 +27,8 @@ export default defineConfig({
           'components/event-black-hole/index.md',
           'components/richtext-editor/index.md',
           'components/grid/index.md',
+          'components/scroll-container/index.md',
+          'components/steps/index.md',
         ],
       },
       {
@@ -35,6 +37,7 @@ export default defineConfig({
           'components/notification/index.md',
           'components/confirm/index.md',
           'components/dialog/index.md',
+          'components/spin/index.md',
         ],
       },
       {
@@ -46,6 +49,8 @@ export default defineConfig({
           'components/date-range-picker/index.md',
           'components/file-select/index.md',
           'components/form/index.md',
+          'components/select/index.md',
+          'components/search-select/index.md',
         ],
       },
     ],

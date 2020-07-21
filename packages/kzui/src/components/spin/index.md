@@ -1,7 +1,23 @@
 # Spin - 加载状态组件
 
+```jsx
+/**
+ * title: loading
+ * desc: 选择框的基本使用方法
+ */
 
-* Spin
+
+import React from 'react';
+import { Spin } from '@kzui/core';
+
+export default () => (
+  <Spin 
+    size='normal'
+    tip='spin'
+    spinning={true}
+  />
+);
+```
 
 ## 属性
 
