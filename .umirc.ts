@@ -25,7 +25,8 @@ export default defineConfig({
           'components/color-picker/index.md',
           'components/empty/index.md',
           'components/event-black-hole/index.md',
-          // 'components/richtext-editor/index.md',
+          'components/richtext-editor/index.md',
+          'components/grid/index.md',
         ],
       },
       {
@@ -43,6 +44,8 @@ export default defineConfig({
           'components/checkbox/index.md',
           'components/date-picker/index.md',
           'components/date-range-picker/index.md',
+          'components/file-select/index.md',
+          'components/form/index.md',
         ],
       },
     ],
