@@ -1,5 +1,6 @@
 import * as React from 'react'
 import classNames from 'classnames'
+import Button from '../button';
 import KZUIComponent, { baseDefaultProps } from '../base/component'
 import ColorPalette from './color-palette'
 import ColorList from './color-list'
@@ -16,7 +17,9 @@ interface ColorPickerProps {
   recentColors?: Array<string> //最近使用色,
   type?: 'simple' | 'full' //拾色器类型
   onChange?: (hex: string, a: number) => void // 颜色改变
-  onBlur?: (e?: React.MouseEvent) => void // 失去焦点
+  onBlur?: (e?: MouseEvent, oldHex?: string) => void // 失去焦点
+  onConfirm?: () => void
+  onCancel?: (oldHex: string) => void
 }
 
 // 简拾色器 title
@@ -38,8 +41,9 @@ class ColorPicker extends KZUIComponent<
     hex?: string
     a?: number
   }
-> {
+  > {
   colorPicker: HTMLElement
+  oldHex: string
 
   static defaultProps = {
     ...baseDefaultProps,
@@ -97,58 +101,70 @@ class ColorPicker extends KZUIComponent<
     ]
   }
 
-  constructor (props: ColorPickerProps) {
-    super(props)
-    this.autoBind('handlePaletteChange', 'handleClickList', 'handleBlur')
+  constructor(props) {
+    super(props);
+    this.autoBind('handlePaletteChange', 'handleClickList', 'handleBlur');
     this.state = {
       a: props.a,
-      hex: props.hex
+      hex: props.hex,
+    };
+    this.oldHex = '';
+  }
+
+  initStateFromProps(props) {
+    return {
+      hex: props.hex,
+      a: props.a,
     }
   }
 
-  componentDidMount () {
-    document.body.addEventListener('click', this.handleBlur, false)
-  }
-
-  componentWillUnmount () {
-    document.body.removeEventListener('click', this.handleBlur, false)
-  }
-
-  shouldComponentUpdate (nextProps, nextState) {
-    return (
-      nextProps.hex !== this.props.hex ||
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.hide && !nextProps.hide) {
+      this.oldHex = nextProps.hex;
+    }
+    return nextProps.hex !== this.props.hex ||
       nextProps.hide !== this.props.hide ||
-      nextState.hex !== this.state.hex
-    )
+      nextState.hex !== this.state.hex;
   }
 
-  handleBlur (e) {
-    if (!this.colorPicker.contains(e.target)) {
+  componentDidMount() {
+    document.body.addEventListener('click', this.handleBlur, false);
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('click', this.handleBlur, false);
+  }
+
+
+
+  handleBlur(e) {
+    if (!this.colorPicker.contains(e.target) && !this.props.hide) {
       if (this.props.onBlur) {
-        this.props.onBlur(e)
+        this.props.onBlur(e, this.oldHex);
       }
     }
   }
 
-  handlePaletteChange (hex, a) {
+
+  handlePaletteChange(hex, a) {
     if (this.props.onChange) {
-      this.props.onChange(hex, a)
+      this.props.onChange(hex, a);
     }
   }
 
-  handleClickList (hex, a = 100) {
+  handleClickList(hex, a = 100) {
     this.setState({
       hex,
-      a
-    })
+      a,
+    });
 
     if (this.props.onChange) {
-      this.props.onChange(hex, a)
+      this.props.onChange(hex, a);
     }
   }
 
-  render () {
-    const clsPrefix = 'kui-color-picker'
+  render() {
+    const clsPrefix = 'kui-color-picker';
     const {
       className,
       style,
@@ -156,65 +172,64 @@ class ColorPicker extends KZUIComponent<
       hide,
       recommendColors,
       recommendThemeColors,
-      dimensions
-    } = this.props
-    const cls = classNames(
-      clsPrefix,
-      {
-        [`${clsPrefix}-cpe-simple`]: type === 'simple',
-        [`${clsPrefix}-hide`]: hide
-      },
-      className
-    )
+      dimensions,
+      onConfirm,
+      onCancel,
+    } = this.props;
+    const cls = classNames(clsPrefix, {
+      [`${clsPrefix}-cpe-simple`]: type === 'simple',
+      [`${clsPrefix}-hide`]: hide,
+    }, className);
 
     const colorPickerStyle = {
       ...dimensions,
-      ...style
-    }
+      ...style,
+    };
 
-    let mainJSX
+    let mainJSX;
 
     if (this.props.type === 'simple') {
       mainJSX = (
-        <div className={`${clsPrefix}-cpr-container ${clsPrefix}-cpr-simple`}>
+        <div className={`${clsPrefix}-cpr-simple`}>
           <div className={`${clsPrefix}-title`}>颜色推荐</div>
           <ColorList
             onChange={this.handleClickList}
             list={recommendColors}
-            type='simple'
+            type="simple"
           />
           <div className={`${clsPrefix}-title`}>颜色自定义</div>
           <ColorPalette
             hex={this.state.hex}
             a={this.state.a}
             onChange={this.handlePaletteChange}
-            type='simple'
+            type="simple"
           />
         </div>
-      )
+      );
     } else {
       mainJSX = (
-        <div className={`${clsPrefix}-cpr-container ${clsPrefix}-cpr-full`}>
+        <div className={`${clsPrefix}-cpr-full`}>
           <ColorPalette
             hex={this.state.hex}
             a={this.state.a}
             onChange={this.handlePaletteChange}
-            type='full'
+            type="full"
           />
           <ColorList
             list={recommendThemeColors}
             onChange={this.handleClickList}
-            title='主题推荐色'
-            type='full'
+            title="主题推荐色"
+            type="full"
           />
           <ColorList
             list={this.props.recentColors}
             onChange={this.handleClickList}
-            title='最近使用色'
-            type='full'
+            title="最近使用色"
+            type="full"
           />
         </div>
-      )
+
+      );
     }
     return (
       <div
@@ -222,9 +237,33 @@ class ColorPicker extends KZUIComponent<
         className={cls}
         ref={this.storeRef('colorPicker')}
       >
-        {mainJSX}
+        <div className={`${clsPrefix}-cpr-container`}>
+          {mainJSX}
+          <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', paddingBottom: '10px' }}>
+            {onCancel ?
+              <Button
+                type="normal"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onCancel(this.oldHex);
+                }}
+              >取消</Button> : null
+            }
+            {onConfirm ?
+              <Button
+                type="confirm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation()
+                  onConfirm();
+                }}
+              >确定</Button> : null
+            }
+          </div>
+        </div>
       </div>
-    )
+    );
   }
 }
 

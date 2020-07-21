@@ -11,6 +11,7 @@ interface CheckboxProps {
   checked?: boolean //是否选中,
   partialChecked?: boolean //是否部分选择,
   size?: UiSizeType //大小
+  uncontroled?: boolean // 是否非受控
   onChange?:  ({ name: string, checked:boolean }) => void  //值改变事件
 }
 
@@ -25,6 +26,7 @@ class Checkbox extends KZUIComponent<CheckboxProps, {
       disabled: false,
       name: '',
       checked: false,
+      uncontroled: false,
       partialChecked: false,
       onChange: null,
     }
@@ -41,8 +43,17 @@ class Checkbox extends KZUIComponent<CheckboxProps, {
     }
 
     handleClick() {
+        
         if (this.props.disabled) {
             return;
+        }
+        if (!this.props.uncontroled) {
+            const { checked, name } = this.props;
+            this.props.onChange && this.props.onChange({
+                checked: !checked,
+                name,
+            })
+            return
         }
         const checked = !this.state.checked;
         this.setState({
@@ -59,9 +70,9 @@ class Checkbox extends KZUIComponent<CheckboxProps, {
 
     render() {
         const clsPrefix = 'kui-checkbox';
-        const { className, style, disabled, children } = this.props;
+        const { className, style, disabled, children, uncontroled, checked } = this.props;
         const cls = classNames(clsPrefix, {
-            [`${clsPrefix}-checked`]: this.state.checked,
+            [`${clsPrefix}-checked`]: uncontroled? this.state.checked : checked,
             [`${clsPrefix}-disabled`]: disabled,
             [`${clsPrefix}-partial-checked`]: this.state.partialChecked,
         }, className);

@@ -1,4 +1,4 @@
-# react-reconciler介绍和remax实现原理
+# react-reconciler介绍
 
 ## react-reconciler
 
@@ -191,13 +191,6 @@ export default {
 
 [hostConfig/index.ts](https://github.com/remaxjs/remax/blob/v2.6.0/packages/remax-runtime/src/hostConfig/index.ts)
 
-## Remax 渲染机制
-
-todo
-
-## 总结
-
-todo
 
 ## 资料
 
