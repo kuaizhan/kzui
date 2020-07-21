@@ -1,7 +1,7 @@
 import * as React from 'react'
 import classNames from 'classnames'
 import KZUIComponent, { baseDefaultProps } from '../base/component'
-import PopTip from '../_poptip'
+import PopTip from '../poptip'
 import Icon from '../icon/index'
 import DatePanel from './DatePanel'
 import './style.less'

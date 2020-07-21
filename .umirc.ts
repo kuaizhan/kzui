@@ -34,6 +34,7 @@ export default defineConfig({
           'components/notification/index.md',
           'components/confirm/index.md',
           'components/dialog/index.md',
+          'components/poptip/index.md'
         ],
       },
       {
