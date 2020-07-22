@@ -3,9 +3,9 @@
     "name": "kzfe"
   },
   "dependencies": {
-    "@kzui/font": "^0.0.20",
-    "@kzui/hooks": "^0.0.20",
-    "@kzui/utils": "^0.0.20",
+    "@kzui/font": "^0.0.21",
+    "@kzui/hooks": "^0.0.21",
+    "@kzui/utils": "^0.0.21",
     "classnames": "^2.2.5"
   },
   "peerDependencies": {
@@ -31,7 +31,7 @@
     "test": "jest",
     "tsc": "tsc -p tsconfig.build.json"
   },
-  "version": "0.0.20",
+  "version": "0.0.21",
   "typings": "dist/index.d.ts",
   "gitHead": "02229dd3efe3f8ce28dad9a00ac09222de85600d"
 }
