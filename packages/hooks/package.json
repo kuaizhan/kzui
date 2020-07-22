@@ -1,7 +1,7 @@
 {
   "name": "@kzui/hooks",
   "version": "0.0.18",
-  "description": "> TODO: description",
+  "description": "快站常用hook库",
   "author": "konglx <konglx90@gmail.com>",
   "homepage": "",
   "license": "ISC",
@@ -21,5 +21,5 @@
   "scripts": {
     "tsc": "tsc -p tsconfig.build.json"
   },
-  "gitHead": "2e1970aeb8548e0ea063307f2e03db85acb77719"
+  "gitHead": "02229dd3efe3f8ce28dad9a00ac09222de85600d"
 }
