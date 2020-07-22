@@ -1,6 +1,5 @@
 import { defineConfig } from 'dumi';
 
-
 const kzuiCoreComponentsPath = (com) => `packages/kzui/src/components/${com}/index.md`
 
 export default defineConfig({
