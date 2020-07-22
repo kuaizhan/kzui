@@ -95,6 +95,7 @@ export const createUseRequest = (request: any) => {
         const [data, setData] = useState<T>()
         const [error, setError] = useState()
 
+        // todo can pass params
         function run(): Promise<void> {
             setLoading(true)
             return request({
