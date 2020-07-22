@@ -64,7 +64,7 @@ const request = new Request((config) => {
 })
 
 
-const createUseRequest = (request) => {
+export const createUseRequest = (request: any) => {
     function useRequest<T>(
         requestConfigOrUrl: Partial<RequestConfig> | string,
         options?: HookOptions,
@@ -127,5 +127,3 @@ const createUseRequest = (request) => {
 
 // 默认提供 request 为 fetch 的 useRequest
 export const useRequest = createUseRequest(request.run.bind(request))
-
-export default createUseRequest;

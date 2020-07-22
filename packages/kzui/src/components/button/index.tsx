@@ -10,7 +10,7 @@ interface ButtonProps {
     status?: 'normal' | 'loading' //按钮状态
     last?: boolean //是否为最后一个按钮, 用于清除多个按钮并排时最后一个margin
     disabled?: boolean //是否禁用
-    onClick?: () => void //按钮点击事件
+    onClick?: (e: React.MouseEvent) => void //按钮点击事件
     loading?: boolean // 按钮的loading状态 是status的快捷用法
     shadow?: boolean // 是否有阴影
 }
@@ -34,11 +34,11 @@ class Button extends KZUIComponent<ButtonProps> {
         this.autoBind('handleClick');
     }
 
-    handleClick() {
+    handleClick(e: React.MouseEvent) {
         if (this.props.onClick && !this.props.disabled) {
             // 组件为加载类型
             if (this.props.status === 'loading' || this.props.loading) return;
-            this.props.onClick();
+            this.props.onClick(e);
         }
     }
 

@@ -21,19 +21,29 @@ export default defineConfig({
         children: [
           // 相对于 https://d.umijs.org/config#includes
           'components/button/index.md',
-          'components/icon/index.md'
+          'components/icon/index.md',
+          'components/color-picker/index.md',
+          'components/empty/index.md',
+          'components/event-black-hole/index.md',
+          // 'components/richtext-editor/index.md',
         ],
       },
       {
         title: '提示(显示)组件',
         children: [
           'components/notification/index.md',
+          'components/confirm/index.md',
+          'components/dialog/index.md',
+          'components/poptip/index.md'
         ],
       },
       {
         title: '表单组件',
         children: [
           'components/input/index.md',
+          'components/checkbox/index.md',
+          'components/date-picker/index.md',
+          'components/date-range-picker/index.md',
         ],
       },
     ],
