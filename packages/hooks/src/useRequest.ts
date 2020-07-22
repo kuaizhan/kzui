@@ -33,10 +33,11 @@ const request = new Request((config) => {
   // 按照 fetch 发起请求
   return fetch(config.url, {
     method: config.method,
-    body: (config.method === 'GET' || config.method === 'DELETE') ? undefined : config.payload,
+    body: (
+      config.method === 'GET' || config.method === 'DELETE' || config.method === undefined
+    ) ? undefined : config.payload,
     headers: config.headers
   }).then(res =>{ 
-    console.log(res, '1')
     return res?.json()
   })
 }, { baseUrl: '' }, {
@@ -74,6 +75,7 @@ export const createUseRequest = (request: any) => {
         let payload: Partial<RequestConfig>['payload'] = {};
         let url: Partial<RequestConfig>['url'] = '';
         let headers: Partial<RequestConfig>['headers'] = {};
+        let method: Partial<RequestConfig>['method'] = 'GET';
 
         let shouldExcute: boolean = true;
         if (options?.shouldExcute !== undefined) {
@@ -86,6 +88,7 @@ export const createUseRequest = (request: any) => {
             url = requestConfigOrUrl.url
             payload = requestConfigOrUrl.payload
             headers = requestConfigOrUrl.headers
+            method = requestConfigOrUrl.method
         }
 
         const [loading, setLoading] = useState(false)
@@ -97,7 +100,8 @@ export const createUseRequest = (request: any) => {
             return request({
                 url,
                 payload,
-                headers
+                headers,
+                method,
             }).then((_data: T) => {
                 setData(_data)
                 setLoading(false)
