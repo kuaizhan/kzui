@@ -62,7 +62,8 @@ export function defaultRequestInterceptor(config: Partial<RequestConfig>) {
   return {
     ...config,
     headers: _headers,
-    payload: _payload
+    payload: _payload,
+    url: _url
   }
 }
 
