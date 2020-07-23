@@ -112,7 +112,7 @@ const request = new Request((config) => {
   // 按照 fetch 发起请求
   return fetch(config.url, {
     method: config.method,
-    body: config.payload,
+    body: config.method === 'GET' ? undefined : config.payload,
     headers: config.headers
   }).then(res => res.json()).then(res => {
     const { body, status } = res;
@@ -135,7 +135,15 @@ const request = new Request((config) => {
   }]]
 })
 
-export default () => <Button onClick={() => request.run({ url: '/foo' }).catch(() => notification.error('请求失败'))}>发起失败请求</Button>
+function handleRequest() {
+   request.run({ url: '/foo', method: 'GET', payload: { a: 'b' } })
+          .catch((e) => {
+            console.log(e);
+            notification.error('请求失败')
+          })
+}
+
+export default () => <Button onClick={handleRequest}>发起失败请求</Button>
 ```
 
 ## API

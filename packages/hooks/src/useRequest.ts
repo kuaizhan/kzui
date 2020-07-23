@@ -5,6 +5,7 @@ import { encodeQueryString } from './tools';
 
 interface ResponseData<T> {
   data?: T
+  setData: (newDate: T) => void 
   error: any
   loading: boolean
   run: () => Promise<void>
@@ -122,7 +123,8 @@ export const createUseRequest = (request: any) => {
       data,
       error,
       loading,
-      run
+      run,
+      setData
     }
   }
 

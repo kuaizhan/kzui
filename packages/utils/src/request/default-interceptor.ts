@@ -53,11 +53,11 @@ export function defaultRequestInterceptor(config: Partial<RequestConfig>) {
           (_acc, _cur) => _acc + `${cur}=${encodeURIComponent(_cur)}&`, ''
         ) : `${cur}=${encodeURIComponent(_payload[cur])}&`)
     }, _url + '?')
-    _url = _url.slice(0, -1)
-
-    // 不需要了
+    _url = _url.slice(0, -1);
     _payload = undefined
   }
+
+  debugger
 
   return {
     ...config,
