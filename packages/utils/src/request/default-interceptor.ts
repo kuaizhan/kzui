@@ -57,7 +57,7 @@ export function defaultRequestInterceptor(config: Partial<RequestConfig>) {
     _payload = undefined
   }
 
-  debugger
+  // debugger
 
   return {
     ...config,
