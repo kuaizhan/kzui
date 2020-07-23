@@ -5,7 +5,7 @@ import { encodeQueryString } from './tools';
 
 interface ResponseData<T> {
   data?: T
-  setData: (newDate: T) => void 
+  setData: (newData: T) => void 
   error: any
   loading: boolean
   run: () => Promise<void>
