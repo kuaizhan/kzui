@@ -7,7 +7,7 @@ interface ResponseData<T> {
     data?: T
     error: any
     loading: boolean
-    run: () => Promise<void>
+    run: (payload?: RequestConfig['payload']) => Promise<void>
 }
 
 interface HookOptions {
@@ -92,11 +92,14 @@ export const createUseRequest = (request: any) => {
         const [data, setData] = useState<T>()
         const [error, setError] = useState()
 
-        function run(): Promise<void> {
+        function run(newPayload: RequestConfig['payload'] = {}): Promise<void> {
             setLoading(true)
             return request({
                 url,
-                payload,
+                payload: {
+                  ...payload,
+                  ...newPayload
+                },
                 headers
             }).then((_data: T) => {
                 setData(_data)

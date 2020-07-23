@@ -92,6 +92,7 @@ class PopTip extends KZUIComponent<PopTipProps, {
     }
 
     handleMouseOut(e) {
+        e.stopPropagation();
         if (this.props.trigger !== 'hover') return;
 
         if (this.poptip.contains(e.target)) {
@@ -107,7 +108,8 @@ class PopTip extends KZUIComponent<PopTipProps, {
         });
     }
 
-    handleClick() {
+    handleClick(e) {
+        e.stopPropagation();
         if (this.props.trigger !== 'click') return;
         if (typeof this.props.visible !== 'undefined') {
           this.props.onVisibleChange(!this.props.visible)
