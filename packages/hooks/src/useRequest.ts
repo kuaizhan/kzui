@@ -85,10 +85,10 @@ export const createUseRequest = (request: any) => {
     if (typeof requestConfigOrUrl === 'string') {
       url = requestConfigOrUrl
     } else {
-      url = requestConfigOrUrl.url
-      payload = requestConfigOrUrl.payload
-      headers = requestConfigOrUrl.headers
-      method = requestConfigOrUrl.method
+      url = requestConfigOrUrl.url || url
+      payload = requestConfigOrUrl.payload || payload
+      headers = requestConfigOrUrl.headers || headers
+      method = requestConfigOrUrl.method || method
     }
 
     const [loading, setLoading] = useState(false)
