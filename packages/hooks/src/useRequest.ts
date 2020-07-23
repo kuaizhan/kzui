@@ -110,6 +110,8 @@ export const createUseRequest = (request: any) => {
       }).catch((e) => {
         setError(e)
         setLoading(false)
+
+        throw e
       })
     }
 
