@@ -15,7 +15,24 @@ export default () =>{
         <PopTip tip='this is a poptip'>
             hover me
         </PopTip>
-)
+    );
+}
+```
+
+```jsx
+/**
+ * title: 气泡可以有四个方向
+ * desc: 通过 placement 属性控制，默认为`bottom`
+ */
+import React from 'react';
+import { PopTip } from '@kzui/core';
+
+export default () =>{ 
+    return (
+        <PopTip tip='this is a poptip' placement='right'>
+            hover me
+        </PopTip>
+    );
 }
 ```
 

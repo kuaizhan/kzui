@@ -41,17 +41,19 @@ class PopConfirm extends KZUIComponent<PopConfirmProps, PopConfirmStates> {
         };
     }
 
-    handleConfirm() {
+    handleConfirm(e) {
+        e.stopPropagation();
         this.setState({ visible: false });
         if (this.props.onConfirm) {
-            this.props.onConfirm();
+            this.props.onConfirm(e);
         }
     }
 
-    handleCancel() {
+    handleCancel(e) {
+        e.stopPropagation();
         this.setState({ visible: false });
         if (this.props.onCancel) {
-            this.props.onCancel();
+            this.props.onCancel(e);
         }
     }
 

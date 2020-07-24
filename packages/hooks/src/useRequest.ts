@@ -12,7 +12,7 @@ interface ResponseData<T> {
 }
 
 interface HookOptions {
-  shouldExcute?: boolean
+  shouldExecute?: boolean
 }
 
 /**
@@ -78,9 +78,9 @@ export const createUseRequest = (request: any) => {
     let headers: Partial<RequestConfig>['headers'] = {};
     let method: Partial<RequestConfig>['method'] = 'GET';
 
-    let shouldExcute: boolean = true;
-    if (options?.shouldExcute !== undefined) {
-      shouldExcute = options.shouldExcute
+    let shouldExecute: boolean = true;
+    if (options?.shouldExecute !== undefined) {
+      shouldExecute = options.shouldExecute
     }
 
     if (typeof requestConfigOrUrl === 'string') {
@@ -116,10 +116,11 @@ export const createUseRequest = (request: any) => {
     }
 
     useEffect(() => {
-      if (shouldExcute) {
+      console.log(shouldExecute, 'effect')
+      if (shouldExecute) {
         run()
       }
-    }, dep || [])
+    }, [...(dep || []), shouldExecute])
 
     return {
       data,
