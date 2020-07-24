@@ -107,6 +107,8 @@ export const createUseRequest = (request: any) => {
       }).then((_data: T) => {
         setData(_data)
         setLoading(false)
+
+        return _data
       }).catch((e) => {
         setError(e)
         setLoading(false)
