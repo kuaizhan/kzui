@@ -1,6 +1,6 @@
 {
   "name": "@kzui/font",
-  "version": "0.0.16",
+  "version": "0.2.0",
   "description": "快站B端字体库",
   "author": "konglx <konglx90@gmail.com>",
   "homepage": "https://github.com/kuaizhan/kzui#readme",
@@ -28,5 +28,5 @@
   "bugs": {
     "url": "https://github.com/kuaizhan/kzui/issues"
   },
-  "gitHead": "5258f2ad03aa494be67c52634e125cd546376904"
+  "gitHead": "02229dd3efe3f8ce28dad9a00ac09222de85600d"
 }
