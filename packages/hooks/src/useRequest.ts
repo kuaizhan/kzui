@@ -116,6 +116,7 @@ export const createUseRequest = (request: any) => {
     }
 
     useEffect(() => {
+      console.log(shouldExecute, 'effect')
       if (shouldExecute) {
         run()
       }
