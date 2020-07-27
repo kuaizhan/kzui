@@ -10,7 +10,7 @@
 import React from 'react';
 import { PopTip } from '@kzui/core';
 
-export default () =>{ 
+export default () => { 
     return (
         <PopTip tip='this is a poptip' trigger='click' placement='top'>
             hover me
@@ -22,7 +22,7 @@ export default () =>{
 ```jsx
 /**
  * title: 气泡可以有四个方向
- * desc: 通过 placement 属性控制，默认为`bottom`
+ * desc: 通过 `placement` 属性控制，默认为`bottom`
  */
 import React from 'react';
 import { PopTip } from '@kzui/core';
@@ -40,7 +40,7 @@ export default () =>{
 ```jsx
 /**
  * title: 浅色主题
- * desc: 通过 theme 属性控制，默认为`dark`, 浅色主题可以通过将 theme 设置成 `light`。
+ * desc: 通过 `theme` 属性控制，默认为`dark`, 浅色主题可以通过将 `theme` 设置成 `light`。
  */
 import React from 'react';
 import { PopTip } from '@kzui/core';
@@ -57,7 +57,7 @@ export default () =>{
 ```jsx
 /**
  * title: 点击展示气泡
- * desc: 将 trigger 属性设置为 `click`。
+ * desc: 将 `trigger` 属性设置为 `click`。
  */
 import React from 'react';
 import { PopTip, Button } from '@kzui/core';
