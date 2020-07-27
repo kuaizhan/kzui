@@ -81,7 +81,6 @@ export default () =>{
 trigger | `string` | 触发方式 | 否 | '`hover` | `hover`, `click`|
 tip | `React.ReactNode` | 提示内容 | 否 | '' | - |
 children | `React.ReactNode` | 主体内容 | 是 | null | - |
-tip | `string` \| `React.ReactNode` | 提示内容 | 是 | - | - | 
 placement | `left` \| `right` \| `top` \| `bottom` | 提示摆放位置  | 否 | `bottom` | `left` \| `right` \| `top` \| `bottom` |
 theme | `light` \| `dark` | 主题，分为深色和浅色 | 否 | `dark` | `light` \| `dark` |
 tipStyle | React.CSSProperties | 提示部分的 style | 否 | {} | - |
