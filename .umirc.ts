@@ -29,8 +29,6 @@ export default defineConfig({
           'components/grid/index.md',
           'components/scroll-container/index.md',
           'components/steps/index.md',
-          'components/scroll-container/index.md',
-          'components/steps/index.md',
         ],
       },
       {
