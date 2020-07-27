@@ -12,7 +12,7 @@ import { PopTip } from '@kzui/core';
 
 export default () =>{ 
     return (
-        <PopTip tip='this is a poptip'>
+        <PopTip tip='this is a poptip' trigger='click' placement='top'>
             hover me
         </PopTip>
     );
@@ -35,6 +35,43 @@ export default () =>{
     );
 }
 ```
+
+
+```jsx
+/**
+ * title: 浅色主题
+ * desc: 通过 theme 属性控制，默认为`dark`, 浅色主题可以通过将 theme 设置成 `light`。
+ */
+import React from 'react';
+import { PopTip } from '@kzui/core';
+
+export default () =>{ 
+    return (
+        <PopTip tip='this is a poptip' theme='light'>
+            hover me
+        </PopTip>
+    );
+}
+```
+
+```jsx
+/**
+ * title: 点击展示气泡
+ * desc: 将 trigger 属性设置为 `click`。
+ */
+import React from 'react';
+import { PopTip, Button } from '@kzui/core';
+
+export default () =>{ 
+    return (
+        <PopTip tip='this is a poptip' theme='light' trigger='click' placement='top'>
+            <Button style={{ marginRight: 0 }}>点击我</Button>
+        </PopTip>
+    );
+}
+```
+
+
 
 
 ## 属性
