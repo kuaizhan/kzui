@@ -90,7 +90,8 @@
         border-color: @color-disabled-bd;
         cursor: not-allowed;
 
-        &:hover, &.@{css-prefix}- hover {
+        &:hover,
+        &.@{css-prefix}-hover {
             color: @color-disabled;;
             background-color: @color-disabled-bg;
             border-color: @color-disabled-bd;
@@ -147,6 +148,8 @@
             vertical-align: middle;
             margin-right: 6px;
             color: #fff;
+            position: relative;
+            top: -2px;
         }
     }
 }

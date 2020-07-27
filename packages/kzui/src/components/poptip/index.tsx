@@ -66,6 +66,7 @@ class PopTip extends KZUIComponent<PopTipProps, {
         return;
       }
 
+      console.log(e, 'blur')
       if (this.poptip.contains(e.target)) {
         return;
       }
@@ -111,6 +112,7 @@ class PopTip extends KZUIComponent<PopTipProps, {
     handleClick(e) {
         e.stopPropagation();
         if (this.props.trigger !== 'click') return;
+
         if (typeof this.props.visible !== 'undefined') {
           this.props.onVisibleChange(!this.props.visible)
           return
@@ -136,8 +138,11 @@ class PopTip extends KZUIComponent<PopTipProps, {
             visible
             // renderChildren
         } = this.props;
+
         const isManualShow = typeof visible !== 'undefined'
+
         const { popVisible } = this.state
+
         const cls = classNames(clsPrefix, className,
           `${clsPrefix}--${trigger}`, 
           `${clsPrefix}--${theme}`, {
@@ -161,7 +166,7 @@ class PopTip extends KZUIComponent<PopTipProps, {
               {children}
             </div>
             <div className={tipCls} style={tipStyle}>
-              {tip}
+              {typeof tip === 'string' ? <p className={`${clsPrefix}__tip-text`}>{tip}</p> : tip}
             </div>
           </div>
         );
