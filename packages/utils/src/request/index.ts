@@ -45,13 +45,13 @@ export class Request {
 
     // 执行拦截器
     mergedConfig = 
-      this.interceptors.request.reduce((config, interceptor) => interceptor(mergedConfig), mergedConfig)
+      this.interceptors.request.reduce((config, interceptor) => interceptor(config), mergedConfig)
 
     mergedConfig.headers = {
       ...mergedConfig.headers,
       ...config.headers,
     }
-
+    
     return this.requestEngine((mergedConfig as any)).then(response => {
       return this.interceptors.response.reduce((response, interceptor) => {
         return response.then(interceptor[0]).catch(interceptor[1])

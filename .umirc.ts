@@ -38,6 +38,7 @@ export default defineConfig({
           'components/confirm/index.md',
           'components/dialog/index.md',
           'components/spin/index.md',
+          'components/poptip/index.md'
         ],
       },
       {

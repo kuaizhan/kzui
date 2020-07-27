@@ -48,6 +48,7 @@ import Portal from './components/portal/index';
 import prompt from './components/prompt/index';
 import notification from './components/notification/index';
 import Empty from './components/empty/index';
+import PopTip from './components/poptip/index'
 import './style/index.less';
 
 export {
@@ -101,4 +102,5 @@ export {
     prompt,
     notification,
     Empty,
+    PopTip
 };
