@@ -1,4 +1,4 @@
-# PopTip - 提示基础组件
+# PopTip - 气泡提示
 
 
 ```jsx

@@ -1,4 +1,4 @@
-# Popconfrim - pop确认组件
+# Popconfrim - 气泡确认框
 
 
 ```jsx
