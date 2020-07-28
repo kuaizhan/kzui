@@ -66,7 +66,7 @@ const request = new Request((config) => {
 })
 
 
-export const createUseRequest = (request: any) => {
+export const createUseRequest = <T>(request: any) => {
   function useRequest<T>(
     requestConfigOrUrl: Partial<RequestConfig> | string,
     options?: HookOptions,
