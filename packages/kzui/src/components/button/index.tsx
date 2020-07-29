@@ -6,8 +6,8 @@ import './index.less';
 
 interface ButtonProps {
     type?: 'normal' | 'confirm' | 'danger' | 'dashed'  //按钮类型
-    size?: UiSizeType //按钮尺寸
-    status?: 'normal' | 'loading' //按钮状态
+    size?: UiSizeType  //按钮尺寸 
+    status?: 'normal' | 'loading' // @deprecated 按钮状态
     last?: boolean //是否为最后一个按钮, 用于清除多个按钮并排时最后一个margin
     disabled?: boolean //是否禁用
     onClick?: (e: React.MouseEvent) => void //按钮点击事件
@@ -44,7 +44,7 @@ class Button extends KZUIComponent<ButtonProps> {
 
     render() {
         const prefixCls = 'kui-button';
-        const { loading, className, style, shadow, type, size, status, disabled, children } = this.props;
+        const { last, loading, className, style, shadow, type, size, status, disabled, children } = this.props;
 
         const cls = classNames({
             [prefixCls]: true,
@@ -53,6 +53,7 @@ class Button extends KZUIComponent<ButtonProps> {
             [`${prefixCls}-${status}`]: true,
             [`${prefixCls}-disabled`]: disabled,
             [`${prefixCls}__shadow`]: shadow,
+            [`${prefixCls}-last`]: last
         }, className);
         // icon button
         let iconEl = null;
