@@ -204,3 +204,7 @@ function confuseAppendChild(element) {
     element.appendChild(randomElement);
 }
 ```
+
+## 示例
+
+- https://movie-du.kuaizhan.com
