@@ -16,6 +16,7 @@ interface InputProps {
   control?: boolean
   onKeyPress?: (e: any, value: string) => void
   onBlur?: (e: { value: string; name?: string }) => void
+  onFocus?: (e: { value: string; name?: string }) => void
   style?: React.CSSProperties
   className?: string
 }
@@ -33,6 +34,7 @@ const Input: React.FC<InputProps> = ({
   control,
   onKeyPress,
   onBlur,
+  onFocus,
   style,
   className
 }) => {
@@ -51,6 +53,10 @@ const Input: React.FC<InputProps> = ({
   }
   function handleBlur (event: React.FocusEvent<HTMLInputElement>) {
     onBlur?.({ value: event.target.value, name })
+  }
+
+  function handleFocus(event: React.FocusEvent<HTMLInputElement>) {
+    onFocus?.({ value: event.target.value, name })
   }
 
   function handleChange (e: React.ChangeEvent<HTMLInputElement>) {
@@ -80,6 +86,7 @@ const Input: React.FC<InputProps> = ({
       placeholder={placeholder}
       disabled={disabled}
       onBlur={handleBlur}
+      onFocus={handleFocus}
       onChange={handleChange}
       onKeyDown={handleKeyPress}
       style={style}

@@ -1,0 +1,28 @@
+.kzui-date-panel {
+  width: 280px;
+  display: inline-block;
+
+  &__header {
+    display: flex;
+    padding: 0 12px;
+    color: rgba(0,0,0,.85);
+    border-bottom: 1px solid #f0f0f0;
+    height: 40px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__body {
+    padding: 8px 12px;
+    font-size: 14px;
+    display: grid;
+    grid-template: ~'repeat(7, 1fr) / repeat(7, 1fr)';
+    row-gap: 3px;
+
+    .nameofday {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

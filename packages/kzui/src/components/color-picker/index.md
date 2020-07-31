@@ -31,7 +31,7 @@ export default () => {
       </div>
       <Button
         type="confirm"
-        onClick={() => setIsCPHide((isCPHide) => !isCPHide)}
+        onClick={() => {console.log('click');setIsCPHide((isCPHide) => !isCPHide)}}
       >
         简单拾色器
       </Button>
@@ -42,7 +42,7 @@ export default () => {
         hex={pickedColor}
         onConfirm={() => setIsCPHide(true)}
         onChange={handleColorChange}
-        onBlur={() => setIsCPHide(true)}
+        onBlur={() => { console.log('blur');setIsCPHide(true)}}
         onCancel={oldHex => {
           handleColorChange(oldHex);
           setIsCPHide(true);

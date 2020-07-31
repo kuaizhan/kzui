@@ -64,14 +64,13 @@ class ColorPicker extends KZUIComponent<
       '#468ee5',
       '#47e4c2',
       '#b7eb81',
-      '#000',
+      '#000000',
       '#4a4a4a',
       '#9b9b9b',
       '#c5c5c5',
-      '#fff'
+      '#ffffff',
     ],
     recommendThemeColors: [
-      'blank',
       '#d2000d',
       '#f7a700',
       '#f9e900',
@@ -80,15 +79,14 @@ class ColorPicker extends KZUIComponent<
       '#3f7600',
       '#bf00e3',
       '#9100ff',
-      'blank',
       '#468ee5',
       '#47e4c2',
       '#b7eb81',
-      '#000',
+      '#000000',
       '#4a4a4a',
       '#9b9b9b',
       '#c5c5c5',
-      '#fff'
+      '#ffffff'
     ],
     recentColors: [
       '#d2000d',
@@ -140,7 +138,10 @@ class ColorPicker extends KZUIComponent<
   handleBlur(e) {
     if (!this.colorPicker.contains(e.target) && !this.props.hide) {
       if (this.props.onBlur) {
-        this.props.onBlur(e, this.oldHex);
+        setTimeout(() => {
+          this.props.onBlur(e, this.oldHex);
+        }, 0);
+        // this.props.onBlur(e, this.oldHex);
       }
     }
   }
@@ -177,7 +178,7 @@ class ColorPicker extends KZUIComponent<
       onCancel,
     } = this.props;
     const cls = classNames(clsPrefix, {
-      [`${clsPrefix}-cpe-simple`]: type === 'simple',
+      // [`${clsPrefix}-cpe-simple`]: type === 'simple',
       [`${clsPrefix}-hide`]: hide,
     }, className);
 

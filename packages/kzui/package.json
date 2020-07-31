@@ -6,7 +6,8 @@
     "@kzui/font": "^0.0.16",
     "@kzui/hooks": "^0.0.16",
     "@kzui/utils": "^0.0.16",
-    "classnames": "^2.2.5"
+    "classnames": "^2.2.5",
+    "dayjs": "^1.8.30"
   },
   "peerDependencies": {
     "react": "^16.12.0",
