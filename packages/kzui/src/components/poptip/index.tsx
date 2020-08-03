@@ -52,13 +52,14 @@ class PopTip extends KZUIComponent<PopTipProps, {
 
     componentDidMount() {
         document.body.addEventListener('click', this.handleBlur, false);
+        document.body.addEventListener('mouseout', this.handleMouseOut, false);
+
     }
 
     componentWillUnmount() {
         document.body.removeEventListener('click', this.handleBlur, false);
+        document.body.removeEventListener('mouseout', this.handleMouseOut, false);
     }
-
-
 
     handleBlur(e) {
       if (this.props.trigger !== 'click') {
@@ -90,8 +91,14 @@ class PopTip extends KZUIComponent<PopTipProps, {
         });
     }
 
-    handleMouseOut() {
+    handleMouseOut(e) {
+        e.stopPropagation();
         if (this.props.trigger !== 'hover') return;
+
+        if (this.poptip.contains(e.target)) {
+          return;
+        }
+
         if (typeof this.props.visible !== 'undefined') {
           this.props.onVisibleChange(false)
           return
@@ -101,7 +108,8 @@ class PopTip extends KZUIComponent<PopTipProps, {
         });
     }
 
-    handleClick() {
+    handleClick(e) {
+        e.stopPropagation();
         if (this.props.trigger !== 'click') return;
         if (typeof this.props.visible !== 'undefined') {
           this.props.onVisibleChange(!this.props.visible)
@@ -149,7 +157,6 @@ class PopTip extends KZUIComponent<PopTipProps, {
               className={triggerCls}
               onClick={this.handleClick}
               onMouseOver={this.handleMouseOver}
-              onMouseOut={this.handleMouseOut}
             >
               {children}
             </div>

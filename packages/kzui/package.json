@@ -32,7 +32,7 @@
     "test": "jest",
     "tsc": "tsc -p tsconfig.build.json"
   },
-  "version": "0.0.16",
+  "version": "0.2.4",
   "typings": "dist/index.d.ts",
-  "gitHead": "5258f2ad03aa494be67c52634e125cd546376904"
+  "gitHead": "3300cb5c45522e6dd1c97e4db8626bc2bdc672c1"
 }
