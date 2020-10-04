@@ -2,8 +2,6 @@ import * as React from 'react';
 import classNames from 'classnames';
 import './style.less';
 import { KZUIComponent } from '../../../types/base';
-// @ts-ignore
-const EmptyImage = require('./images/empty-image.jpg')
 
 export interface EmptyProps extends KZUIComponent {
   emptyText?: string
@@ -22,7 +20,7 @@ const Empty: React.FC<EmptyProps> = ({
   return (
     <div className={cls} style={style}>
       <div className={`${clsPrefix}__image`}>
-        <img src={emptyImg || EmptyImage} alt="" />
+        <img src={emptyImg} alt="" />
       </div>
       <p className={`${clsPrefix}__text`}>{emptyText || '暂无数据'}</p>
     </div>
