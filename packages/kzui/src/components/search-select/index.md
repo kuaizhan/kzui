@@ -1,7 +1,36 @@
 # SearchSelect - 带有搜索的下拉选择组件
 
+```jsx
+/**
+ * title: 搜索选择框
+ * desc: 搜索选择框的基本使用方法
+ */
 
-* SearchSelect
+
+import React from 'react';
+import { SearchSelect, notification } from '@kzui/core';
+
+const options = [
+	{value: 1, text: '1'},
+	{value: 2, text: '2'},
+	{value: 3, text: '3'}
+]
+
+export default () => (
+  <SearchSelect 
+    defaultText= '请选择'
+    emptyWarning= '暂无搜索结果'
+    value={null}
+    name= ''
+    options={options}
+    onChange={(e) => notification.success(JSON.stringify(e))}
+    onSearch={(e) => notification.success(JSON.stringify(e))}
+    disabled={false}
+    size= ''
+    onExpand={() => console.log('onExpand')}
+  />
+);
+```
 
 ## 属性
 

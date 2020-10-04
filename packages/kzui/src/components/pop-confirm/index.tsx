@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import KZUIComponent, { baseDefaultProps } from '../base/component';
 import Button from '../button';
-import PopTip from '../_poptip';
+import PopTip from '../poptip';
 import './style.less';
 
 interface PopConfirmProps {
@@ -41,17 +41,19 @@ class PopConfirm extends KZUIComponent<PopConfirmProps, PopConfirmStates> {
         };
     }
 
-    handleConfirm() {
+    handleConfirm(e) {
+        e.stopPropagation();
         this.setState({ visible: false });
         if (this.props.onConfirm) {
-            this.props.onConfirm();
+            this.props.onConfirm(e);
         }
     }
 
-    handleCancel() {
+    handleCancel(e) {
+        e.stopPropagation();
         this.setState({ visible: false });
         if (this.props.onCancel) {
-            this.props.onCancel();
+            this.props.onCancel(e);
         }
     }
 

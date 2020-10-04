@@ -23,7 +23,7 @@ import { Request } from '@kzui/utils'
 // https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
 const request = new Request((config) => {
   // 按照 fetch 发起请求
-  return fetch(url, {
+  return fetch(config.url, {
     method: config.method,
     body: config.payload,
     headers: config.headers
@@ -100,6 +100,52 @@ request.run({ url: '/foo', method: 'GET' }).then((res) => {
 request.run({ url: '/foo', method: 'POST' })
 ```
 
+## web 平台上的例子
+
+```jsx
+import React from 'react'
+import { Request } from '@kzui/utils'
+import { notification, Button } from '@kzui/core'
+
+// https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
+const request = new Request((config) => {
+  // 按照 fetch 发起请求
+  return fetch(config.url, {
+    method: config.method,
+    body: config.method === 'GET' ? undefined : config.payload,
+    headers: config.headers
+  }).then(res => res.json()).then(res => {
+    const { body, status } = res;
+    return {
+      status,
+      data: body,
+    }
+  })
+}, { baseUrl: '/baseUrl' }, {
+  request: [function(config) {
+    // 在请求发起之前，处理config
+    return config
+  }],
+  response: [[function(response) {
+      // 统一对请求做处理
+      return response
+  }, function(error) {
+    // 统一对异常处理 *默认: 如果 status 不在 [100, 300) 之间就走这里 
+    return Promise.reject(error);
+  }]]
+})
+
+function handleRequest() {
+   request.run({ url: '/foo', method: 'GET', payload: { a: 'b' } })
+          .catch((e) => {
+            console.log(e);
+            notification.error('请求失败')
+          })
+}
+
+export default () => <Button onClick={handleRequest}>发起失败请求</Button>
+```
+
 ## API
 
 ```js
@@ -121,3 +167,7 @@ export interface Response<T = any> {
 export type RequestInterceptor = (config: Partial<RequestConfig>) => Partial<RequestConfig>
 export type ResponseInterceptor = (response: Response) => any
 ```
+
+## 其他
+
+默认提交 `content-type: application/json`

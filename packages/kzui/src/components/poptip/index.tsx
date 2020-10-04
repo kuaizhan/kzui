@@ -52,19 +52,21 @@ class PopTip extends KZUIComponent<PopTipProps, {
 
     componentDidMount() {
         document.body.addEventListener('click', this.handleBlur, false);
+        document.body.addEventListener('mouseout', this.handleMouseOut, false);
+
     }
 
     componentWillUnmount() {
         document.body.removeEventListener('click', this.handleBlur, false);
+        document.body.removeEventListener('mouseout', this.handleMouseOut, false);
     }
-
-
 
     handleBlur(e) {
       if (this.props.trigger !== 'click') {
         return;
       }
 
+      console.log(e, 'blur')
       if (this.poptip.contains(e.target)) {
         return;
       }
@@ -90,8 +92,14 @@ class PopTip extends KZUIComponent<PopTipProps, {
         });
     }
 
-    handleMouseOut() {
+    handleMouseOut(e) {
+        e.stopPropagation();
         if (this.props.trigger !== 'hover') return;
+
+        if (this.poptip.contains(e.target)) {
+          return;
+        }
+
         if (typeof this.props.visible !== 'undefined') {
           this.props.onVisibleChange(false)
           return
@@ -101,8 +109,10 @@ class PopTip extends KZUIComponent<PopTipProps, {
         });
     }
 
-    handleClick() {
+    handleClick(e) {
+        e.stopPropagation();
         if (this.props.trigger !== 'click') return;
+
         if (typeof this.props.visible !== 'undefined') {
           this.props.onVisibleChange(!this.props.visible)
           return
@@ -128,8 +138,11 @@ class PopTip extends KZUIComponent<PopTipProps, {
             visible
             // renderChildren
         } = this.props;
+
         const isManualShow = typeof visible !== 'undefined'
+
         const { popVisible } = this.state
+
         const cls = classNames(clsPrefix, className,
           `${clsPrefix}--${trigger}`, 
           `${clsPrefix}--${theme}`, {
@@ -149,12 +162,11 @@ class PopTip extends KZUIComponent<PopTipProps, {
               className={triggerCls}
               onClick={this.handleClick}
               onMouseOver={this.handleMouseOver}
-              onMouseOut={this.handleMouseOut}
             >
               {children}
             </div>
             <div className={tipCls} style={tipStyle}>
-              {tip}
+              {typeof tip === 'string' ? <p className={`${clsPrefix}__tip-text`}>{tip}</p> : tip}
             </div>
           </div>
         );

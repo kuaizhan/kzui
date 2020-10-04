@@ -1,17 +1,23 @@
-# notification 组件
+# notification 消息通知
 
-## —— notice 的调用式
+```jsx
+/**
+ * title: 调用式的消息通知组件
+ */
 
 
-* 成功提示
-## notification.success(content[, duration])
-## notification.success({ content, duration })
+import React from 'react';
+import { notification, Button } from '@kzui/core';
 
-* 警告提示
-## notification.warn(content[, duration])
-## notification.warn({ content, duration })
+export default () => {
+    return (
+          <>
+            <Button onClick={() => notification.success('success')}>success</Button>
+            <Button onClick={() => notification.warn('warn')}>warn</Button>
+            <Button onClick={() => notification.error('error')}>error</Button>
+        </>
+    )
+}
+```
 
-* 错误提示
-## notification.error(content[, duration])
-## notification.error({ content, duration })
 

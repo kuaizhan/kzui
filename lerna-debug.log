@@ -1,0 +1,23 @@
+0 silly argv { _: [ 'bootstrap' ],
+0 silly argv   lernaVersion: '3.22.1',
+0 silly argv   '$0': '/Users/chen/newKuaizhan/kzui/node_modules/.bin/lerna' }
+1 notice cli v3.22.1
+2 verbose rootPath /Users/chen/newKuaizhan/kzui
+3 silly npmConfig { registry: undefined,
+3 silly npmConfig   npmClient: 'npm',
+3 silly npmConfig   npmClientArgs: [],
+3 silly npmConfig   mutex: undefined }
+4 info Bootstrapping 4 packages
+5 verbose lifecycle preinstall
+6 silly lifecycle No script for "preinstall" in "@kzui/font", continuing
+7 silly lifecycle No script for "preinstall" in "@kzui/hooks", continuing
+8 silly lifecycle No script for "preinstall" in "@kzui/utils", continuing
+9 silly lifecycle No script for "preinstall" in "@kzui/core", continuing
+10 silly hasDependencyInstalled @kzui/core classnames
+11 silly root dependencies {}
+12 silly leaf dependencies {}
+13 info Installing external dependencies
+14 verbose actions 1 actions, concurrency 4
+15 silly npmInstallDependencies @kzui/core [ 'classnames@^2.2.5' ]
+16 silly npmInstallDependencies backup /Users/chen/newKuaizhan/kzui/packages/kzui/package.json
+17 error
