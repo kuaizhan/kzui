@@ -12,7 +12,7 @@ import { PopTip } from '@kzui/core';
 
 export default () => { 
     return (
-        <PopTip tip='this is a poptip' placement='left-top' isPopover>
+        <PopTip tip='this is a poptip' placement='bottom-left'>
             hover me
         </PopTip>
     );

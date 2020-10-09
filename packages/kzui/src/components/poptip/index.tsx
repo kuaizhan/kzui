@@ -104,6 +104,14 @@ const PopTip:React.FC<PopTipProps> = ({
         }
     }, [visible, popVisible])
 
+    function changeTipVisble(isShow) {
+        if (typeof visible !== 'undefined') {
+            onVisibleChange?.(isShow)
+            return
+        }
+        setPopVisible(isShow)
+    }
+
     function handleBlur(e) {
       if (trigger !== 'click') {
         return;
@@ -112,13 +120,7 @@ const PopTip:React.FC<PopTipProps> = ({
       if (popTipRef.current?.contains(e.target) || tipRef.current?.contains(e.target)) {
         return;
       }
-
-      if (typeof visible !== 'undefined') {
-        onVisibleChange?.(false)
-        return
-      }
-
-      setPopVisible(false)
+      changeTipVisble(false)
     }
 
     function handleMouseOver(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -126,11 +128,7 @@ const PopTip:React.FC<PopTipProps> = ({
 
         if (trigger !== 'hover') return;
 
-        if (typeof visible !== 'undefined') {
-          onVisibleChange?.(true)
-          return
-        }
-        setPopVisible(true)
+        changeTipVisble(true)
     }
 
     function handleMouseOut(e) {
@@ -140,13 +138,7 @@ const PopTip:React.FC<PopTipProps> = ({
         if (popTipRef.current?.contains(e.target) || tipRef.current?.contains(e.target)) {
           return;
         }
-  
-        if (typeof visible !== 'undefined') {
-          onVisibleChange?.(false)
-          return
-        }
-
-        setPopVisible(false)
+        changeTipVisble(false)
     }
 
     function handleClick(e) {
@@ -154,12 +146,10 @@ const PopTip:React.FC<PopTipProps> = ({
 
         if (trigger !== 'click') return;
 
-
         if (typeof visible !== 'undefined') {
           onVisibleChange?.(!visible)
           return
         }
-
         setPopVisible(popVisible => !popVisible)
         onVisible?.()
     }
@@ -237,7 +227,6 @@ const PopTip:React.FC<PopTipProps> = ({
         }
 
         setTipPosition(tipPosition)
-        console.log(arrowPos, 'arrowPos')
         setArrowPosition(arrowPos)
     }
         
