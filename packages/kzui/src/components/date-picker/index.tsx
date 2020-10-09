@@ -101,6 +101,7 @@ class DatePicker extends KZUIComponent<
           style={{ width: 'auto', zIndex: 999999 }}
           visible={expand}
           onVisibleChange={visible => this.setState({ expand: visible })}
+          placement='bottom-left'
           tip={
             <DatePanel
               value={this.state.value}

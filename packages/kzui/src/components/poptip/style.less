@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import '../base/index.less';
+@import './config.less';
 @css-prefix-poptip: ~"@{css-prefix}-poptip";
 @css-prefix-popover: ~"@{css-prefix}-popover";
 
@@ -16,225 +17,201 @@
     }
 }
 
-/* 气泡位置 */
-.poptip-placement-top {
-  top: -15px;
-  left: 50%;
-  transform: translate(-50%, -100%);
-}
-
-.poptip-placement-right {
-  left: 100%;
-  margin-left: 10px;
-  bottom: 50%;
-  transform: translateY(50%);
-}
-
-.poptip-placement-bottom {
-  top: 100%;
-  transform: translate(-50%, 15px);
-  left: ~"calc(50% + 5px)";
-}
-
-.poptip-placement-left {
-  right: 100%;
-  margin-right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* 三角位置 */
-.triangle-placement-top {
-  bottom: -5px;
-  left: 50%;
-  transform: rotate(-135deg);
-  margin-left: -5px;
-}
- 
-.triangle-placement-right {
-  left: -5px;
-  top: 50%;
-  margin-top: -5px;
-  transform: rotate(-45deg);
-}
-
-.triangle-placement-bottom {
-  top: -5px;
-  left: 50%;
-  margin-left: -10px;
-  transform: rotate(45deg);
-}
-
-.triangle-placement-left {
-  right: -5px;
-  top: 50%;
-  margin-top: -5px;
-  transform: rotate(135deg);
-  z-index: 2000;
-}
-
- 
-/* 三角形主题 */
-.triangle-theme-dark {
-  border-top: 10px solid @color-poptip-dark;
-  border-right: 10px solid transparent;
-}
- 
-.triangle-theme-light {
-  border-top: 10px solid #fff;
-  box-shadow: -7px -7px 7px rgba(0,0,0,.07);
-  border-right: 10px solid transparent;
-  z-index: 1111;
-}
-
-/* 气泡主题 */
-.poptip-theme-dark {
-  color: #fff;
-  background-color: @color-poptip-dark;
-}
- 
-.poptip-theme-light {
-  color: @color-poptip-dark;
-  background-color: #fff;
-  box-shadow: @shadow-popover;;
-}
-
-
-
 .@{css-prefix-poptip} {
-    position: relative;
     width: fit-content;
     display: inline-block;
-
-    /* 气泡默认样式 */
-    &__tip {
-      display: none;
-      box-sizing: border-box;
-
-      &::before {
-        display: none;
-        content: '';
-        box-sizing: border-box;
-      }  
-    }
-    /* 三角形默认样式 */
-    &__trigger {
-      position: relative;
-      user-select: none;
-      box-sizing: border-box;
-    }
 
     &--click {
       & .@{css-prefix-poptip}__trigger {
         cursor: pointer;
       }
     }
+}
 
-    &--dark {
-      & .@{css-prefix-poptip}__tip {
-          &:extend(.poptip-theme-dark);
+// 气泡部分
+.@{css-prefix-poptip}__wrap {
+    display: none;
+    box-sizing: border-box;
+    z-index: 1050;
+    position: absolute;
 
-          &::before {
-              &:extend(.triangle-theme-dark);
-          }
-      }
+    &--left, &--left-top, &--left-bottom {
+      flex-direction: row-reverse;
     }
 
-    &--light {
-      & .@{css-prefix-poptip}__tip {
-          &:extend(.poptip-theme-light);
+    &--top, &--top-left, &--top-right {
+      flex-direction: column-reverse;
+    }
 
-          &::before {
-              &:extend(.triangle-theme-light);
-          }
-      }
+    &--bottom, &--bottom-right, &--bottom-left {
+      flex-direction: column;
+    }
+
+    &--left, &--right, &--top, &--bottom {
+      align-items: center;
+    }
+
+    &--top-right, &--bottom-right, &--left-bottom, &--right-bottom {
+      align-items: flex-end;
+    }
+
+    &--left {
+        &:extend(.poptip-placement-left);
+    }
+  
+    &--top {
+        &:extend(.poptip-placement-top);
+    }
+  
+    &--right {
+        &:extend(.poptip-placement-right);
+    }
+
+    &--bottom {
+        &:extend(.poptip-placement-bottom);
+    }
+
+    &--bottom-right {
+        &:extend(.poptip-placement-bottom-right);
+    }
+
+    &--right-bottom {
+        &:extend(.poptip-placement-right-bottom);
+    }
+
+    &--left-bottom {
+        &:extend(.poptip-placement-left-bottom);
+    }
+
+    &--left-top {
+        &:extend(.poptip-placement-left-top);
+    }
+
+    &--top-left {
+        &:extend(.poptip-placement-top-left);
+    }
+
+    &--top-right {
+        &:extend(.poptip-placement-top-right);
+    }
+
+    // 气泡箭头
+    .@{css-prefix-poptip}__arrow {
+        display: none;
+        content: '';
+        box-sizing: border-box;
+    }
+
+    // 气泡主体
+    .@{css-prefix-poptip}__tip {
+        /* 气泡默认样式 */
+        display: none;
+        box-sizing: border-box;
     }
 
     &--visible {
-      /* 鼠标移入该元素，显示气泡、三角形 */
-      & .@{css-prefix-poptip}__tip {
-          display: block;
-          position: absolute;
-          padding: 8px 15px;
-          width: fit-content;
-          min-width: 170px;
-          border-radius: 4px;
-          box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-          z-index: 2002;
-          transition: all 1s ease;
-          line-height: 1.5;
-          box-sizing: border-box;
+        display: flex;
 
-          &-text {
-              margin: 0;
-          }
+        & .@{css-prefix-poptip}__arrow {
+            display: block;
+            content: "";
+            width: 0;
+            height: 0;
+            z-index: 1005;
 
-          &--left {
-            &:extend(.poptip-placement-left);
-          }
+            &--dark {
+                &:extend(.triangle-theme-dark);
+            }
 
-          &--top {
-            &:extend(.poptip-placement-top);
-          }
+            &--light {
+                &:extend(.triangle-theme-light);
+            }
 
-          &--right {
-            &:extend(.poptip-placement-right);
-          }
+            &--left {
+              &:extend(.triangle-placement-left);
+            }
+            &--left-bottom {
+              &:extend(.triangle-placement-left-bottom);
+            }
+            &--left-top {
+                &:extend(.triangle-placement-left-top);
+            }
 
-          &--bottom {
-            &:extend(.poptip-placement-bottom);
-          }
-      }
-      
-      // 三角形
-      & .@{css-prefix-poptip}__tip {
-        &::before {
-          display: block;
-          content: "";
-          width: 0;
-          height: 0;
-          position: absolute;
-          z-index: 1005;
-          cursor: default;
+            &--right {
+                &:extend(.triangle-placement-right);
+            }
+            &--right-top {
+                &:extend(.triangle-placement-right-top);
+            }
+            &--right-bottom {
+                &:extend(.triangle-placement-right-bottom);
+            }
+
+            &--top {
+                &:extend(.triangle-placement-top);
+            }
+            &--top-left {
+                &:extend(.triangle-placement-top-left);
+            }
+            &--top-right{
+                &:extend(.triangle-placement-top-right);
+            } 
+            
+            &--bottom {
+                &:extend(.triangle-placement-bottom);
+            }
+            &--bottom-left {
+                &:extend(.triangle-placement-bottom-left);
+            }
+            &--bottom-right {
+                &:extend(.triangle-placement-bottom-right);
+            }
         }
 
-        &--left {
-          &::before {
-            &:extend(.triangle-placement-left);
-          }
-        }
-
-        &--right {
-          &::before {
-            &:extend(.triangle-placement-right);
-          }
-        }
-
-        &--top {
-          &::before {
-            &:extend(.triangle-placement-top);
-          }
-        }
-        
-        &--bottom {
-          &::before {
-            &:extend(.triangle-placement-bottom);
-          }
-        }
-      }
-
-      &.@{css-prefix-poptip}__popover {
         & .@{css-prefix-poptip}__tip {
-          &--bottom {
-            &:extend(.poptip-placement-bottom);
-            transform: translate(0, 5px);
-            left: 0;
-          }
+            display: block;
+            overflow: hidden;
+            padding: 8px 15px;
+            width: fit-content;
+            min-width: 170px;
+            border-radius: 4px;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+            z-index: 1002;
+            transition: all 1s ease;
+            line-height: 1.5;
+            position: relative;
+
+            &--left, &--left-top, &--left-bottom {
+                right: -3px;
+            }
+        
+            &--top, &--top-left, &--top-right,  &--left-bottom, &--right-bottom {
+                bottom: -3px;
+            }
+        
+            &--right, &--right-top, &--right-bottom {
+                left: -3px;
+            }
+
+            &--bottom, &--bottom-left, &--bottom-right, &--right-top, &--left-top  {
+                top: -3px;
+            }
+        
+            &--dark {
+                &:extend(.poptip-theme-dark);
+            }
+        
+            &--light {
+                &:extend(.poptip-theme-light);
+            }
         }
 
-        & .@{css-prefix-poptip}__tip::before {
-            display: none;
+        &.@{css-prefix-poptip}__wrap-popover {
+            & .@{css-prefix-poptip}__arrow {
+                display: none;
+            }
         }
-      }
     }
 }
+
+

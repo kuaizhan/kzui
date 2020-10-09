@@ -12,7 +12,7 @@ import { PopTip } from '@kzui/core';
 
 export default () => { 
     return (
-        <PopTip tip='this is a poptip' trigger='click' placement='top'>
+        <PopTip tip='this is a poptip'>
             hover me
         </PopTip>
     );
@@ -21,7 +21,7 @@ export default () => {
 
 ```jsx
 /**
- * title: 气泡可以有四个方向
+ * title: 气泡可以有十二个方向
  * desc: 通过 `placement` 属性控制，默认为`bottom`
  */
 import React from 'react';
@@ -29,7 +29,7 @@ import { PopTip } from '@kzui/core';
 
 export default () =>{ 
     return (
-        <PopTip tip='this is a poptip' placement='right'>
+        <PopTip tip='this is a poptip' placement='bottom-right'>
             hover me
         </PopTip>
     );
@@ -64,7 +64,7 @@ import { PopTip, Button } from '@kzui/core';
 
 export default () =>{ 
     return (
-        <PopTip tip='this is a poptip' theme='light' trigger='click' placement='top'>
+        <PopTip tip='this is a poptip' theme='light' trigger='click'>
             <Button style={{ marginRight: 0 }}>点击我</Button>
         </PopTip>
     );
@@ -81,7 +81,7 @@ export default () =>{
 trigger | `string` | 触发方式 | 否 | '`hover` | `hover`, `click`|
 tip | `React.ReactNode` | 提示内容 | 否 | '' | - |
 children | `React.ReactNode` | 主体内容 | 是 | null | - |
-placement | `left` \| `right` \| `top` \| `bottom` | 提示摆放位置  | 否 | `bottom` | `left` \| `right` \| `top` \| `bottom` |
+placement | `left` \| `right` \| `top` \| `bottom` \| `left-bottom` \| `left-top` \| `right-top` \| `right-bottom` \| `bottom-left` \| `bottom-right`\| `top-left` \| `top-right` | 提示摆放位置  | 否 | `bottom` | `left` \| `right` \| `top` \| `bottom` \| `left-bottom` \| `left-top` \| `right-top` \| `right-bottom` \| `bottom-left` \| `bottom-right`\| `top-left` \| `top-right`|
 theme | `light` \| `dark` | 主题，分为深色和浅色 | 否 | `dark` | `light` \| `dark` |
 tipStyle | React.CSSProperties | 提示部分的 style | 否 | {} | - |
 visible | boolean | 使气泡显隐受控 | 否 | - | - |

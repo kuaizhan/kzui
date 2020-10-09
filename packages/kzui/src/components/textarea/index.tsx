@@ -13,6 +13,7 @@ interface TextAreaProps {
     onChange?: (e: { name?: string, value: string }) => void
     onKeyPress?: (e: Event) => void
     maxLength?: number
+    onBlur?: (e: Event) => void
     size: UiSizeType
 }
 class TextArea extends KZUIComponent<TextAreaProps> {
@@ -31,7 +32,7 @@ class TextArea extends KZUIComponent<TextAreaProps> {
 
     constructor(props) {
         super(props);
-        this.autoBind('handleChange', 'handleKeyPress');
+        this.autoBind('handleChange', 'handleKeyPress', 'handleBlur');
     }
 
     initStateFromProps(props) {
@@ -42,15 +43,15 @@ class TextArea extends KZUIComponent<TextAreaProps> {
 
     handleChange(event) {
         // this.setState({ value: event.target.value });
-        if (this.props.onChange) {
-            this.props.onChange({ value: event.target.value, name: this.props.name });
-        }
+        this.props.onChange?.({ value: event.target.value, name: this.props.name });
     }
 
     handleKeyPress(event) {
-        if (this.props.onKeyPress) {
-            this.props.onKeyPress(event);
-        }
+        this.props.onKeyPress?.(event);
+    }
+
+    handleBlur(event) {
+        this.props.onBlur?.(event)
     }
 
     render() {
@@ -86,6 +87,7 @@ class TextArea extends KZUIComponent<TextAreaProps> {
                     disabled={disabled}
                     onChange={this.handleChange}
                     onKeyDown={this.handleKeyPress}
+                    onBlur={this.handleBlur}
                     maxLength={maxLength}
                 />
                 {

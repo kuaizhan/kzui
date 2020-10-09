@@ -47,24 +47,36 @@ class Cache extends KZUIComponent<Partial<TabPanelsProps>, {
         initialChildren[defaultIndex] = Array.isArray(children) ? children[defaultIndex] : children;
         return initialChildren;
     }
-
-
     static getDerivedStateFromProps(props, state) {
         const {
             curIndex,
-            defaultIndex,
             children,
         } = props;
         const { renderChildren } = state;
-        if (curIndex !== defaultIndex) {
-            const newChildren = [...renderChildren]
-            newChildren[curIndex] = children[curIndex];
-            return {
-                renderChildren: newChildren
-            }
+ 
+        const newChildren = [...renderChildren]
+        newChildren[curIndex] = children[curIndex];
+        return {
+            renderChildren: newChildren
         }
-        return null
     }
+
+    // static getDerivedStateFromProps(props, state) {
+    //     const {
+    //         curIndex,
+    //         defaultIndex,
+    //         children,
+    //     } = props;
+    //     const { renderChildren } = state;
+    //     if (curIndex !== defaultIndex) {
+    //         const newChildren = [...renderChildren]
+    //         newChildren[curIndex] = children[curIndex];
+    //         return {
+    //             renderChildren: newChildren
+    //         }
+    //     }
+    //     return null
+    // }
 
     render() {
         const {
@@ -110,21 +122,7 @@ class TabPanels extends KZUIComponent<Partial<TabPanelsProps>> {
 
     constructor(props) {
         super(props);
-        this.state = {
-            renderChildren: this.initialChildren,
-        }
     }
-
-    get initialChildren() {
-        const {
-            defaultIndex,
-            children,
-        } = this.props;
-        const initialChildren = [];
-        initialChildren[defaultIndex] = Array.isArray(children) ? children[defaultIndex] : children;
-        return initialChildren;
-    }
-    
 
     render() {
         const {
