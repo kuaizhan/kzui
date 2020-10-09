@@ -10,12 +10,7 @@ interface PopTipProps {
   isPopover?: boolean
   tip: string | React.ReactNode // 提示内容
   trigger?: 'click' | 'hover'
-  placement?: 
-    'left' | 'right' | 'top' | 'bottom' |
-    'left-bottom' | 'left-top' |
-    'right-top' | 'right-bottom' |
-    'bottom-left' | 'bottom-right'|
-    'top-left' | 'top-right'
+  placement?: 'left' | 'right' | 'top' | 'bottom' | 'left-bottom' | 'left-top' | 'right-top' | 'right-bottom' | 'bottom-left' | 'bottom-right'| 'top-left' | 'top-right'
   theme?: 'light' | 'dark'
   tipStyle?: React.CSSProperties,
   onVisible?: () => void  // 内部控制显隐的显示后的回调

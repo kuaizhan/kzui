@@ -11,7 +11,7 @@ interface PopConfirmProps {
   onCancel?: (e?: Event) => void //取消回调,
   onBlur?: () => void //失焦回调
   title?: React.ReactNode | string
-  placement?: 'left' | 'right' | 'top' | 'bottom' | 'left-bottom' | 'right-top' | 'bottom-left' | 'bottom-right'
+  placement?: 'left' | 'right' | 'top' | 'bottom' | 'left-bottom' | 'left-top' | 'right-top' | 'right-bottom' | 'bottom-left' | 'bottom-right'| 'top-left' | 'top-right'
 }
 
 interface PopConfirmStates {
