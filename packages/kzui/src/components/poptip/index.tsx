@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import KZUIComponent, { baseDefaultProps } from '../base/component';
 import { DimensionType } from '../../../types/base';
+import Portal from '../portal';
 import './style.less';
 
 interface PopTipProps {
@@ -9,168 +10,285 @@ interface PopTipProps {
   isPopover?: boolean
   tip: string | React.ReactNode // 提示内容
   trigger?: 'click' | 'hover'
-  placement?: 'left' | 'right' | 'top' | 'bottom'
+  placement?: 
+    'left' | 'right' | 'top' | 'bottom' |
+    'left-bottom' | 'left-top' |
+    'right-top' | 'right-bottom' |
+    'bottom-left' | 'bottom-right'|
+    'top-left' | 'top-right'
   theme?: 'light' | 'dark'
   tipStyle?: React.CSSProperties,
   onVisible?: () => void  // 内部控制显隐的显示后的回调
   visible?: boolean // 用于手动控制气泡显隐
   onVisibleChange?: (visible: boolean) => void // 用于手动控制气泡显隐
+  className?: string
+  style?: React.CSSProperties
+  tipClassName?: string
+  destroyOnHide?: boolean
+  onTriggerClick?: (e: Event) => void
+  onTriggerHover?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
-class PopTip extends KZUIComponent<PopTipProps, {
-  popVisible: boolean
-}> {
-    poptip: HTMLElement;
+const PopTip:React.FC<PopTipProps> = ({
+    // dimensions =  {},
+    children = null,
+    className = '',
+    style = {},
+    isPopover = false,
+    trigger = 'hover',
+    placement = 'bottom',
+    theme = 'dark',
+    onVisible = () => null,
+    tipStyle = {},
+    visible,
+    onVisibleChange,
+    tipClassName = '',
+    tip,
+    destroyOnHide = false,
+    onTriggerClick,
+    onTriggerHover
+}) =>  {
+    const [popVisible, setPopVisible] = useState(visible || false)
+    const [tipPosition, setTipPosition] = useState<React.CSSProperties>({})
+    const [arrowPosition, setArrowPosition] = useState<React.CSSProperties>({})
 
-    static defaultProps = {
-        ...baseDefaultProps,
-        dimensions: {},
-        children: null,
-        className: '',
-        style: {},
-        isPopover: false,
-        trigger: 'hover',
-        placement: 'bottom',
-        theme: 'dark',
-        onVisible: () => null,
-        tipStyle: {},
-    };
+    const popTipRef = useRef()
+    const tipRef = useRef()
+    const triggerRef = useRef()
 
+    const setPopTipRef = el => popTipRef.current = el
+    const setTipRef = el => tipRef.current = el
+    const setTriggerRef = el => triggerRef.current = el
+
+    const clsPrefix = 'kui-poptip'
+    const isManualShow = typeof visible !== 'undefined'
+    const cls = classNames(clsPrefix, className,
+        `${clsPrefix}--${trigger}`);
+    const triggerCls = classNames(`${clsPrefix}__trigger`)
     
-    constructor(props) {
-      super(props)
-      this.autoBind(
-        'handleBlur',
-        'handleClick',
-        'handleMouseOver',
-        'handleMouseOut',
-      );
-      this.state = {
-        popVisible: this.props.visible || false
+    const tipWrapper = classNames(
+        `${clsPrefix}__wrap`,
+        tipClassName,
+        {
+        [`${clsPrefix}__wrap--visible`]: isManualShow ? visible : popVisible,
+        [`${clsPrefix}__wrap-popover`]: isPopover,
+        [`${clsPrefix}__wrap--${placement}`]: placement, 
+        }
+    )
+    const tipCls = classNames(
+        `${clsPrefix}__tip--${theme}`,
+        `${clsPrefix}__tip`,
+        `${clsPrefix}__tip--${placement}`
+    )
+    const arrowCls = classNames(
+        `${clsPrefix}__arrow`,
+        {[`${clsPrefix}__arrow--${placement}`]: !isPopover},
+        `${clsPrefix}__arrow--${theme}`,
+    )
+
+    useEffect(() => {
+        adjustTipPosition();
+    }, [])
+
+    useEffect(() => {
+        adjustTipPosition();
+
+        document.body.addEventListener('click', handleBlur, false);
+        document.body.addEventListener('mouseout', handleMouseOut, false);
+        window.addEventListener('resize', adjustTipPosition)
+
+        return () => {
+            document.body.removeEventListener('click', handleBlur, false);
+            document.body.removeEventListener('mouseout', handleMouseOut, false);
+            window.removeEventListener('resize', adjustTipPosition)
+        }
+    }, [visible, popVisible])
+
+    function handleBlur(e) {
+      if (trigger !== 'click') {
+        return;
       }
-    }
-
-    componentDidMount() {
-        document.body.addEventListener('click', this.handleBlur, false);
-        document.body.addEventListener('mouseout', this.handleMouseOut, false);
-
-    }
-
-    componentWillUnmount() {
-        document.body.removeEventListener('click', this.handleBlur, false);
-        document.body.removeEventListener('mouseout', this.handleMouseOut, false);
-    }
-
-    handleBlur(e) {
-      if (this.props.trigger !== 'click') {
+      // @ts-ignore
+      if (popTipRef.current?.contains(e.target) || tipRef.current?.contains(e.target)) {
         return;
       }
 
-      console.log(e, 'blur')
-      if (this.poptip.contains(e.target)) {
-        return;
-      }
-
-      if (typeof this.props.visible !== 'undefined') {
-        this.props.onVisibleChange(false)
+      if (typeof visible !== 'undefined') {
+        onVisibleChange?.(false)
         return
       }
 
-      this.setState({
-        popVisible: false,
-      });
+      setPopVisible(false)
     }
 
-    handleMouseOver() {
-        if (this.props.trigger !== 'hover') return;
-        if (typeof this.props.visible !== 'undefined') {
-          this.props.onVisibleChange(!this.props.visible)
+    function handleMouseOver(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+        onTriggerHover?.(e)
+
+        if (trigger !== 'hover') return;
+
+        if (typeof visible !== 'undefined') {
+          onVisibleChange?.(true)
           return
         }
-        this.setState({
-          popVisible: true,
-        });
+        setPopVisible(true)
     }
 
-    handleMouseOut(e) {
-        e.stopPropagation();
-        if (this.props.trigger !== 'hover') return;
+    function handleMouseOut(e) {
+        if (trigger !== 'hover') return;
 
-        if (this.poptip.contains(e.target)) {
+        // @ts-ignore
+        if (popTipRef.current?.contains(e.target) || tipRef.current?.contains(e.target)) {
           return;
         }
-
-        if (typeof this.props.visible !== 'undefined') {
-          this.props.onVisibleChange(false)
+  
+        if (typeof visible !== 'undefined') {
+          onVisibleChange?.(false)
           return
         }
-        this.setState({
-          popVisible: false,
-        });
+
+        setPopVisible(false)
     }
 
-    handleClick(e) {
-        e.stopPropagation();
-        if (this.props.trigger !== 'click') return;
+    function handleClick(e) {
+        onTriggerClick?.(e)
 
-        if (typeof this.props.visible !== 'undefined') {
-          this.props.onVisibleChange(!this.props.visible)
+        if (trigger !== 'click') return;
+
+
+        if (typeof visible !== 'undefined') {
+          onVisibleChange?.(!visible)
           return
         }
-        this.setState({
-          popVisible: !this.state.popVisible,
-        }, () => {
-          this.props.onVisible?.()
-        });
+
+        setPopVisible(popVisible => !popVisible)
+        onVisible?.()
     }
-    render() {
-        const clsPrefix = 'kui-poptip'
-        const {
-            className,
-            style,
-            children,
-            tip,
-            placement,
-            theme,
-            trigger,
-            tipStyle,
-            isPopover,
-            visible
-            // renderChildren
-        } = this.props;
 
-        const isManualShow = typeof visible !== 'undefined'
+    function getTriggerPosition() {
+        // @ts-ignore
+        const positions = triggerRef.current?.getBoundingClientRect() || {}
+        return positions
+    }
 
-        const { popVisible } = this.state
+    function adjustTipPosition() {
+        const triggerPosition = getTriggerPosition()
+        let tipPosition: React.CSSProperties = {}
+        const leftRelateToPage = triggerPosition.left + window.scrollX
+        const topRelateToPage = triggerPosition.top + window.scrollY
+        const arrowWidth = 5
 
-        const cls = classNames(clsPrefix, className,
-          `${clsPrefix}--${trigger}`, 
-          `${clsPrefix}--${theme}`, {
-          [`${clsPrefix}__popover`]: isPopover,
-          [`${clsPrefix}--visible`]: isManualShow ? visible : popVisible
-        });
-        const triggerCls = classNames(`${clsPrefix}__trigger--${placement}`, `${clsPrefix}__trigger`)
-        const tipCls = classNames(`${clsPrefix}__tip--${placement}`, `${clsPrefix}__tip`)
+        let arrowPos: React.CSSProperties = { position: 'relative'}
 
-        return (
-          <div
+        switch (placement) {
+            case 'left':
+                tipPosition.left = leftRelateToPage - arrowWidth
+                tipPosition.top = topRelateToPage + triggerPosition.height / 2
+                break;
+            case 'right':
+                tipPosition.top = topRelateToPage + triggerPosition.height / 2
+                tipPosition.left = leftRelateToPage + triggerPosition.width + arrowWidth
+                break;
+            case 'top':
+                tipPosition.top = topRelateToPage - arrowWidth
+                tipPosition.left = leftRelateToPage + triggerPosition.width / 2
+                break;
+            case 'bottom': 
+                tipPosition.top = topRelateToPage + triggerPosition.height + arrowWidth
+                tipPosition.left = leftRelateToPage + triggerPosition.width / 2
+                break;
+            case 'bottom-left':
+                tipPosition.top = topRelateToPage + triggerPosition.height + arrowWidth
+                tipPosition.left = leftRelateToPage
+                arrowPos.left = (triggerPosition.width) / 2
+                break;
+            case 'bottom-right':
+                tipPosition.top = topRelateToPage + triggerPosition.height + arrowWidth
+                tipPosition.left = leftRelateToPage + triggerPosition.width
+                arrowPos.left = (triggerPosition.width) / 2 * -1
+                break;
+            case 'right-top':
+                tipPosition.top = topRelateToPage
+                tipPosition.left = leftRelateToPage + triggerPosition.width + arrowWidth
+                arrowPos.top = triggerPosition.height / 2
+                break;
+            case 'right-bottom': 
+                tipPosition.top = topRelateToPage + triggerPosition.height
+                tipPosition.left = leftRelateToPage + triggerPosition.width + arrowWidth
+                break;
+            case 'left-bottom':
+                tipPosition.left = leftRelateToPage - arrowWidth
+                tipPosition.top = topRelateToPage + triggerPosition.height
+                break;
+            case 'left-top': 
+                tipPosition.left = leftRelateToPage - arrowWidth
+                tipPosition.top = topRelateToPage
+                arrowPos.top = triggerPosition.height / 2
+                break;
+            case 'top-left':
+                tipPosition.top = topRelateToPage - arrowWidth
+                tipPosition.left = leftRelateToPage
+                arrowPos.left = (triggerPosition.width) / 2
+                break;
+            case 'top-right':
+                tipPosition.top = topRelateToPage - arrowWidth
+                tipPosition.left = leftRelateToPage + triggerPosition.width
+                arrowPos.left = (triggerPosition.width) / 2 * -1
+                break;
+        }
+
+        setTipPosition(tipPosition)
+        console.log(arrowPos, 'arrowPos')
+        setArrowPosition(arrowPos)
+    }
+        
+    const container = document.querySelector('#root')
+
+    return (
+        <div
             className={cls}
             style={style}
-            ref={this.storeRef('poptip')}
-          >
+            ref={setPopTipRef}
+            tabIndex={0}
+        >
             <div
-              className={triggerCls}
-              onClick={this.handleClick}
-              onMouseOver={this.handleMouseOver}
+                className={triggerCls}
+                onClick={handleClick}
+                onMouseOver={handleMouseOver}
+                ref={setTriggerRef}
             >
-              {children}
+                {children}
             </div>
-            <div className={tipCls} style={tipStyle}>
-              {typeof tip === 'string' ? <p className={`${clsPrefix}__tip-text`}>{tip}</p> : tip}
-            </div>
-          </div>
-        );
-    }
+            {
+                destroyOnHide ? (
+                    (
+                        (visible || popVisible) ? (
+                            <Portal
+                                container={container}
+                            >
+                                <div className={tipWrapper} style={{...tipPosition}} ref={setTipRef}>
+                                    <div className={arrowCls}></div>
+                                    <div className={tipCls} style={{...tipStyle}}>{tip}</div>
+                                </div>
+                            </Portal>
+                        ) : null
+                    )
+                ) : (
+                    <Portal
+                        container={container}
+                    >
+                        <div className={tipWrapper} style={{...tipPosition}} ref={setTipRef}>
+                            <div className={arrowCls} style={arrowPosition}></div>
+                            <div className={tipCls} style={{...tipStyle}}>
+                                <div className={`${clsPrefix}__tip-inner`}>
+                                    {tip}
+                                </div>
+                            </div>
+                        </div>
+                    </Portal>
+                )
+            }
+        </div>
+    );
 }
 
 export default PopTip;

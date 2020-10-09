@@ -1,7 +1,28 @@
 # NumberInput - 数字输入框
 
+- NumberInput
 
-* NumberInput
+```jsx
+/**
+ * title: 数字输入框
+ * desc: 设置最大值。
+ */
+
+import React, { useState } from "react";
+import NumberInput from "./index.tsx";
+
+export default () => {
+    const [value, setValue] = useState(0)
+    return (
+        <NumberInput
+            value={value}
+            onChange={e => setValue(e.value)}
+            max={10}
+            min={null}
+        />
+    )
+}
+```
 
 ## 属性
 
@@ -21,3 +42,4 @@ max | number | 可输入最大值 | 否 | 100 | - |
 属性名 | 类型 | 描述 | 是否必须 | 默认值 | 事件处理函数说明 |  
 ------- | ------- | ------- | ------- | ------- | ------- |
 onChange | func | 值改变事件 | 否 | null | 回调函数第一个参数为一个包含 name, value属性的对象 |
+onBlur | func | 失焦回调事件 | 否 | null | 回调函数参数为event |

@@ -46,6 +46,7 @@ export default defineConfig({
         title: '表单组件',
         children: [
           'components/input/index.md',
+          'components/number-input/index.md',
           'components/checkbox/index.md',
           'components/date-picker/index.md',
           'components/date-range-picker/index.md',

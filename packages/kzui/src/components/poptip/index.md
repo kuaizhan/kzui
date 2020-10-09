@@ -12,7 +12,7 @@ import { PopTip } from '@kzui/core';
 
 export default () => { 
     return (
-        <PopTip tip='this is a poptip' trigger='click' placement='top'>
+        <PopTip tip='this is a poptip' placement='left-top' isPopover>
             hover me
         </PopTip>
     );
@@ -64,7 +64,7 @@ import { PopTip, Button } from '@kzui/core';
 
 export default () =>{ 
     return (
-        <PopTip tip='this is a poptip' theme='light' trigger='click' placement='top'>
+        <PopTip tip='this is a poptip' theme='light' trigger='click'>
             <Button style={{ marginRight: 0 }}>点击我</Button>
         </PopTip>
     );

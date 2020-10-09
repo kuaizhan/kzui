@@ -73,6 +73,7 @@
     "website": "npx dumi dev"
   },
   "dependencies": {
+    "@kzui/utils": "^0.2.4",
     "@testing-library/jest-dom": "^5.9.0",
     "@testing-library/react": "^10.2.1",
     "classnames": "^2.2.6",

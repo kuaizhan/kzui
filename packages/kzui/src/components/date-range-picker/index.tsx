@@ -201,8 +201,9 @@ class DateRangePicker extends KZUIComponent<
           theme='light'
           trigger='click'
           className={`${clsPrefix}-date-range-panel`}
+          placement='bottom-left'
           tip={
-            <React.Fragment>
+            <div className={cls}>
               <header className={`${clsPrefix}-date-header`}>
                 <span>开始日期 ~ 结束日期</span>
               </header>
@@ -234,7 +235,7 @@ class DateRangePicker extends KZUIComponent<
                   refresh={refresh}
                 />
               </div>
-            </React.Fragment>
+            </div>
           }
         >
           <div className={`${clsPrefix}-date-display`}>

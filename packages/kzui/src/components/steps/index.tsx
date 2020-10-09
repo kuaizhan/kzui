@@ -24,6 +24,7 @@ interface StepItemProps {
   style: React.CSSProperties,
   children: React.ReactNode,
   index: number,
+  passed: boolean
 }
 
 const clsPrefix = 'kui-step-nav';
@@ -54,11 +55,13 @@ const StepItem: React.FC<Partial<StepItemProps>> = (
         children: null,
         index: 0,
         style: {},
+        passed: false
     }
 ) => {
-    const { className, style, cur, index, children } = props;
+    const { className, style, cur, index, children, passed } = props;
     const cls = classNames(`${clsPrefix}-nav-item`, {
         [`${clsPrefix}-cur`]: cur,
+        [`${clsPrefix}-item--passed` ]: passed
     }, className);
 
     return (
@@ -93,6 +96,7 @@ class Steps extends KZUIComponent<StepProps> {
                                     key={`step-nav-item${index}`}
                                     index={index + 1}
                                     cur={curStep === index + 1}
+                                    passed={curStep > (index + 1)}
                                 >
                                     {text}
                                 </StepItem>
