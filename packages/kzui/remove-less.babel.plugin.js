@@ -1,3 +1,4 @@
+// build时移除 import .less 
 module.exports = function({ types: t }) {
   return {
     visitor: {
