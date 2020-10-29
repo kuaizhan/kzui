@@ -32,54 +32,35 @@ class NumberInput extends KZUIComponent<
     disabled: false,
     error: false,
     name: '',
-    value: 0,
+    value: undefined,
     step: 1,
     min: 0,
-    max: 100,
+    max: undefined,
     onChange: null,
     placeholder: ''
   }
   constructor (props) {
     super(props)
-    this.autoBind('onIncrease', 'onDecrease', 'setValue', 'handleInput', 'handleBlur')
-  }
-
-  initStateFromProps (props) {
-    const { value } = props
-        if (typeof value == 'undefined') {
-            return {
-                value
-            }
-        }
-        if (typeof value !== 'undefined' && isNaN(value) && value !== 0) {
-            notification.error('请输入数字')
-            return {
-                value: undefined,
-            };
-        }
-
-    return {
-      value: Number(value),
-    }
+    this.autoBind('onIncrease', 'onDecrease', 'setValue', 'handleInput', 'handleBlur');
+    this.state = {
+      value: undefined
+    };
   }
 
   setValue (value) {
     const { min, max } = this.props;
-    if (typeof value !== 'undefined' && isNaN(value) && value !== 0) {
-        notification.error('请输入数字')
-        this.setState({
-            value: null,
-        });
-        if (this.props.onChange) {
-            this.props.onChange({ value: null, name: this.props.name });
-        }
-        return 
-    }
 
-    if ((min && value >= this.props.min) || (max && value <= this.props.max)) {
-      this.setState({
-        value
-      })
+    /* TODO  FIX BUG 
+    * 如果最小值 | 最大值 突变，value无法一步满足要求怎么办
+    */
+
+    if ((min ? Number(value) >= min : true) && (max ? Number(value) <= max : true)) {
+      setTimeout(() => {
+        this.setState({
+          value: Number(value)
+        })
+      }, 0)
+      
       if (this.props.onChange) {
         this.props.onChange({ value: Number(value), name: this.props.name })
       }
@@ -88,12 +69,12 @@ class NumberInput extends KZUIComponent<
 
   onIncrease (e) {
     e.stopPropagation()
-    this.setValue(this.state.value + this.props.step)
+    this.setValue(Number(this.state.value || 0) + this.props.step)
   }
 
   onDecrease (e) {
     e.stopPropagation()
-    this.setValue(this.state.value - this.props.step)
+    this.setValue(Number(this.state.value || 0) - this.props.step)
   }
 
   handleInput(e) {
@@ -101,6 +82,17 @@ class NumberInput extends KZUIComponent<
   }
 
   handleBlur(e) {
+      const { value } = e.target;
+      if (typeof value !== 'undefined' && isNaN(value) && value !== 0) {
+          notification.error('请输入数字')
+          this.setState({
+              value: null,
+          });
+          if (this.props.onChange) {
+              this.props.onChange({ value: null, name: this.props.name });
+          }
+          return 
+      }
       this.props.onBlur?.(e)
   }
 
@@ -116,7 +108,6 @@ class NumberInput extends KZUIComponent<
       min,
       max,
       step,
-      onBlur,
       placeholder
     } = this.props
     const cls = classNames(clsPrefix, className, {
@@ -129,7 +120,7 @@ class NumberInput extends KZUIComponent<
     const noDecrease = (typeof min === 'number') ? Number(this.state.value) - step < Number(min) : false;
     const noIncreaseCls = noIncrease ? `${clsPrefix}-disabled` : ''
     const noDecreaseCls = noDecrease ? `${clsPrefix}-disabled` : ''
-    console.log(noDecrease, min)
+  
     return (
       <div
         className={cls}

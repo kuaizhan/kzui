@@ -16,6 +16,8 @@ export interface OptionType {
   selected?: boolean
   disabled?: boolean
   className?: string
+  isLabel?: boolean
+  isSubOption?: boolean
 }
 
 export type OptionListType = Array<OptionType>

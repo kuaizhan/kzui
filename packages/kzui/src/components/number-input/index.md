@@ -5,7 +5,7 @@
 ```jsx
 /**
  * title: 数字输入框
- * desc: 设置最大值。
+ * desc: 设置最大值为100。
  */
 
 import React, { useState } from "react";
@@ -17,7 +17,7 @@ export default () => {
         <NumberInput
             value={value}
             onChange={e => setValue(e.value)}
-            max={10}
+            max={100}
             min={null}
         />
     )
