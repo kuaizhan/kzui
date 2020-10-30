@@ -21,6 +21,7 @@ interface RichTextEditorProps {
   onBlur?: (e:any, range: Range) => void
   onMouseUp?: (e: any) => void
   lineBreak?: 1 | 0 // 0 Crtl+Enter换行， 1 Enter换行
+  onFocus?: any
 }
 
 const getCurrentRange = () => {
@@ -81,7 +82,7 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
 
   constructor(props) {
     super(props);
-    this.autoBind('handleBlur', 'commander', 'handleChange', 'handleKeyPress', 'handlePaste');
+    this.autoBind('handleBlur', 'commander', 'handleChange', 'handleKeyPress', 'handlePaste', 'handleFocus');
   }
 
   shouldComponentUpdate(nextProps) {
@@ -164,14 +165,19 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
     this.props.onPaste(e);
   }
 
+  handleFocus(e) {
+    this.props.onFocus(e);
+  }
+
   render() {
-    const className = this.classname('richtext-editor', { [this.props.className]: true });
+    const className = this.classname('richtext-editor');
 
     return (
       <div
         className={className}
         ref={this.storeRef('wrp')}
         contentEditable
+        onFocus={this.handleFocus}
         dangerouslySetInnerHTML={{ __html: this.props.value }}
         onBlur={this.handleBlur}
         onInput={this.handleChange}
