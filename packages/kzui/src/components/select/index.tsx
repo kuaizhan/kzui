@@ -195,7 +195,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                     visible={expand}
                     onVisibleChange={visible => this.setState({ expand: visible })}
                     trigger='click'
-                    tipStyle={{ padding: 0, width }}
+                    tipStyle={{ padding: 0, width, minWidth: 'auto' }}
                     theme='light'
                     style={{ width: "100%", height: '100%' }}
                     tip={(
