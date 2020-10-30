@@ -6,40 +6,46 @@ import './index.less';
 const clsPrefix = 'kui-form';
 
 interface FormProps {
-  children?: React.ReactNode //表单行节点
+    children?: React.ReactNode //表单行节点
 }
 
 interface FormRowProps {
     children?: React.ReactNode //表单行节点
     label?: string | React.ReactNode // 表单行label	
-    labelStyle?: React.CSSProperties,
+    labelStyle?: React.CSSProperties
     isRequired?: boolean
+    alignItems?: 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch'
+    extra?: any
 }
 
 class FormRow extends KZUIComponent<FormRowProps> {
 
     static defaultProps = {
-      ...baseDefaultProps,
-      children: null,
-      label: '',
-      labelStyle: {},
-      isRequired: false,
+        ...baseDefaultProps,
+        children: null,
+        label: '',
+        labelStyle: {},
+        isRequired: false,
     }
 
     render() {
-        const { labelStyle, style, isRequired, className } = this.props;
+        const { labelStyle, style, isRequired, className, alignItems, extra } = this.props;
         const labelCls = isRequired ? 'required-label' : '';
         const rowCls = classNames(`${clsPrefix}-row`, className, {
             [`${clsPrefix}-row--required`]: isRequired,
         });
+        const _style = alignItems ? { alignItems, ...style } : style
         return (
-            <div className={rowCls} style={style}>
+            <div className={rowCls} style={_style}>
                 {this.props.label ?
-                  (<label className={labelCls} style={labelStyle}>{this.props.label}</label>) :
-                  null
+                    (<label className={labelCls} style={labelStyle}>{this.props.label}</label>) :
+                    null
                 }
                 <div className={`${clsPrefix}-cell`}>
                     {this.props.children}
+                    {
+                        extra ? <p className='form-item-description'>{extra}</p> : null
+                    }
                 </div>
             </div>
         );
@@ -49,8 +55,8 @@ class FormRow extends KZUIComponent<FormRowProps> {
 class Form extends KZUIComponent<FormProps> {
 
     static defaultProps = {
-      ...baseDefaultProps,
-      children: null,
+        ...baseDefaultProps,
+        children: null,
     }
 
     render() {

@@ -18,7 +18,7 @@ interface onChangeArg {
 interface SelectProps {
   defaultText?: string //默认显示文案,
   name?: string //表单项名,
-  value?: string //当前值,
+  value?: any //当前值,
   size?: UiSizeType //大小,
   options?: OptionListType //可选项,
   disabled?: boolean //是否禁用
@@ -33,7 +33,7 @@ interface SelectProps {
 }
 
 interface SelectStates {
-  value?: string
+  value?: any
   expand?: boolean
   selectedText?: React.ReactNode
 }
