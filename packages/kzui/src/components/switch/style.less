@@ -41,16 +41,17 @@
             height: 18px;
             border-radius: 9px;
             background-color: white;
+            transform: translateX(0);
+            transition: transform 0.2s linear;
         }
     }
 
     &-checked {
         .@{css-prefix-switch}-indicator {
-            background-color: rgba(151,209,102,1);
+            background-color:#4886ff;
 
             &::before {
-                left: auto;
-                right: 2px;
+                transform: translateX(22px);
             }
         }
     }

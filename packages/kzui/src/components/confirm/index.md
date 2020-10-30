@@ -45,3 +45,4 @@ export default () => {
 | --------- | ---- | ------------ | -------- | ------ | ---- |
 | onConfirm | func | 确认按钮回调 | 否       | null   | -      |
 | onCancel  | func | 取消按钮回调 | 否       | null   | -      |
+| onClose   | func | 关闭键回调  |  否       | null   | -      |

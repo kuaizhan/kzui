@@ -3,7 +3,8 @@
 @css-prefix-select: ~"@{css-prefix}-select";
 
 .@{css-prefix-select} {
-
+    padding: 0;
+    
     &-with-search {
         .@{css-prefix-select}-search-input {
             margin: 5px;
@@ -13,13 +14,14 @@
     &-options-panel {
         .overlay-style;
         display: none;
-        position: absolute;
+        position: relative;
         left: 0;
         width: 100%;
         z-index: 9999;
     }
+}
 
-    & .options-panel-visible {
-        display: block;
-    }
+
+.@{css-prefix-select}-search-input {
+    margin: 5px;
 }

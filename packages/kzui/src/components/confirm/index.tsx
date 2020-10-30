@@ -11,6 +11,7 @@ interface ConfirmProps {
   cancelText?: string //取消按钮文案
   onConfirm?: () => void //确认按钮回调,
   onCancel?: () => void //取消按钮回调
+  onClose?: () => void // 关闭 icon 回调
 }
 
 
@@ -27,7 +28,7 @@ class Confirm extends KZUIComponent<ConfirmProps> {
 
     constructor(props) {
         super(props);
-        this.autoBind('handleCancelClick', 'handleConfirmClick');
+        this.autoBind('handleCancelClick', 'handleConfirmClick', 'handleClose');
     }
 
     handleCancelClick() {
@@ -42,6 +43,16 @@ class Confirm extends KZUIComponent<ConfirmProps> {
         }
     }
 
+    handleClose() {
+        if (this.props.onClose) {
+            this.props.onClose();
+            return;
+        }
+        if (this.props.onCancel) {
+            this.props.onCancel();
+        }
+    }
+
     render() {
         const clsPrefix = 'kui-confirm';
         const { className, style, hide, confirmText, cancelText, children } = this.props;
@@ -50,7 +61,7 @@ class Confirm extends KZUIComponent<ConfirmProps> {
             <Dialog portal hide={hide} style={style} className={cls}>
                 <i
                     className={`${clsPrefix}-close-btn kz-e-close-4`}
-                    onClick={this.handleCancelClick}
+                    onClick={this.handleClose}
                     role="button"
                     tabIndex={0}
                 />

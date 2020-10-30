@@ -28,6 +28,7 @@ export default () => (
     disabled={false}
     size= ''
     onExpand={() => console.log('onExpand')}
+    hasMore
   />
 );
 ```
