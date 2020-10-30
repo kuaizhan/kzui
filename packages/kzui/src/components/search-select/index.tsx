@@ -248,7 +248,7 @@ class SearchSelect extends KZUIComponent<SearchSelectProps, SearchSelectStates> 
                     visible={expand}
                     onVisibleChange={visible => this.setState({ expand: visible })}
                     trigger='click'
-                    tipStyle={{ padding: 0, width: panelWidth }}
+                    tipStyle={{ padding: 0, width: panelWidth, minWidth: 'auto'  }}
                     theme='light'
                     style={{ width: "100%", height: '100%' }}
                     tip={(
