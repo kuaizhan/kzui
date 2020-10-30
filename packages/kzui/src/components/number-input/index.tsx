@@ -47,6 +47,24 @@ class NumberInput extends KZUIComponent<
     };
   }
 
+  initStateFromProps(props) {
+      const { value } = props
+      if (typeof value == 'undefined') {
+          return {
+              value
+          }
+      }
+      if (typeof value !== 'undefined' && isNaN(value) && value !== 0) {
+          notification.error('请输入数字')
+          return {
+              value: undefined,
+          };
+      }
+      return {
+          value: Number(value),
+      };
+  }
+
   setValue (value) {
     const { min, max } = this.props;
 
