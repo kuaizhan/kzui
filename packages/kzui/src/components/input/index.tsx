@@ -16,6 +16,7 @@ interface InputProps {
   control?: boolean
   onKeyPress?: (e: any, value: string) => void
   onBlur?: (e: { value: string; name?: string }) => void
+  onFocus?: () => void
   style?: React.CSSProperties
   className?: string
 }
@@ -34,7 +35,8 @@ const Input: React.FC<InputProps> = ({
   onKeyPress,
   onBlur,
   style,
-  className
+  className,
+  onFocus
 }) => {
   const [stateValue, setStateValue] = useState(value)
   const [prevValue, setPrevValue] = useState(value)
@@ -83,6 +85,7 @@ const Input: React.FC<InputProps> = ({
       onChange={handleChange}
       onKeyDown={handleKeyPress}
       style={style}
+      onFocus={onFocus}
     />
   )
 }

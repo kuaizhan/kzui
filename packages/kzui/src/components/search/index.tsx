@@ -18,6 +18,7 @@ interface SearchProps {
   hasMore?: boolean //是否下拉加载更多
   onChange?: (e: {name: string, value: string}) => void //回调函数第一个参数为一个包含 name, value属性的对象
   onSearch?: (e: {name: string, value: string}) => void //回调函数第一个参数为一个包含 name, value属性的对象
+  onFocus?: () => void
 }
 
 class Search extends KZUIComponent<SearchProps, {
@@ -33,6 +34,7 @@ class Search extends KZUIComponent<SearchProps, {
       value: '',
       onChange: null,
       onSearch: null,
+      onFocus: null
     }
 
     constructor(props: SearchProps) {
@@ -92,6 +94,7 @@ class Search extends KZUIComponent<SearchProps, {
                     placeholder={placeholder}
                     onChange={this.handleChange}
                     onKeyPress={this.handleKeyPress}
+                    onFocus={this.props.onFocus}
                 />
                 <Icon type="search" onClick={this.handleSearch} />
             </div>

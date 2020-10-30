@@ -70,10 +70,6 @@ export default () =>{
     );
 }
 ```
-
-
-
-
 ## 属性
 
 属性名 | 类型 | 描述 | 是否必须 | 默认值 | 字典 |  
@@ -85,9 +81,16 @@ placement | `left` \| `right` \| `top` \| `bottom` \| `left-bottom` \| `left-top
 theme | `light` \| `dark` | 主题，分为深色和浅色 | 否 | `dark` | `light` \| `dark` |
 tipStyle | React.CSSProperties | 提示部分的 style | 否 | {} | - |
 visible | boolean | 使气泡显隐受控 | 否 | - | - |
+className | string | 样式类名 | 否 | '' | - |
+style | React.CSSProperties | 组件最外层元素 style | {} | - |
+tipClassName | 气泡部分样式类名 | '' | - |
+destroyOnHide | boolean | 隐藏时销毁 | false | - |
 
 ## 事件
 
 属性名 | 类型 | 描述 | 是否必须 | 默认值 | 字典 |  
 ------- | ------- | ------- | ------- | ------- | ------- |
 onVisible | () => void  | 内部控制显隐的显示后的回调 | 否 | null | - |
+onVisibleChange | (visible: boolean) => void | 用于手动控制气泡显隐 | 否 | null | - |
+onTriggerHover | (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void | hover触发元素时回调 | 否 | null | - |
+onTriggerClick | (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void | 点击触发元素时回调 | 否 | null | - |

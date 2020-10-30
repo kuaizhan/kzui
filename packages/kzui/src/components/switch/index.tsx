@@ -32,6 +32,10 @@ class Switch extends KZUIComponent<Partial<SwitchProps>, {
     }
 
     handleClick() {
+        if (this.props.disabled) {
+            return;
+        }
+
         const on = !this.state.on;
         this.setState({
             on,

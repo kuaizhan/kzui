@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import KZUIComponent, { baseDefaultProps } from '../base/component';
 import Icon from '../icon/index';
 import EventBlackHole from '../event-black-hole/index';
+import PopTip from '../poptip/index';
 import Option from './Option';
 import './style.less';
 import { UiSizeType, OptionListType } from '../../../types/base';
@@ -28,12 +29,13 @@ interface SelectProps {
   onLoadMore?: () => void,
   popoverCls?: string,
   popoverStyle?: React.CSSProperties,
+  initialExpand: boolean,
 }
 
 interface SelectStates {
   value?: string
   expand?: boolean
-  selectedText?: string
+  selectedText?: React.ReactNode
 }
 
 class Select extends KZUIComponent<SelectProps, SelectStates> {
@@ -84,7 +86,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
     componentWillReceiveProps(nextProps) {
         const { options, value } = nextProps
         const selected = options.filter(item => (item.value === value))
-        let newSelectedText = this.state.selectedText
+        let newSelectedText = this.props.defaultText
         if (selected.length > 0) {
             newSelectedText = selected[0].text;
         }
@@ -140,6 +142,9 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
         const { onLoadMore } = this.props;
         if (onLoadMore === null) return;
         this.wrp.focus();
+        setTimeout(() => {
+            this.setState({ expand: true });
+        }, 50)
         onLoadMore();
     }
 
@@ -174,6 +179,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
             };
         }
 
+        const width = this.wrp && this.wrp.offsetWidth;
         return (
             <div
                 ref={this.storeRef('wrp')}
@@ -182,44 +188,58 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                 role="button"
                 tabIndex={0}
                 onClick={this.handleClick}
-                onBlur={this.handleBlur}
             >
-                <div className={`${clsPrefix}-selected`}>
-                    <div className={`${clsPrefix}-indicator`}>
-                        <Icon type="nav-pull-down" />
+                <PopTip
+                    isPopover
+                    placement='bottom-left'
+                    visible={expand}
+                    onVisibleChange={visible => this.setState({ expand: visible })}
+                    trigger='click'
+                    tipStyle={{ padding: 0, width }}
+                    theme='light'
+                    style={{ width: "100%", height: '100%' }}
+                    tip={(
+                        <div className={optionsPanelCls} style={{ ...finalPopoverStyle, display: expand ? 'block' : 'none', width }}>
+                            <div className={`${clsPrefix}-options`}>
+                                {this.props.options.map((option, index) => (
+                                    <Option
+                                        key={`option-${index}`}
+                                        value={option.value}
+                                        selected={this.state.value === option.value}
+                                        onClick={this.handleSelect}
+                                        disabled={option.disabled}
+                                        isLabel={option.isLabel}
+                                        isSubOption={option.isSubOption}
+                                    >
+                                        {option.text}
+                                    </Option>
+                                ))}
+                                { this.props.options.length === 0 && (
+                                    <Option style={{ color: '#9b9b9b' }}>
+                                        没有内容
+                                    </Option>
+                                )}
+                                {
+                                    this.props.hasMore ?
+                                        <Option
+                                            style={{ color: '#9b9b9b' }}
+                                            value=""
+                                            onClick={this.handleLoadMore}
+                                        >
+                                            点击加载更多
+                                        </Option> : null
+                                }
+                            </div>
+                        </div>
+                    )}
+                >
+                    <div className={`${clsPrefix}-selected`}  tabIndex={0} onBlur={this.handleBlur}>
+                        <div className={`${clsPrefix}-selected-title`}>{this.state.selectedText}</div>
+                        <div className={`${clsPrefix}-indicator`}>
+                            <Icon type="nav-pull-down" />
+                        </div>
                     </div>
-                    <div className={`${clsPrefix}-selected-title`}>{this.state.selectedText}</div>
-                </div>
-                <div className={optionsPanelCls} style={{ ...finalPopoverStyle, display: expand ? 'block' : 'none' }}>
-                    <EventBlackHole className={`${clsPrefix}-options`} captureEvents={['click']}>
-                        {this.props.options.map((option, index) => (
-                            <Option
-                                key={`option-${index}`}
-                                value={option.value}
-                                selected={this.state.value === option.value}
-                                onClick={this.handleSelect}
-                                disabled={option.disabled}
-                            >
-                                {option.text}
-                            </Option>
-                        ))}
-                        { this.props.options.length === 0 && (
-                            <Option style={{ color: '#9b9b9b' }}>
-                                没有内容
-                            </Option>
-                        )}
-                        {
-                            this.props.hasMore ?
-                                <Option
-                                    style={{ color: '#9b9b9b' }}
-                                    value=""
-                                    onClick={this.handleLoadMore}
-                                >
-                                    点击加载更多
-                                </Option> : null
-                        }
-                    </EventBlackHole>
-                </div>
+                </PopTip>
             </div>
         );
     }
