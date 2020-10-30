@@ -44,11 +44,16 @@
     .input-style;
     position: relative;
     user-select: none;
-    width: @select-default-width;
+    width: @select-default-width;   
 
     &-selected {
         cursor: pointer;
-
+        padding: 0 10px;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        box-sizing: border-box;
+    
         &-title {
             margin-right: 13px;
             overflow: hidden;
@@ -57,48 +62,50 @@
             white-space: nowrap;
         }
         .@{css-prefix-select}-indicator {
-            float: right;
-            display: inline-block;
+            // float: right;
+            // display: inline-block;
             transition: 0.3s all;
             transform: rotate(0);
             font-size: 12px;
         }
     }
-
+    
     &-expand {
         .@{css-prefix-select}-selected {
             color: @color-theme;
         }
-
+    
         .@{css-prefix-select}-indicator {
             transform: rotate(180deg);
         }
     }
-
+    
     &-options-panel {
         .overlay-style;
         display: none;
-        position: absolute;
+        // position: absolute;
         overflow-y: auto;
         width: 100%;
-        left: 0;
+        // left: 0;
     }
-
+    
     &-option-list {
         max-height: 180px;
         overflow-y: auto;
     }
-
+    
     &-disabled {
         cursor: not-allowed;
         color: #d9d9d9;
-
+    
         .@{css-prefix-select}-selected {
             cursor: not-allowed;
         }
-
+    
         .@{css-prefix-select}-indicator {
             color: #dedede;
         }
     }
 }
+
+

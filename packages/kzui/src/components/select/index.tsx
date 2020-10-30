@@ -29,12 +29,13 @@ interface SelectProps {
   onLoadMore?: () => void,
   popoverCls?: string,
   popoverStyle?: React.CSSProperties,
+  initialExpand: boolean,
 }
 
 interface SelectStates {
   value?: string
   expand?: boolean
-  selectedText?: string
+  selectedText?: React.ReactNode
 }
 
 class Select extends KZUIComponent<SelectProps, SelectStates> {
@@ -85,7 +86,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
     componentWillReceiveProps(nextProps) {
         const { options, value } = nextProps
         const selected = options.filter(item => (item.value === value))
-        let newSelectedText = this.state.selectedText
+        let newSelectedText = this.props.defaultText
         if (selected.length > 0) {
             newSelectedText = selected[0].text;
         }
@@ -233,10 +234,10 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                     )}
                 >
                     <div className={`${clsPrefix}-selected`}  tabIndex={0} onBlur={this.handleBlur}>
+                        <div className={`${clsPrefix}-selected-title`}>{this.state.selectedText}</div>
                         <div className={`${clsPrefix}-indicator`}>
                             <Icon type="nav-pull-down" />
                         </div>
-                        <div className={`${clsPrefix}-selected-title`}>{this.state.selectedText}</div>
                     </div>
                 </PopTip>
             </div>

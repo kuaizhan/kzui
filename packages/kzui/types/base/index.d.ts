@@ -12,7 +12,7 @@ export interface CallBackArg<T = string> {
 }
 export interface OptionType {
   value: valueType,
-  text: string | React.ReactNode,
+  text: React.ReactNode,
   selected?: boolean
   disabled?: boolean
   className?: string
