@@ -1,7 +1,7 @@
 /**
  * @description 文件选择组件
  */
-import React from 'react'
+import * as React from 'react'
 import classNames from 'classnames'
 import KZUIComponent, { baseDefaultProps } from '../base/component'
 import Icon from '../icon/index'

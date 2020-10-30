@@ -18,7 +18,7 @@ export interface ColumnsProps {
 }
 
 export interface PaginationProps {
-  pageSize: number
+  pageSize?: number
   totalPage: number //总页数,
   curPage: number //当前页面，页面从 1 开始
   onPageChange?: (value: number) => void //页码改变事件

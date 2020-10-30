@@ -4,7 +4,7 @@ import { ReactElement } from "react"
 export type UiSizeType = 'tiny' | 'normal' | 'small' | 'large' | 'huge'
 
 // 表单值类型
-export type valueType = string | number | boolean
+export type valueType = string | number
 
 export interface CallBackArg<T = string> {
   name: string,

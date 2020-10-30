@@ -53,7 +53,9 @@ import PopTip from './components/poptip/index'
 // build时移除
 import './style/index.less';
 
+
 export {
+    Input as TextInput,
     Tab,
     TabBar,
     KZUIComponent,

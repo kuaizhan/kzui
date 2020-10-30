@@ -10,7 +10,7 @@ interface InputProps {
   disabled?: boolean //是否禁用输入,
   error?: boolean //是否输入验证出错,
   name?: string //表单输入项名,
-  value?: string //初始值,
+  value?: any //初始值,
   placeholder?: string //输入默认显示
   onChange?: (e: { value: string; name?: string }) => void
   control?: boolean

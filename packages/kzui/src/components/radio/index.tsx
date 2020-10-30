@@ -6,19 +6,19 @@ import { OptionListType, valueType } from '../../../types/base';
 import { Radio, RadioProps } from './Radio';
 
 interface RadioGroupProps<T = valueType> {
-  disabled?: boolean
-  name?: string
-  value?: T
-  options: OptionListType
-  onChange?: (value: { value: T, name: string}) => void
-  layout?: 'vertical' | 'horizontal'
-  type?: 'radio' | 'button'
-  radioStyle?: React.CSSProperties
+    disabled?: boolean
+    name?: string
+    value?: T
+    options: OptionListType
+    onChange?: (value: { value: T, name: string }) => void
+    layout?: 'vertical' | 'horizontal'
+    type?: 'radio' | 'button'
+    radioStyle?: React.CSSProperties
 }
 
 // 完全受控
-class RadioGroup extends KZUIComponent<RadioGroupProps> {
-    
+class RadioGroup<T> extends KZUIComponent<RadioGroupProps<T>> {
+
     static defaultProps = {
         ...baseDefaultProps,
         disabled: false,
@@ -41,7 +41,7 @@ class RadioGroup extends KZUIComponent<RadioGroupProps> {
             return;
         }
         if (this.props.onChange) {
-            this.props.onChange({ value, name: this.props.name });
+            this.props.onChange({ value: (value as any), name: this.props.name });
         }
     }
 
@@ -61,6 +61,7 @@ class RadioGroup extends KZUIComponent<RadioGroupProps> {
                             key={`radio-${option.value}`}
                             value={option.value}
                             onClick={this.handleClick}
+                            // @ts-ignore
                             checked={option.value === this.props.value}
                             type={type}
                             style={radioStyle}
