@@ -7,7 +7,7 @@ let promptInst = null;
 
 interface PromptType {
   alert: (msg?: string | React.ReactNode, onConfirm?: () => void, buttonText?: string) => void,
-  confirm: (msg?: string | React.ReactNode, onConfirm?: () => void, onCancel?: () => void, confirmText?: string, cancelText?: string) => void
+  confirm: (msg?: string | React.ReactNode, onConfirm?: () => void, onCancel?: () => void, confirmText?: string, cancelText?: string, onClose?: () => void) => void
 }
 
 const getPromptInst = () => {
@@ -39,7 +39,7 @@ const prompt: PromptType  = {
             })
         })
     },
-    confirm: (msg, onConfirm, onCancel, confirmText, cancelText) => {
+    confirm: (msg, onConfirm, onCancel, confirmText, cancelText, onClose) => {
         getPromptInst().then(() => {
             promptInst.add({
                 msg,
@@ -48,6 +48,7 @@ const prompt: PromptType  = {
                 type: 'confirm',
                 confirmText,
                 cancelText,
+                onClose
             })
         })
     },

@@ -14,6 +14,7 @@ interface PromptItemProps {
   cancelText?: string,
   key: number,
   buttonText?: string
+  onClose?: () => void
 }
 
 interface PromptContainerStates {
@@ -77,7 +78,8 @@ class PromptContainer extends KZUIComponent<{}, PromptContainerStates> {
                         confirmText,
                         cancelText,
                         key,
-                        buttonText
+                        buttonText,
+                        onClose
                     }, index) => {
                         switch (type) {
                         case 'alert': {
@@ -114,6 +116,7 @@ class PromptContainer extends KZUIComponent<{}, PromptContainerStates> {
                                     }}
                                     confirmText={confirmText}
                                     cancelText={cancelText}
+                                    onClose={onClose}
                                 >
                                     {msg}
                                 </Confirm>
