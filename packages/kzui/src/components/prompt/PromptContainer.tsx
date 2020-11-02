@@ -116,7 +116,12 @@ class PromptContainer extends KZUIComponent<{}, PromptContainerStates> {
                                     }}
                                     confirmText={confirmText}
                                     cancelText={cancelText}
-                                    onClose={onClose}
+                                    onClose={() => {
+                                        if (onClose) {
+                                            onClose();
+                                        }
+                                        this.remove(key);
+                                    }}
                                 >
                                     {msg}
                                 </Confirm>
