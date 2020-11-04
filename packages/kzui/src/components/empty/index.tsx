@@ -16,7 +16,8 @@ const Empty: React.FC<EmptyProps> = ({
   emptyImg,
   className = '',
   style = {},
-  imgStyle = {}
+  imgStyle = {},
+  children
 }) => {
   const cls = classNames(clsPrefix, className)
   return (
@@ -25,6 +26,7 @@ const Empty: React.FC<EmptyProps> = ({
         <img src={emptyImg} alt="" style={imgStyle} />
       </div>
       <p className={`${clsPrefix}__text`}>{emptyText || '暂无数据'}</p>
+      {children}
     </div>
   );
 }
