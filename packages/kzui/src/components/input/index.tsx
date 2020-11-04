@@ -19,6 +19,7 @@ interface InputProps {
   onFocus?: () => void
   style?: React.CSSProperties
   className?: string
+  ref?: React.RefObject<HTMLInputElement>
 }
 
 const clsPrefix = 'kui-input'
@@ -36,7 +37,8 @@ const Input: React.FC<InputProps> = ({
   onBlur,
   style,
   className,
-  onFocus
+  onFocus,
+  ref,
 }) => {
   const [stateValue, setStateValue] = useState(value)
   const [prevValue, setPrevValue] = useState(value)
@@ -86,6 +88,7 @@ const Input: React.FC<InputProps> = ({
       onKeyDown={handleKeyPress}
       style={style}
       onFocus={onFocus}
+      ref={ref}
     />
   )
 }
