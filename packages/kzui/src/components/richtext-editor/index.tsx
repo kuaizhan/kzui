@@ -170,7 +170,8 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
   }
 
   render() {
-    const className = this.classname('richtext-editor');
+    const className = this.classname('richtext-editor', { [this.props.className]: true });
+    const { style } = this.props;
 
     return (
       <div
@@ -184,6 +185,7 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
         onPaste={this.handlePaste}
         onKeyPress={this.handleKeyPress}
         onMouseUp={this.props.onMouseUp}
+        style={style}
       />
     );
   }
