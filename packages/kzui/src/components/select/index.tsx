@@ -233,7 +233,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                         </div>
                     )}
                 >
-                    <div className={`${clsPrefix}-selected`}  tabIndex={0} onBlur={this.handleBlur}>
+                    <div className={`${clsPrefix}-selected`} tabIndex={0} onBlur={this.handleBlur}>
                         <div className={`${clsPrefix}-selected-title`}>{this.state.selectedText}</div>
                         <div className={`${clsPrefix}-indicator`}>
                             <Icon type="nav-pull-down" />
