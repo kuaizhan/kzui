@@ -38,25 +38,29 @@ const Input: React.FC<InputProps> = ({
   className,
   onFocus
 }) => {
-  const [stateValue, setStateValue] = useState(value)
+  // control 为显性受控属性，如果有 value 或 onChange 则认为是受控
+  const _control = control || !!(value || onChange)
+
+  const [stateValue, setStateValue] = useState(value) // 非受控
   const [prevValue, setPrevValue] = useState(value)
 
-  if (prevValue !== value && control) {
+  if (prevValue !== value && _control) {
     // 如果受控，stateValue 是用不上的
     setPrevValue(value)
   }
 
-  const realValue = control ? value || '' : stateValue
+  const realValue = _control ? value || '' : stateValue
 
   function handleKeyPress (event: React.KeyboardEvent<HTMLInputElement>) {
     onKeyPress?.(event, realValue)
   }
+
   function handleBlur (event: React.FocusEvent<HTMLInputElement>) {
     onBlur?.({ value: event.target.value, name })
   }
 
   function handleChange (e: React.ChangeEvent<HTMLInputElement>) {
-    if (!control) {
+    if (!_control) {
       setStateValue(e.target.value)
     }
 
@@ -97,7 +101,7 @@ Input.defaultProps = {
   error: false,
   name: '',
   placeholder: '',
-  control: true,
+  control: false,
   onBlur: null,
   onChange: null,
   onKeyPress: null,
