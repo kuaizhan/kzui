@@ -19,7 +19,7 @@ interface InputProps {
   onFocus?: () => void
   style?: React.CSSProperties
   className?: string
-  ref?: React.RefObject<HTMLInputElement>
+  setRef?: (ref: HTMLInputElement) => void
 }
 
 const clsPrefix = 'kui-input'
@@ -38,7 +38,7 @@ const Input: React.FC<InputProps> = ({
   style,
   className,
   onFocus,
-  ref,
+  setRef,
 }) => {
   // control 为显性受控属性，如果有 value 或 onChange 则认为是受控
   const _control = control || !!(value || onChange)
@@ -92,7 +92,9 @@ const Input: React.FC<InputProps> = ({
       onKeyDown={handleKeyPress}
       style={style}
       onFocus={onFocus}
-      ref={ref}
+      ref={el => {
+        setRef?.(el)
+      }}
     />
   )
 }
