@@ -47,7 +47,7 @@ const TableBody:React.FC<{
                         } else {
                             return (
                                 <td
-                                    style={{ textAlign: item.align, ...style }}
+                                    style={{ textAlign: item.align, ...style, width: item.width }}
                                     className={`${clsPrefix}__body-cell`}
                                     key={item.key}
                                 >
@@ -58,7 +58,7 @@ const TableBody:React.FC<{
                     } 
                     return (
                         <td
-                            style={{ textAlign: item.align, ...style }}
+                            style={{ textAlign: item.align, ...style, width: item.width }}
                             className={`${clsPrefix}__body-cell`}
                             key={item.key}
                         >
