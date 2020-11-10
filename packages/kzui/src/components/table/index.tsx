@@ -38,7 +38,7 @@ export interface TableProps {
     children?: React.ReactNode // 替换掉整个表格内容
     onRowClick?: (arg?: any) => void // 行点击事件
     showHeader?: boolean
-    strip?: boolean // 是否使用隔行样式
+    stripe?: boolean // 是否使用隔行样式
 }
 
 const clsPrefix = 'kui-new-table';
@@ -56,7 +56,7 @@ const Table:React.FC<TableProps> = ({
     children = null,
     onRowClick = () => null,
     showHeader = true,
-    strip = false
+    stripe = false
 }) => {
     const { pageSize, curPage } = typeof pagination === 'object' && pagination;
     const _dataSource = (
@@ -92,7 +92,7 @@ const Table:React.FC<TableProps> = ({
                           dataSource={_dataSource}
                           style={bodyStyle}
                           onRowClick={onRowClick}
-                          strip={strip}
+                          stripe={stripe}
                         />
                     </>
                 )}

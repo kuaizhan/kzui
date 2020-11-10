@@ -9,19 +9,19 @@ const TableBody:React.FC<{
   onRowClick?: TableProps['onRowClick'],
   columns: TableProps['columns']
   style?: React.CSSProperties
-  strip?: boolean
+  stripe?: boolean
 }> = ({
   dataSource = [],
   columns = [],
   style = {},
   onRowClick = () => null,
-  strip,
+  stripe,
 }) => {
   return (
     <tbody className={`${clsPrefix}__body`}>
         {dataSource.length ? dataSource.map((data, index) => (
             <tr
-                className={classNames(`${clsPrefix}__body-row`, { [`${clsPrefix}__body-row--stripped`]: strip })}
+                className={classNames(`${clsPrefix}__body-row`, { [`${clsPrefix}__body-row--stripped`]: stripe })}
                 onClick={() => {
                     onRowClick(data);
                 }}
