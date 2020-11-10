@@ -46,6 +46,7 @@ export interface RequestConfig extends BaseRequestConfig {
 export interface Response<T = any> {
   data: T
   status: number
+  [propName: string]: any;
   // statusText: string
   // headers: {}
 }

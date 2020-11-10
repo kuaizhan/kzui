@@ -34,6 +34,7 @@ export default defineConfig({
       {
         title: '提示(显示)组件',
         children: [
+          'components/alert/index.md',
           'components/notification/index.md',
           'components/confirm/index.md',
           'components/dialog/index.md',
