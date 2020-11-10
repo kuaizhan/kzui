@@ -10,7 +10,7 @@ interface InputProps {
   disabled?: boolean //是否禁用输入,
   error?: boolean //是否输入验证出错,
   name?: string //表单输入项名,
-  value?: any //初始值,
+  value?: string | null | undefined // 受控的值,
   placeholder?: string //输入默认显示
   onChange?: (e: { value: string; name?: string }) => void
   control?: boolean
@@ -40,18 +40,25 @@ const Input: React.FC<InputProps> = ({
   onFocus,
   setRef,
 }) => {
-  // control 为显性受控属性，如果有 value 或 onChange 则认为是受控
-  const _control = control || !!(value || onChange)
+  // REVIEW:control 为显性受控属性，如果有 value 或 onChange 则认为是受控 
+  const _control = control || (typeof value !== 'undefined')
 
-  const [stateValue, setStateValue] = useState(value) // 非受控
-  const [prevValue, setPrevValue] = useState(value)
+  const [stateValue, setStateValue] = useState(fixedControlValue(value))
+  const [prevValue, setPrevValue] = useState(fixedControlValue(value)) // 有啥用？
 
-  if (prevValue !== value && _control) {
-    // 如果受控，stateValue 是用不上的
-    setPrevValue(value)
+  if (prevValue !== fixedControlValue(value) && _control) {
+    // 如果受控，不用 stateValue
+    setPrevValue(fixedControlValue(value))
   }
 
-  const realValue = _control ? value || '' : stateValue
+  const realValue = _control ? fixedControlValue(value) : stateValue
+
+  function fixedControlValue(value) {
+    if (typeof value === 'undefined' || value === null) {
+      return '';
+    }
+    return value;
+  }
 
   function handleKeyPress (event: React.KeyboardEvent<HTMLInputElement>) {
     onKeyPress?.(event, realValue)
@@ -64,6 +71,10 @@ const Input: React.FC<InputProps> = ({
   function handleChange (e: React.ChangeEvent<HTMLInputElement>) {
     if (!_control) {
       setStateValue(e.target.value)
+    }
+
+    if (_control && stateValue) {
+      setStateValue('')
     }
 
     onChange?.({ value: e.target.value, name })
@@ -112,7 +123,6 @@ Input.defaultProps = {
   onKeyPress: null,
   style: {},
   className: '',
-  value: ''
 }
 
 export default Input
