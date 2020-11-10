@@ -3,6 +3,22 @@
 
 * Input
 
+```jsx
+/**
+ * title: 输入框。
+ * desc: 基础用法。
+ */
+
+import React, {useState} from 'react';
+import { Input } from '@kzui/core';
+
+export default () => {
+    return (
+        <Input />
+    )
+}
+```
+
 ## 属性
 
 属性名 | 类型 | 描述 | 是否必须 | 默认值 | 字典 |  
