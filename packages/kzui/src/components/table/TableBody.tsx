@@ -32,7 +32,7 @@ const TableBody:React.FC<{
                             item.render({ data, item: data[item.dataIndex], index }) :
                             item.render({ data, index });
                         // @ts-ignore
-                        const { children, props } = component
+                        const { children, props } = component || {}
                         if (children !== undefined) {
                             if (props?.colSpan === 0) {
                                 return null;
@@ -42,7 +42,7 @@ const TableBody:React.FC<{
                                     style={{ textAlign: item.align, ...style, width: item.width }}
                                     className={`${clsPrefix}__body-cell`}
                                     key={item.key}
-                                    {...props}
+                                    {...props || {}}
                                 >
                                     {children}
                                 </td>
