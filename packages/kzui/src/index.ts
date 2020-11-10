@@ -49,9 +49,13 @@ import prompt from './components/prompt/index';
 import notification from './components/notification/index';
 import Empty from './components/empty/index';
 import PopTip from './components/poptip/index'
+
+// build时移除
 import './style/index.less';
 
+
 export {
+    Input as TextInput,
     Tab,
     TabBar,
     KZUIComponent,

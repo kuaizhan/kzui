@@ -23,10 +23,10 @@ export interface OptionType {
 export type OptionListType = Array<OptionType>
 
 export interface DimensionType {
-  left: valueType,
-  top: valueType,
-  width: valueType,
-  height: valueType
+  left?: string | number,
+  top?: string | number,
+  width?: string | number,
+  height?: string | number
 }
 
 export type SingleChildNode = number | string | ReactElement | Function

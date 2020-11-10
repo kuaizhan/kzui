@@ -4,8 +4,7 @@
 
 * 安装依赖
 ```shell
-npm install @kzui/utils
-npm install
+npm run bootstrap
 ```
 
 * 启动开发服务器：

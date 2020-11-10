@@ -5,7 +5,7 @@ import { UiSizeType } from '../../../types/base'
 import './style.less'
 
 interface InputProps {
-  type?: 'text' | 'password' //输入类型,
+  type?: 'text' | 'password' | 'number' //输入类型,
   size?: UiSizeType //按钮尺寸,
   disabled?: boolean //是否禁用输入,
   error?: boolean //是否输入验证出错,
@@ -19,6 +19,7 @@ interface InputProps {
   onFocus?: () => void
   style?: React.CSSProperties
   className?: string
+  setRef?: (ref: HTMLInputElement) => void
 }
 
 const clsPrefix = 'kui-input'
@@ -36,7 +37,8 @@ const Input: React.FC<InputProps> = ({
   onBlur,
   style,
   className,
-  onFocus
+  onFocus,
+  setRef,
 }) => {
   // REVIEW:control 为显性受控属性，如果有 value 或 onChange 则认为是受控 
   const _control = control || (typeof value !== 'undefined')
@@ -101,6 +103,9 @@ const Input: React.FC<InputProps> = ({
       onKeyDown={handleKeyPress}
       style={style}
       onFocus={onFocus}
+      ref={el => {
+        setRef?.(el)
+      }}
     />
   )
 }

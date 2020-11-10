@@ -18,7 +18,7 @@ interface onChangeArg {
 interface SelectProps {
   defaultText?: string //默认显示文案,
   name?: string //表单项名,
-  value?: string //当前值,
+  value?: any //当前值,
   size?: UiSizeType //大小,
   options?: OptionListType //可选项,
   disabled?: boolean //是否禁用
@@ -33,7 +33,7 @@ interface SelectProps {
 }
 
 interface SelectStates {
-  value?: string
+  value?: any
   expand?: boolean
   selectedText?: React.ReactNode
 }
@@ -195,7 +195,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                     visible={expand}
                     onVisibleChange={visible => this.setState({ expand: visible })}
                     trigger='click'
-                    tipStyle={{ padding: 0, width }}
+                    tipStyle={{ padding: 0, width, minWidth: 'auto' }}
                     theme='light'
                     style={{ width: "100%", height: '100%' }}
                     tip={(
@@ -233,7 +233,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                         </div>
                     )}
                 >
-                    <div className={`${clsPrefix}-selected`}  tabIndex={0} onBlur={this.handleBlur}>
+                    <div className={`${clsPrefix}-selected`} tabIndex={0} onBlur={this.handleBlur}>
                         <div className={`${clsPrefix}-selected-title`}>{this.state.selectedText}</div>
                         <div className={`${clsPrefix}-indicator`}>
                             <Icon type="nav-pull-down" />

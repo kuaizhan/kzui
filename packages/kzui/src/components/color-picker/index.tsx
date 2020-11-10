@@ -181,7 +181,7 @@ class ColorPicker extends KZUIComponent<
       [`${clsPrefix}-hide`]: hide,
     }, className);
 
-    const colorPickerStyle = {
+    const colorPickerStyle:React.CSSProperties = {
       ...dimensions,
       ...style,
     };

@@ -7,14 +7,23 @@
  */
 
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Select, notification } from '@kzui/core';
-
-const options = [
+const initOptions = [
 	{value: 1, text: '1'},
 	{value: 2, text: '2'},
 	{value: 3, text: '3'}
 ]
+
+const [options, setOptions] = useState(initOptions)
+
+function handleLoadMore() {
+  const newOptions = [...initOptions, {
+    value: 4,
+    text: '4',
+  }]
+  setOptions(newOptions)
+}
 
 export default () => (
   <Select 
@@ -25,6 +34,8 @@ export default () => (
     disabled={false}
     size='large'
     onExpand={() => console.log('onExpand')}
+    hasMore
+    onLoadMore={handleLoadMore}
   />
 );
 ```

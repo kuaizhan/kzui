@@ -13,8 +13,9 @@ interface TextAreaProps {
     onChange?: (e: { name?: string, value: string }) => void
     onKeyPress?: (e: Event) => void
     maxLength?: number
-    onBlur?: (e: Event) => void
+    onBlur?: (e: { name?: string, value: string }) => void
     size: UiSizeType
+    rows?: number
 }
 class TextArea extends KZUIComponent<TextAreaProps> {
     static defaultProps = {
@@ -28,6 +29,7 @@ class TextArea extends KZUIComponent<TextAreaProps> {
       error: false,
       size: 'normal',
       disabled: false,
+      rows: undefined
     }
 
     constructor(props) {
@@ -51,7 +53,7 @@ class TextArea extends KZUIComponent<TextAreaProps> {
     }
 
     handleBlur(event) {
-        this.props.onBlur?.(event)
+        this.props.onBlur?.({ value: event.target.value, name: this.props.name })
     }
 
     render() {
@@ -63,11 +65,9 @@ class TextArea extends KZUIComponent<TextAreaProps> {
             maxLength,
             size,
             disabled,
-            value
+            value,
+            rows
         } = this.props;
-        // const {
-        //     value,
-        // } = this.state;
         const error = this.props.error || (maxLength && value && value.length > maxLength);
 
         const cls = classNames(clsPrefix, className);
@@ -89,6 +89,7 @@ class TextArea extends KZUIComponent<TextAreaProps> {
                     onKeyDown={this.handleKeyPress}
                     onBlur={this.handleBlur}
                     maxLength={maxLength}
+                    rows={rows}
                 />
                 {
                     maxLength > 0 ?

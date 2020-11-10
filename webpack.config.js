@@ -1,5 +1,4 @@
 const path = require('path');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const lessConfig = require('./config/less');
 const assertsRules = require('./config/asserts');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -18,12 +17,6 @@ module.exports = {
     },
 
     plugins: [
-        // new HtmlWebpackPlugin({
-        //     filename: 'index.html',
-        //     template: 'website/public/index.html',
-        //     hash: false,
-        //     inject: true,
-        // }),
         new ExtractTextPlugin("styles.css"),
     ],
 
