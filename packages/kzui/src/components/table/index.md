@@ -2,6 +2,69 @@
 
 ## 属性
 
+```jsx
+/**
+ * title: 基本用法
+ */
+import React from 'react';
+import { Table } from '@kzui/core';
+export default () => {
+    const pseudoColumns = [
+        {
+            title: 'col 1',
+            key: 'col 1',
+            dataIndex: 'one',
+        },
+        {
+            title: 'col 2',
+            key: 'col 2',
+            dataIndex: 'two',
+        },
+        {
+            title: 'col 3',
+            key: 'col 3',
+            dataIndex: 'three',
+        }
+    ];
+
+    const pseudoDataSource = [
+        {
+            one: '1',
+            two: '1',
+            three: '2'
+        },
+        {
+            one: '2',
+            two: '2',
+            three: '3'
+        },
+        {
+            one: '3',
+            two: '3',
+            three: '4'
+        },
+        {
+            one: '3',
+            two: '3',
+            three: '4'
+        },
+        {
+            one: '3',
+            two: '3',
+            three: '4'
+        }
+    ];
+    return (
+        <Table
+            columns={pseudoColumns}
+            dataSource={pseudoDataSource}s
+            strip
+        />
+    );
+}
+
+```
+
 ## Table
 
 | 参数 | 说明 | 类型 | 默认值 | 是否必须 |

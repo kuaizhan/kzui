@@ -40,6 +40,7 @@ export default defineConfig({
           'components/spin/index.md',
           'components/poptip/index.md',
           'components/pop-confirm/index.md',
+          'components/table/index.md',
         ],
       },
       {
