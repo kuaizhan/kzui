@@ -1,7 +1,21 @@
 # Search - 搜索组件
 
+```jsx
+/**
+ * title: 搜索选择框
+ * desc: 搜索选择框的基本使用方法
+ */
 
-* Search
+import React from 'react';
+import { Search } from '@kzui/core'
+
+export default () => (
+    <Search
+        onChange={e => console.log(e)}
+    />
+)
+```
+
 
 ## 属性
 

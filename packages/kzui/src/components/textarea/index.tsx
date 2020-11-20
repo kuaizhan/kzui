@@ -13,7 +13,7 @@ interface TextAreaProps {
     onChange?: (e: { name?: string, value: string }) => void
     onKeyPress?: (e: Event) => void
     maxLength?: number
-    onBlur?: (e: Event) => void
+    onBlur?: (e: { name?: string, value: string }) => void
     size: UiSizeType
     rows?: number
 }
@@ -53,7 +53,7 @@ class TextArea extends KZUIComponent<TextAreaProps> {
     }
 
     handleBlur(event) {
-        this.props.onBlur?.(event)
+        this.props.onBlur?.({ value: event.target.value, name: this.props.name })
     }
 
     render() {

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import { TableProps } from './index';
 
 const clsPrefix = 'kui-new-table';
@@ -8,17 +9,19 @@ const TableBody:React.FC<{
   onRowClick?: TableProps['onRowClick'],
   columns: TableProps['columns']
   style?: React.CSSProperties
+  stripe?: boolean
 }> = ({
   dataSource = [],
   columns = [],
   style = {},
-  onRowClick = () => null
+  onRowClick = () => null,
+  stripe,
 }) => {
   return (
     <tbody className={`${clsPrefix}__body`}>
         {dataSource.length ? dataSource.map((data, index) => (
             <tr
-                className={`${clsPrefix}__body-row`}
+                className={classNames(`${clsPrefix}__body-row`, { [`${clsPrefix}__body-row--stripped`]: stripe })}
                 onClick={() => {
                     onRowClick(data);
                 }}
@@ -29,7 +32,7 @@ const TableBody:React.FC<{
                             item.render({ data, item: data[item.dataIndex], index }) :
                             item.render({ data, index });
                         // @ts-ignore
-                        const { children, props } = component
+                        const { children, props } = component || {}
                         if (children !== undefined) {
                             if (props?.colSpan === 0) {
                                 return null;
@@ -39,7 +42,7 @@ const TableBody:React.FC<{
                                     style={{ textAlign: item.align, ...style, width: item.width }}
                                     className={`${clsPrefix}__body-cell`}
                                     key={item.key}
-                                    {...props}
+                                    {...props || {}}
                                 >
                                     {children}
                                 </td>
@@ -47,7 +50,7 @@ const TableBody:React.FC<{
                         } else {
                             return (
                                 <td
-                                    style={{ textAlign: item.align, ...style }}
+                                    style={{ textAlign: item.align, ...style, width: item.width }}
                                     className={`${clsPrefix}__body-cell`}
                                     key={item.key}
                                 >
@@ -58,7 +61,7 @@ const TableBody:React.FC<{
                     } 
                     return (
                         <td
-                            style={{ textAlign: item.align, ...style }}
+                            style={{ textAlign: item.align, ...style, width: item.width }}
                             className={`${clsPrefix}__body-cell`}
                             key={item.key}
                         >

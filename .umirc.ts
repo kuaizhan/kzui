@@ -41,6 +41,7 @@ export default defineConfig({
           'components/spin/index.md',
           'components/poptip/index.md',
           'components/pop-confirm/index.md',
+          'components/table/index.md',
         ],
       },
       {
@@ -55,6 +56,7 @@ export default defineConfig({
           'components/form/index.md',
           'components/select/index.md',
           'components/search-select/index.md',
+          'components/search/index.md'
         ],
       },
     ],
