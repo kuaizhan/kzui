@@ -8,7 +8,7 @@ interface ResponseData<T> {
   setData: (newData: T) => void 
   error: any
   loading: boolean
-  run: () => Promise<void>
+  run: (values?: any) => Promise<void>
 }
 
 interface HookOptions {
