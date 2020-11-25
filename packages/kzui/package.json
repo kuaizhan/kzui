@@ -4,8 +4,8 @@
   },
   "dependencies": {
     "@kzui/font": "^0.3.1",
-    "@kzui/hooks": "^0.3.0",
-    "@kzui/utils": "^0.3.0",
+    "@kzui/hooks": "^0.3.27",
+    "@kzui/utils": "^0.3.27",
     "classnames": "^2.2.5"
   },
   "peerDependencies": {
@@ -31,7 +31,7 @@
     "test": "jest",
     "tsc": "tsc -p tsconfig.build.json"
   },
-  "version": "0.3.26",
+  "version": "0.3.27",
   "typings": "dist/index.d.ts",
   "gitHead": "3300cb5c45522e6dd1c97e4db8626bc2bdc672c1"
 }
