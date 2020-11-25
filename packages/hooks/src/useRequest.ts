@@ -68,7 +68,7 @@ const request = new Request((config) => {
 
 export const createUseRequest = <T>(request: any) => {
   function useRequest<T>(
-    requestConfigOrUrl: Partial<RequestConfig> | string,
+    requestConfigOrUrlOrConfigGen: Partial<RequestConfig> | string | ((...args: any[]) => Partial<RequestConfig>),
     options?: HookOptions,
     dep?: any[]
   ): ResponseData<T> {
@@ -83,13 +83,13 @@ export const createUseRequest = <T>(request: any) => {
       shouldExecute = options.shouldExecute
     }
 
-    if (typeof requestConfigOrUrl === 'string') {
-      url = requestConfigOrUrl
-    } else {
-      url = requestConfigOrUrl.url || url
-      payload = requestConfigOrUrl.payload || payload
-      headers = requestConfigOrUrl.headers || headers
-      method = requestConfigOrUrl.method || method
+    if (typeof requestConfigOrUrlOrConfigGen === 'string') {
+      url = requestConfigOrUrlOrConfigGen
+    } else if (typeof requestConfigOrUrlOrConfigGen === 'object') {
+      url = requestConfigOrUrlOrConfigGen.url || url
+      payload = requestConfigOrUrlOrConfigGen.payload || payload
+      headers = requestConfigOrUrlOrConfigGen.headers || headers
+      method = requestConfigOrUrlOrConfigGen.method || method
     }
 
     const [loading, setLoading] = useState(false)
@@ -97,14 +97,23 @@ export const createUseRequest = <T>(request: any) => {
     const [error, setError] = useState()
 
     // todo can pass params
-    function run(): Promise<void> {
-      setLoading(true)
-      return request({
+    function run(values?: any): Promise<void> {
+
+      let params = {
         url,
         payload,
         headers,
         method,
-      }).then((_data: T) => {
+      }
+      if (typeof requestConfigOrUrlOrConfigGen === 'function') {
+        params = {
+          ...params,
+          ...requestConfigOrUrlOrConfigGen(values)
+        }
+      }
+
+      setLoading(true)
+      return request(params).then((_data: T) => {
         setData(_data)
         setLoading(false)
 
