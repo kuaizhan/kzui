@@ -9,7 +9,6 @@ interface AlertProps {
     hide?: boolean //是否隐藏,
     buttonText?: string //显示内容,
     onClick?: () => void //点击回调
-    position?: string
 }
 
 export default class Alert extends KZUIComponent<AlertProps> {
@@ -23,10 +22,8 @@ export default class Alert extends KZUIComponent<AlertProps> {
 
     render() {
         const clsPrefix = 'kui-alert';
-        const { className, style, position, hide, children, buttonText, onClick } = this.props;
-        const cls = classNames(clsPrefix, {
-            [`${clsPrefix}-${position}`]: !!position,
-        }, className);
+        const { className, style, hide, children, buttonText, onClick } = this.props;
+        const cls = classNames(clsPrefix, className);
         return (
             <Dialog portal hide={hide} style={style} className={cls}>
                 <div className={`${clsPrefix}-msg`}>

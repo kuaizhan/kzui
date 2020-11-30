@@ -1,71 +1,65 @@
 import * as React from 'react';
+import { useState } from 'react'
 import classNames from 'classnames';
-import KZUIComponent, { baseDefaultProps } from '../base/component';
 import './style.less';
 
 interface SwitchProps {
-  disabled: boolean,
-  name: string,
-  on: boolean,
-  onChange: (props: { on?: boolean, name?: string }) => void,
+  disabled?: boolean,
+  name?: string,
+  on?: boolean,
+  control?: boolean,
+  className?: string,
+  style?: React.CSSProperties,
+  onChange?: (props: { on?: boolean, name?: string }) => void,
 }
 
-class Switch extends KZUIComponent<Partial<SwitchProps>, {
-  on?: boolean
-}> {
-    static defaultProps = {
-        ...baseDefaultProps,
-        disabled: false,
-        name: '',
-        on: false,
-        onChange: () => null,
-    }
+const Switch: React.FC<SwitchProps> = ({
+    disabled,
+    name,
+    on,
+    control,
+    onChange = () => null,
+    className,
+    style,
+    children,
+}) => {
 
-    constructor(props) {
-        super(props);
-        this.autoBind('handleClick');
-    }
-    initStateFromProps(props) {
-        return {
-            on: props.on,
-        };
-    }
+    const _control =  typeof control === 'boolean'? control : (typeof on !== 'undefined')
 
-    handleClick() {
-        if (this.props.disabled) {
+    const [stateValue, setStateValue] = useState(on)
+
+    function handleChange () {
+        if (disabled) {
             return;
         }
 
-        const on = !this.state.on;
-        this.setState({
-            on,
-        });
-        if (this.props.onChange) {
-            this.props.onChange({
-                on,
-                name: this.props.name,
-            });
+        if (_control) {
+            onChange({on: !on, name})
+        } else {
+            setStateValue(state => {
+                onChange({on: !state, name});
+                return !state
+            })
         }
     }
 
-    render() {
-        const clsPrefix = 'kui-switch';
-        const { className, style, disabled, children } = this.props;
-        const cls = classNames(clsPrefix, {
-            [`${clsPrefix}-checked`]: this.state.on,
-            [`${clsPrefix}-disabled`]: disabled,
-        }, className);
+    const realValue = _control? on : stateValue
 
-        return (
-            <div
-                className={cls}
-                style={style}
-            >
-                <span className={`${clsPrefix}-label`}>{children}</span>
-                <span className={`${clsPrefix}-indicator`} onClick={this.handleClick} role="button" tabIndex={0} />
-            </div>
-        );
-    }
+    const clsPrefix = 'kui-switch';
+    const cls = classNames(clsPrefix, {
+        [`${clsPrefix}-checked`]: realValue,
+        [`${clsPrefix}-disabled`]: disabled,
+    }, className);
+
+    return (
+        <div
+            className={cls}
+            style={style}
+        >
+            <span className={`${clsPrefix}-label`}>{children}</span>
+            <span className={`${clsPrefix}-indicator`} onClick={handleChange} role="button" tabIndex={0} />
+        </div>
+    );
 }
 
 export default Switch;

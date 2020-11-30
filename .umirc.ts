@@ -34,6 +34,7 @@ export default defineConfig({
       {
         title: '提示(显示)组件',
         children: [
+          'components/alert/index.md',
           'components/notification/index.md',
           'components/confirm/index.md',
           'components/dialog/index.md',
@@ -55,7 +56,8 @@ export default defineConfig({
           'components/form/index.md',
           'components/select/index.md',
           'components/search-select/index.md',
-          'components/search/index.md'
+          'components/search/index.md',
+          'components/switch/index.md'
         ],
       },
     ],

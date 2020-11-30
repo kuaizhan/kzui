@@ -1,0 +1,47 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/tangyihan/.nvm/versions/node/v7.7.4/bin/node',
+1 verbose cli   '/Users/tangyihan/.nvm/versions/node/v7.7.4/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'website' ]
+2 info using npm@4.1.2
+3 info using node@v7.7.4
+4 verbose run-script [ 'prewebsite', 'website', 'postwebsite' ]
+5 info lifecycle root@~prewebsite: root@
+6 silly lifecycle root@~prewebsite: no script for prewebsite, continuing
+7 info lifecycle root@~website: root@
+8 verbose lifecycle root@~website: unsafe-perm in lifecycle true
+9 verbose lifecycle root@~website: PATH: /Users/tangyihan/.nvm/versions/node/v7.7.4/lib/node_modules/npm/bin/node-gyp-bin:/Users/tangyihan/kuaizhan/kzui/node_modules/.bin:/Users/tangyihan/.nvm/versions/node/v7.7.4/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+10 verbose lifecycle root@~website: CWD: /Users/tangyihan/kuaizhan/kzui
+11 silly lifecycle root@~website: Args: [ '-c', 'npx dumi dev' ]
+12 info lifecycle root@~website: Failed to exec website script
+13 verbose stack Error: root@ website: `npx dumi dev`
+13 verbose stack spawn ENOENT
+13 verbose stack     at ChildProcess.<anonymous> (/Users/tangyihan/.nvm/versions/node/v7.7.4/lib/node_modules/npm/lib/utils/spawn.js:33:16)
+13 verbose stack     at emitTwo (events.js:106:13)
+13 verbose stack     at ChildProcess.emit (events.js:194:7)
+13 verbose stack     at maybeClose (internal/child_process.js:899:16)
+13 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
+14 verbose pkgid root@
+15 verbose cwd /Users/tangyihan/kuaizhan/kzui
+16 error Darwin 19.6.0
+17 error argv "/Users/tangyihan/.nvm/versions/node/v7.7.4/bin/node" "/Users/tangyihan/.nvm/versions/node/v7.7.4/bin/npm" "run" "website"
+18 error node v7.7.4
+19 error npm  v4.1.2
+20 error file sh
+21 error code ELIFECYCLE
+22 error errno ENOENT
+23 error syscall spawn
+24 error root@ website: `npx dumi dev`
+24 error spawn ENOENT
+25 error Failed at the root@ website script 'npx dumi dev'.
+25 error Make sure you have the latest version of node.js and npm installed.
+25 error If you do, this is most likely a problem with the root package,
+25 error not with npm itself.
+25 error Tell the author that this fails on your system:
+25 error     npx dumi dev
+25 error You can get information on how to open an issue for this project with:
+25 error     npm bugs root
+25 error Or if that isn't available, you can get their info via:
+25 error     npm owner ls root
+25 error There is likely additional logging output above.
+26 verbose exit [ 1, true ]
