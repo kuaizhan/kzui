@@ -77,6 +77,7 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
     onPaste: emptyFunc,
     onBlur: emptyFunc,
     onMouseUp: emptyFunc,
+    onFocus: emptyFunc,
     lineBreak: 0,
   }
 
@@ -86,7 +87,8 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
   }
 
   shouldComponentUpdate(nextProps) {
-    return nextProps.value !== this.props.value;
+    return nextProps.value !== this.props.value || nextProps.className !== this.props.className
+
   }
 
   componentDidMount() {
@@ -147,14 +149,14 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
       e.preventDefault();
     }
     this.handleChange();
-    this.props.onKeyPress(e);
+    this.props.onKeyPress?.(e);
   }
   handleChange() {
     const wrp = this.wrp;
     const { name } = this.props;
     const html = wrp.innerHTML;
     if (html !== this.lastHtml) {
-      this.props.onChange({
+      this.props.onChange?.({
         name,
         value: html,
       });
@@ -162,15 +164,15 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
     this.lastHtml = html;
   }
   handlePaste(e) {
-    this.props.onPaste(e);
+    this.props.onPaste?.(e);
   }
 
   handleFocus(e) {
-    this.props.onFocus(e);
+    this.props.onFocus?.(e);
   }
 
   render() {
-    const className = this.classname('richtext-editor', { [this.props.className]: true });
+    const className = `richtext-editor ${this.props.className}`
     const { style } = this.props;
 
     return (
