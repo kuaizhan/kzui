@@ -55,7 +55,8 @@ export default defineConfig({
           'components/form/index.md',
           'components/select/index.md',
           'components/search-select/index.md',
-          'components/search/index.md'
+          'components/search/index.md',
+          'components/switch/index.md'
         ],
       },
     ],
