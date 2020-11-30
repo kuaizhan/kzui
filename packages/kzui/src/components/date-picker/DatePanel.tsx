@@ -382,7 +382,7 @@ class DatePanel extends KZUIComponent<
           year
         },
         () => {
-          this.props.onPanelChange(this.state.year, this.state.month)
+          this.props.onPanelChange?.(this.state.year, this.state.month)
         }
       )
     }
@@ -395,7 +395,7 @@ class DatePanel extends KZUIComponent<
           month
         },
         () => {
-          this.props.onPanelChange(this.state.year, this.state.month)
+          this.props.onPanelChange?.(this.state.year, this.state.month)
         }
       )
     }
