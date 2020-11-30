@@ -77,7 +77,8 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
     onPaste: emptyFunc,
     onBlur: emptyFunc,
     onMouseUp: emptyFunc,
-    lineBreak: 0,
+    onFocus: emptyFunc,
+    lineBreak: 0,   // 0 Crtl+Enter换行， 1 Enter换行
   }
 
   constructor(props) {
@@ -86,7 +87,9 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
   }
 
   shouldComponentUpdate(nextProps) {
-    return nextProps.value !== this.props.value;
+    return nextProps.value !== this.props.value ||
+      nextProps.className !== this.props.className;
+
   }
 
   componentDidMount() {
@@ -170,12 +173,10 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
   }
 
   render() {
-    const className = this.classname('richtext-editor', { [this.props.className]: true });
-    const { style } = this.props;
-
     return (
       <div
-        className={className}
+        className={`richtext-editor ${this.props.className}`}
+        style={this.props.style}
         ref={this.storeRef('wrp')}
         contentEditable
         onFocus={this.handleFocus}
@@ -185,7 +186,6 @@ class RichTextEditor extends KZUIComponent<RichTextEditorProps> {
         onPaste={this.handlePaste}
         onKeyPress={this.handleKeyPress}
         onMouseUp={this.props.onMouseUp}
-        style={style}
       />
     );
   }
