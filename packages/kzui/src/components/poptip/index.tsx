@@ -22,6 +22,7 @@ interface PopTipProps {
   destroyOnHide?: boolean
   onTriggerClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void // 点击回调
   onTriggerHover?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void // hover 回调
+  onBlur?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
 const PopTip:React.FC<PopTipProps> = ({
@@ -40,7 +41,8 @@ const PopTip:React.FC<PopTipProps> = ({
     tip,
     destroyOnHide = false,
     onTriggerClick,
-    onTriggerHover
+    onTriggerHover,
+    onBlur,
 }) =>  {
     const [popVisible, setPopVisible] = useState(visible || false)
     const [tipPosition, setTipPosition] = useState<React.CSSProperties>({})
@@ -114,6 +116,7 @@ const PopTip:React.FC<PopTipProps> = ({
         return;
       }
       changeTipVisble(false)
+      onBlur?.(e)
     }
 
     function handleMouseOver(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -132,6 +135,7 @@ const PopTip:React.FC<PopTipProps> = ({
           return;
         }
         changeTipVisble(false)
+        onBlur?.(e)
     }
 
     function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
