@@ -42,6 +42,7 @@ export default defineConfig({
           'components/poptip/index.md',
           'components/pop-confirm/index.md',
           'components/table/index.md',
+          'components/tab/index.md'
         ],
       },
       {

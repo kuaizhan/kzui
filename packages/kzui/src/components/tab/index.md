@@ -4,6 +4,30 @@
 * Tab
 * TabBar
 
+```jsx
+/**
+ * title: 基本用法
+ */
+import React, { useState } from 'react'
+import { Tab } from '@kzui/core'
+
+export default () => {
+    const [curTab, setCurTab] = useState(0)
+    return (
+        <Tab
+            tabTitles={['tab 1', 'tab 2', 'tab 3']}
+            curIndex={curTab}
+            onChange={curIndex => setCurTab(curIndex)}
+        >
+            <div>tab 1 的内容</div>
+            <div>tab 2 的内容</div>
+            <div>tab 3 的内容</div>
+        </Tab>
+    )
+}
+
+```
+
 ## Tab 属性
 
 属性名 | 类型 | 描述 | 是否必须 | 默认值 | 字典 |
