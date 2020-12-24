@@ -8,7 +8,7 @@
  * desc: 将 type 属性设为 simple，使用简单拾色器。可通过设置 hex 属性设置颜色初始值
  */
 import React, { useState } from "react";
-import { Button, ColorPicker } from "@kzui/core";
+import { Button, ColorPicker, EventBlackHole } from "@kzui/core";
 
 export default () => {
   const [isCPHide, setIsCPHide] = useState(true);
@@ -29,12 +29,17 @@ export default () => {
         ></div>
         <span style={{ marginLeft: "6px" }}>{pickedColor}</span>
       </div>
-      <Button
-        type="confirm"
-        onClick={() => setIsCPHide((isCPHide) => !isCPHide)}
-      >
-        简单拾色器
-      </Button>
+      <EventBlackHole captureEvents={["click"]}>
+        <Button
+          type="confirm"
+          onClick={() => {
+            console.log(Date.now(), 'click')
+            setIsCPHide(isCPHide => !isCPHide)
+          }}
+        >
+          简单拾色器
+        </Button>
+      </EventBlackHole>
       <ColorPicker
         style={{ zIndex: 999 }}
         hide={isCPHide}
@@ -42,7 +47,10 @@ export default () => {
         hex={pickedColor}
         onConfirm={() => setIsCPHide(true)}
         onChange={handleColorChange}
-        onBlur={() => setIsCPHide(true)}
+        onBlur={() => {
+          console.log(Date.now(), 'onBlur')
+          setIsCPHide(true)
+        }}
         onCancel={oldHex => {
           handleColorChange(oldHex);
           setIsCPHide(true);
