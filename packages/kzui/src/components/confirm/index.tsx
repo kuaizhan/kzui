@@ -12,6 +12,7 @@ interface ConfirmProps {
   onConfirm?: () => void //确认按钮回调,
   onCancel?: () => void //取消按钮回调
   onClose?: () => void // 关闭 icon 回调
+  footer?: any
 }
 
 
@@ -55,20 +56,11 @@ class Confirm extends KZUIComponent<ConfirmProps> {
 
     render() {
         const clsPrefix = 'kui-confirm';
-        const { className, style, hide, confirmText, cancelText, children } = this.props;
+        const { className, style, hide, confirmText, cancelText, children, footer } = this.props;
         const cls = classNames(clsPrefix, className);
-        return (
-            <Dialog portal hide={hide} style={style} className={cls}>
-                <i
-                    className={`${clsPrefix}-close-btn kz-e-close-4`}
-                    onClick={this.handleClose}
-                    role="button"
-                    tabIndex={0}
-                />
 
-                <div className={`${clsPrefix}-msg`}>
-                    {children}
-                </div>
+        let footerElement : JSX.Element | null = (
+            <>
                 <Button
                     type="normal"
                     size="large"
@@ -84,6 +76,30 @@ class Confirm extends KZUIComponent<ConfirmProps> {
                 >
                     {confirmText}
                 </Button>
+            </>
+        )
+
+        if (footer === null) {
+            footerElement = null
+        }
+
+        if (footer) {
+            footerElement = footer
+        }
+
+        return (
+            <Dialog portal hide={hide} style={style} className={cls}>
+                <i
+                    className={`${clsPrefix}-close-btn kz-e-close-4`}
+                    onClick={this.handleClose}
+                    role="button"
+                    tabIndex={0}
+                />
+
+                <div className={`${clsPrefix}-msg`}>
+                    {children}
+                </div>
+                {footerElement}
             </Dialog>
         );
     }

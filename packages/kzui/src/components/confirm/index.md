@@ -5,7 +5,6 @@
 ```jsx
 /**
  * title: 确认弹框
- * desc: 唯一用法。
  */
 import React, { useState } from "react";
 import { Button, Confirm } from "@kzui/core";
@@ -31,6 +30,33 @@ export default () => {
 };
 ```
 
+```jsx
+/**
+ * title: no footer
+ */
+import React, { useState } from "react";
+import { Button, Confirm } from "@kzui/core";
+
+export default () => {
+  const [isConfirmHide, setIsConfirmHide] = useState(true);
+  return (
+    <div>
+      <Button type="confirm" onClick={() => setIsConfirmHide(false)}>
+        点击展示 Confirm{" "}
+      </Button>
+      <Confirm
+        hide={isConfirmHide}
+        onCancel={() => setIsConfirmHide(true)}
+        onConfirm={() => setIsConfirmHide(true)}
+        footer={null}
+      >
+        This is a Confirm
+      </Confirm>
+    </div>
+  );
+};
+```
+
 ## 属性
 
 | 属性名      | 类型   | 描述         | 是否必须 | 默认值 | 字典 |
@@ -38,6 +64,7 @@ export default () => {
 | hide        | bool   | 是否隐藏     | 否       | false  | -     |
 | confirmText | string | 确认按钮文案 | 否       | '确定' | -      |
 | cancalText  | string | 取消按钮文案 | 否       | '取消' | -      |
+| footer  | React.ReactNode | 自定义footer | 否       | undefined | -      |
 
 ## 方法
 

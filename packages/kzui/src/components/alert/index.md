@@ -23,7 +23,7 @@ export default () => {
                     setVisble(false)
                     notification.success('点击成功')
                 }}
-            >小鸭最棒了!</Alert>
+            >duck最棒了!</Alert>
         </>
     );
 }
