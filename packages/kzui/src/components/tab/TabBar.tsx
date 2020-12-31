@@ -11,7 +11,9 @@ interface TabBarProps {
   tabBarStyle: React.CSSProperties
 }
 
-class TabBar extends KZUIComponent<TabBarProps> {
+class TabBar extends KZUIComponent<TabBarProps, {
+    deltaX?: number
+}> {
     slider: HTMLElement;
 
     static defaultProps = {
@@ -26,6 +28,9 @@ class TabBar extends KZUIComponent<TabBarProps> {
     constructor(props) {
         super(props);
         this.autoBind('handleClick', 'animateSlider');
+        this.state = {
+            deltaX: 0,
+        }
     }
 
     componentDidMount() {

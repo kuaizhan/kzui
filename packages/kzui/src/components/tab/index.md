@@ -15,7 +15,7 @@ export default () => {
     const [curTab, setCurTab] = useState(0)
     return (
         <Tab
-            tabTitles={['tab 1', 'tab 2', 'tab 3']}
+            tabTitles={['Android', 'ios', 'PC', 'Android', 'ios', 'PC', 'Android', 'ios', 'PC','Android', 'ios', 'PC','Android', 'ios', 'PC','Android', 'ios', 'PC']}
             curIndex={curTab}
             onChange={curIndex => setCurTab(curIndex)}
         >
