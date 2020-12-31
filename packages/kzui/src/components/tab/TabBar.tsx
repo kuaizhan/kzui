@@ -67,7 +67,7 @@ class TabBar extends KZUIComponent<TabBarProps> {
         const clsPrefix = 'kui-tab';
         const { className, tabTitles, curIndex, tabBarStyle, type } = this.props;
         const cls = classNames(`${clsPrefix}-bar`, className, {
-          [`${clsPrefix}-bar--card`] : type === 'card'
+            [`${clsPrefix}-bar--card`] : type === 'card'
         });
 
         return (
