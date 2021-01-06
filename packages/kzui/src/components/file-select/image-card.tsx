@@ -42,7 +42,7 @@ const ImageCard = (props: ImageCardProps) => {
       <img className={`${clsPrefix}-thumb`} style={imageStyle} src={url} />
       <div
         className={`${clsPrefix}-cover`}
-        style={{ display: hover ? 'block' : 'none' }}
+        style={{ display: hover ? 'flex' : 'none' }}
       >
         {
           props.onEdit

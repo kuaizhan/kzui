@@ -6,13 +6,19 @@
  * desc: 上传文件等
  */
 
-import React from "react";
+import React, { useState } from "react";
 import { FileSelect } from "@kzui/core";
 
 export default () => {
+  const [fileList, setFileList] = useState([])
   return (
     <>
-      <FileSelect>上传图片</FileSelect>
+      <FileSelect
+         fileList={fileList}
+         onChange={e => setFileList(e)}
+      >
+        上传图片
+      </FileSelect>
     </>
   );
 };
@@ -28,7 +34,7 @@ export default () => {
 | multiple     | bool   | 是否支持多选               | 否       | false   | -    |
 | maxFileSize  | number | 单个文件最大尺寸，以字节计 | 否       | 4194304 | -    |
 | maxFileCount | number | 可选取的文件数目           | 否       | 1       | -    |
-
+| fileList     | Array<{ url: string }> | 已上传的文件 |   否   |  null  |  -   |
 ## 事件
 
 | 属性名   | 类型 | 描述               | 是否必须 | 默认值 | 参数说明                                    |
