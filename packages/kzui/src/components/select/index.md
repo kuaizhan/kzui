@@ -16,6 +16,7 @@ const initOptions = [
 ]
 
 const [options, setOptions] = useState(initOptions)
+const [selected, setSelected] = useState([])
 
 function handleLoadMore() {
   const newOptions = [...initOptions, {
@@ -25,17 +26,25 @@ function handleLoadMore() {
   setOptions(newOptions)
 }
 
+console.log(selected, 'selected');
+
 export default () => (
   <Select 
     defaultText= '请选择'
-    value={null}
+    value={selected}
     options={options}
-    onChange={(e) => notification.success(JSON.stringify(e))}
+    onChange={(e) => {
+      console.log(e, 'onselecte')
+      setSelected(e.value)
+      notification.success(JSON.stringify(e))
+    }}
     disabled={false}
     size='large'
     onExpand={() => console.log('onExpand')}
     hasMore
     onLoadMore={handleLoadMore}
+    mode='multiple'
+    style={{ width: 300 }}
   />
 );
 ```
@@ -53,7 +62,8 @@ options | array | 可选项 | 否 | [] | - |
 disabled | bool | 是否禁用 | 否 | false | - |
 maxHeight | number | 下拉菜单最大高度 | 否 | null | - |
 popoverCls | string | 下拉菜单 class | 否 | '' | - |
-popoverStyle | cssProperties | 下拉菜单样式 | 否 | {} | - | 
+popoverStyle | cssProperties | 下拉菜单样式 | 否 | {} | - |
+mode | `multiple` |  是否多选  | 否 | - | `multiple` |
 
 其中：
 * options是一个对象数组，必须满足如下定义：

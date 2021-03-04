@@ -5,58 +5,61 @@ import Icon from '../icon/index';
 import EventBlackHole from '../event-black-hole/index';
 import PopTip from '../poptip/index';
 import Option from './Option';
+import Tag from '../tag'
 import './style.less';
 import { UiSizeType, OptionListType } from '../../../types/base';
 
 interface onChangeArg {
   name: string
-  value: string
-  selectedText: string
+  value: any | any[]
+  selectedText: string | string[]
   text: string
 }
 
 interface SelectProps {
-  defaultText?: string //默认显示文案,
-  name?: string //表单项名,
-  value?: any //当前值,
-  size?: UiSizeType //大小,
-  options?: OptionListType //可选项,
-  disabled?: boolean //是否禁用
-  onChange?: (e: onChangeArg) => void
-  onExpand?: () => void
-  maxHeight?: number,
-  hasMore?: boolean,
-  onLoadMore?: () => void,
-  popoverCls?: string,
-  popoverStyle?: React.CSSProperties,
-  initialExpand: boolean,
+    defaultText?: string //默认显示文案,
+    name?: string //表单项名,
+    value?: any | Array<any>//当前值,
+    size?: UiSizeType //大小,
+    options?: OptionListType //可选项,
+    disabled?: boolean //是否禁用
+    onChange?: (e: onChangeArg) => void
+    onExpand?: () => void
+    maxHeight?: number,
+    hasMore?: boolean,
+    onLoadMore?: () => void,
+    popoverCls?: string,
+    popoverStyle?: React.CSSProperties,
+    initialExpand: boolean,
+    mode?: 'multiple'
 }
 
 interface SelectStates {
-  value?: any
-  expand?: boolean
-  selectedText?: React.ReactNode
+    value?: any | Array<any>
+    expand?: boolean
+    selectedText?: string | Array<string>
 }
 
 class Select extends KZUIComponent<SelectProps, SelectStates> {
     wrp: HTMLElement;
 
     static defaultProps = {
-      ...baseDefaultProps,
-      defaultText: '请选择',
-      value: null,
-      name: '',
-      disabled: false,
-      options: [],
-      onChange: null,
-      maxHeight: null,
-      hasMore: false,
-      onLoadMore: null,
-      onExpand: null,
-      popoverCls: '',
-      popoverStyle: {},
-      size: '',
-      initialExpand: false,
+        ...baseDefaultProps,
+        defaultText: '请选择',
+        value: null,
+        name: '',
+        disabled: false,
+        options: [],
+        onChange: null,
+        maxHeight: null,
+        hasMore: false,
+        onLoadMore: null,
+        onExpand: null,
+        popoverCls: '',
+        popoverStyle: {},
+        size: '',
+        initialExpand: false,
+        mode: null,
     }
 
     constructor(props) {
@@ -69,11 +72,16 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
         let value = props.value;
         const initialExpand = props.initialExpand;
         const selected = props.options.filter(item => (
-            item.value === props.value
+            props.mode === 'multiple' ? props.value?.indexOf(item.value) > -1 : item.value === props.value
         ));
         if (selected.length > 0) {
-            selectedText = selected[0].text;
-            value = selected[0].value;
+            if (props.mode == 'multiple') {
+                selectedText = selected.map(item => item.text)
+                value = selected.map(item => item.value)
+            } else {
+                selectedText = selected[0].text;
+                value = selected[0].value;
+            }
         }
 
         return {
@@ -84,11 +92,11 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { options, value } = nextProps
-        const selected = options.filter(item => (item.value === value))
+        const { options, value, mode } = nextProps
+        const selected = options.filter(item => (mode === 'multiple' ? value?.indexOf(item.value) > -1 : item.value === value))
         let newSelectedText = this.props.defaultText
         if (selected.length > 0) {
-            newSelectedText = selected[0].text;
+            newSelectedText = mode === 'multiple' ? selected.map(item => item.text) : selected[0].text;
         }
         this.setState({
             selectedText: newSelectedText,
@@ -123,19 +131,45 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
     }
 
     handleSelect(selected) {  // TODO value是否需要完全受控
-        this.setState({
-            selectedText: selected.text,
-            value: selected.value,
-            expand: false,
+        let selectedText = selected.text
+        let selectedValue = selected.value
+
+        this.setState((state) => {
+            if (this.props.mode === 'multiple') {
+                if (Array.isArray(state.selectedText) && Array.isArray(state.value)) {
+                    const valueIndex = state.value.indexOf(selected.value)
+                    let textArr = [...state.selectedText]
+                    let valueArr = [...state.value]
+                    if (valueIndex > -1) {
+                        textArr.splice(valueIndex, 1)
+                        valueArr.splice(valueIndex, 1)
+                    } else {
+                        textArr.push(selected.text)
+                        valueArr.push(selected.value)
+                    }
+                    selectedValue = valueArr
+                    selectedText = textArr
+                } else {
+                    selectedText = [selected.text]
+                    selectedValue = [selected.value]
+                }
+            }
+            return ({
+                selectedText: selectedText,
+                value: selectedValue,
+                expand: false,
+            })
+        }, () => {
+            if (this.props.onChange) {
+                this.props.onChange({
+                    name: this.props.name,
+                    value: this.state.value,
+                    selectedText: this.state.selectedText,
+                    text: selected.text,
+                });
+            }
         });
-        if (this.props.onChange) {
-            this.props.onChange({
-                name: this.props.name,
-                value: selected.value,
-                selectedText: selected.text,
-                text: selected.text,
-            });
-        }
+        
     }
 
     handleLoadMore() {
@@ -158,6 +192,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
             popoverCls,
             popoverStyle,
             maxHeight,
+            mode
         } = this.props;
         const { expand } = this.state;
         const cls = classNames(clsPrefix, {
@@ -180,6 +215,8 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
         }
 
         const width = this.wrp && this.wrp.offsetWidth;
+        
+        console.log(this.state.selectedText, 'this.state.selectedText')
         return (
             <div
                 ref={this.storeRef('wrp')}
@@ -205,7 +242,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                                     <Option
                                         key={`option-${index}`}
                                         value={option.value}
-                                        selected={this.state.value === option.value}
+                                        selected={mode === 'multiple' ? ((this.state.value || []).indexOf(option.value) > -1) : this.state.value === option.value}
                                         onClick={this.handleSelect}
                                         disabled={option.disabled}
                                         isLabel={option.isLabel}
@@ -234,7 +271,16 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                     )}
                 >
                     <div className={`${clsPrefix}-selected`} tabIndex={0} onBlur={this.handleBlur}>
-                        <div className={`${clsPrefix}-selected-title`}>{this.state.selectedText}</div>
+                        <div className={classNames(`${clsPrefix}-selected-title`, `${clsPrefix}-selected-title--multiple`)}>
+                            {mode === 'multiple' ? 
+                                (Array.isArray(this.state.selectedText) ? 
+                                    this.state.selectedText .map(text => (
+                                        <Tag showOnly label={text} />
+                                    )) : this.state.selectedText
+                                )
+                                : this.state.selectedText 
+                            }
+                        </div>
                         <div className={`${clsPrefix}-indicator`}>
                             <Icon type="nav-pull-down" />
                         </div>

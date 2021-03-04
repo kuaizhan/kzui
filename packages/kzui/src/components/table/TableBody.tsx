@@ -42,7 +42,7 @@ const TableBody:React.FC<{
                                     style={{ textAlign: item.align, ...style, width: item.width }}
                                     className={`${clsPrefix}__body-cell`}
                                     key={item.key}
-                                    {...props || {}}
+                                    {...(props || {})}
                                 >
                                     {children}
                                 </td>
