@@ -273,7 +273,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                     )}
                 >
                     <div className={`${clsPrefix}-selected`} tabIndex={0} onBlur={this.handleBlur}>
-                        <div className={classNames(`${clsPrefix}-selected-title`, `${clsPrefix}-selected-title--multiple`)}>
+                        <div className={classNames(`${clsPrefix}-selected-title`, {[`${clsPrefix}-selected-title--multiple`] : mode === 'multiple'})}>
                             {mode === 'multiple' ? 
                                 (Array.isArray(selectedText) ? 
                                     selectedText.map((text, index) => (
