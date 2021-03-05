@@ -39,7 +39,7 @@ export default () => (
       notification.success(JSON.stringify(e))
     }}
     disabled={false}
-    size='large'
+    // size='large'
     onExpand={() => console.log('onExpand')}
     hasMore
     onLoadMore={handleLoadMore}

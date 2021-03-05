@@ -18,6 +18,7 @@ export interface OptionType {
   className?: string
   isLabel?: boolean
   isSubOption?: boolean
+  isMultiple?: boolean
 }
 
 export type OptionListType = Array<OptionType>

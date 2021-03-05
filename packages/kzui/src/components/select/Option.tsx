@@ -17,6 +17,7 @@ class Option extends KZUIComponent<OptionProps> {
       style: {},
       isLabel: false,
       isSubOption: false,
+      isMultiple: false
     }
 
     constructor(props: OptionProps) {
@@ -44,6 +45,7 @@ class Option extends KZUIComponent<OptionProps> {
             [`${clsPrefix}-disabled`]: this.props.disabled,
             [`${clsPrefix}-labeled`]: this.props.isLabel,
             [`${clsPrefix}-suboption`]: this.props.isSubOption,
+            [`${clsPrefix}--multi`]: this.props.isMultiple,
         }, className);
         return (
             <div style={style} className={cls} onClick={this.handleClick} role="button" tabIndex={0}>

@@ -157,7 +157,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
             return ({
                 selectedText: selectedText,
                 value: selectedValue,
-                expand: false,
+                expand: this.props.mode === 'multiple',
             })
         }, () => {
             if (this.props.onChange) {
@@ -192,9 +192,10 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
             popoverCls,
             popoverStyle,
             maxHeight,
-            mode
+            mode,
+            options,
         } = this.props;
-        const { expand } = this.state;
+        const { expand, selectedText } = this.state;
         const cls = classNames(clsPrefix, {
             [`${clsPrefix}-expand`]: expand,
             [`${clsPrefix}-disabled`]: disabled,
@@ -216,7 +217,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
 
         const width = this.wrp && this.wrp.offsetWidth;
         
-        console.log(this.state.selectedText, 'this.state.selectedText')
+        console.log(this.state.selectedText, 'this.state.selectedText', this.state.expand, 'expand');
         return (
             <div
                 ref={this.storeRef('wrp')}
@@ -238,7 +239,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                     tip={(
                         <div className={optionsPanelCls} style={{ ...finalPopoverStyle, display: expand ? 'block' : 'none', width }}>
                             <div className={`${clsPrefix}-options`}>
-                                {this.props.options.map((option, index) => (
+                                {options?.map((option, index) => (
                                     <Option
                                         key={`option-${index}`}
                                         value={option.value}
@@ -247,6 +248,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                                         disabled={option.disabled}
                                         isLabel={option.isLabel}
                                         isSubOption={option.isSubOption}
+                                        isMultiple={mode === 'multiple'}
                                     >
                                         {option.text}
                                     </Option>
@@ -273,12 +275,12 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                     <div className={`${clsPrefix}-selected`} tabIndex={0} onBlur={this.handleBlur}>
                         <div className={classNames(`${clsPrefix}-selected-title`, `${clsPrefix}-selected-title--multiple`)}>
                             {mode === 'multiple' ? 
-                                (Array.isArray(this.state.selectedText) ? 
-                                    this.state.selectedText .map(text => (
-                                        <Tag showOnly label={text} />
-                                    )) : this.state.selectedText
+                                (Array.isArray(selectedText) ? 
+                                    selectedText.map((text, index) => (
+                                        index == selectedText.length - 1 ? ` ${text}` : ` ${text} |`
+                                    )) : selectedText
                                 )
-                                : this.state.selectedText 
+                                : selectedText 
                             }
                         </div>
                         <div className={`${clsPrefix}-indicator`}>
