@@ -41,7 +41,7 @@ interface SelectStates {
 }
 
 class Select extends KZUIComponent<SelectProps, SelectStates> {
-    wrp: HTMLElement;
+    wrp: React.RefObject<HTMLDivElement>;
 
     static defaultProps = {
         ...baseDefaultProps,
@@ -65,6 +65,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
     constructor(props) {
         super(props);
         this.autoBind('handleSelect', 'handleBlur', 'handleLoadMore', 'handleClick');
+        this.wrp = React.createRef<HTMLDivElement>()
     }
 
     initStateFromProps(props) {
@@ -109,7 +110,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
             return;
         }
         const { expand } = this.state;
-        this.wrp.focus();
+        this.wrp.current.focus();
 
         this.setState({
             expand: !expand,
@@ -121,7 +122,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
     }
 
     handleBlur(e) {
-        if (e.relatedTarget && this.wrp.contains(e.relatedTarget)) {
+        if (e.relatedTarget && this.wrp.current.contains(e.relatedTarget)) {
             e.preventDefault();
             return;
         }
@@ -175,7 +176,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
     handleLoadMore() {
         const { onLoadMore } = this.props;
         if (onLoadMore === null) return;
-        this.wrp.focus();
+        this.wrp.current.focus();
         setTimeout(() => {
             this.setState({ expand: true });
         }, 50)
@@ -215,12 +216,10 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
             };
         }
 
-        const width = this.wrp && this.wrp.offsetWidth;
         
-        console.log(this.state.selectedText, 'this.state.selectedText', this.state.expand, 'expand');
         return (
             <div
-                ref={this.storeRef('wrp')}
+                ref={this.wrp}
                 className={cls}
                 style={style}
                 role="button"
@@ -233,11 +232,11 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                     visible={expand}
                     onVisibleChange={visible => this.setState({ expand: visible })}
                     trigger='click'
-                    tipStyle={{ padding: 0, width, minWidth: 'auto' }}
+                    tipStyle={{ padding: 0, width: style.width || 200, minWidth: 'auto' }}
                     theme='light'
                     style={{ width: "100%", height: '100%' }}
                     tip={(
-                        <div className={optionsPanelCls} style={{ ...finalPopoverStyle, display: expand ? 'block' : 'none', width }}>
+                        <div className={optionsPanelCls} style={{ ...finalPopoverStyle, display: expand ? 'block' : 'none', width: style.width || 200 }}>
                             <div className={`${clsPrefix}-options`}>
                                 {options?.map((option, index) => (
                                     <Option

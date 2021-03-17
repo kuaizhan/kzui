@@ -17,6 +17,7 @@ const initOptions = [
 
 const [options, setOptions] = useState(initOptions)
 const [selected, setSelected] = useState([])
+const [initialExpand, setInitialExpand] = useState(false)
 
 function handleLoadMore() {
   const newOptions = [...initOptions, {
@@ -26,19 +27,19 @@ function handleLoadMore() {
   setOptions(newOptions)
 }
 
-console.log(selected, 'selected');
-
 export default () => (
   <Select 
     defaultText= '请选择'
     value={selected}
     options={options}
     onChange={(e) => {
-      console.log(e, 'onselecte')
+      setInitialExpand(true)
       setSelected(e.value)
       notification.success(JSON.stringify(e))
+      
     }}
     disabled={false}
+    initialExpand={initialExpand}
     // size='large'
     onExpand={() => console.log('onExpand')}
     hasMore
