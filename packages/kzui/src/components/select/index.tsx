@@ -2,10 +2,8 @@ import  * as React from 'react';
 import classNames from 'classnames';
 import KZUIComponent, { baseDefaultProps } from '../base/component';
 import Icon from '../icon/index';
-import EventBlackHole from '../event-black-hole/index';
 import PopTip from '../poptip/index';
 import Option from './Option';
-import Tag from '../tag'
 import './style.less';
 import { UiSizeType, OptionListType } from '../../../types/base';
 
@@ -85,6 +83,8 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
             }
         }
 
+        console.log(selectedText, 'selectedText')
+        
         return {
             expand: initialExpand || false,
             value,
@@ -141,6 +141,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                     const valueIndex = state.value.indexOf(selected.value)
                     let textArr = [...state.selectedText]
                     let valueArr = [...state.value]
+                    // 已选中的改为未选中
                     if (valueIndex > -1) {
                         textArr.splice(valueIndex, 1)
                         valueArr.splice(valueIndex, 1)
@@ -216,6 +217,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
             };
         }
 
+        console.log(expand, 'expand')
         
         return (
             <div
@@ -234,7 +236,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                     trigger='click'
                     tipStyle={{ padding: 0, width: style?.width || 200, minWidth: 'auto' }}
                     theme='light'
-                    style={{ width: "100%", height: '100%' }}
+                    style={{ width: "100%", height: '100%', display: 'block' }}
                     tip={(
                         <div className={optionsPanelCls} style={{ ...finalPopoverStyle, display: expand ? 'block' : 'none', width: style?.width || 200 }}>
                             <div className={`${clsPrefix}-options`}>

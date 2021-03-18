@@ -8,7 +8,8 @@
 
 
 import React, { useState } from 'react';
-import { Select, notification } from '@kzui/core';
+import { notification } from '@kzui/core';
+import Select from './fc.tsx';
 const initOptions = [
 	{value: 1, text: '1'},
 	{value: 2, text: '2'},
@@ -27,20 +28,20 @@ function handleLoadMore() {
   setOptions(newOptions)
 }
 
+console.log(selected, 'selected');
+
 export default () => (
   <Select 
     defaultText= '请选择'
     value={selected}
     options={options}
     onChange={(e) => {
-      setInitialExpand(true)
       setSelected(e.value)
       notification.success(JSON.stringify(e))
-      
     }}
     disabled={false}
     initialExpand={initialExpand}
-    // size='large'
+    size='large'
     onExpand={() => console.log('onExpand')}
     hasMore
     onLoadMore={handleLoadMore}

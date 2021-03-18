@@ -10,14 +10,14 @@ interface OptionProps extends Partial<OptionType> {
 class Option extends KZUIComponent<OptionProps> {
 
     static defaultProps = {
-      ...baseDefaultProps,
-      selected: false,
-      disable: false,
-      value: null,
-      style: {},
-      isLabel: false,
-      isSubOption: false,
-      isMultiple: false
+        ...baseDefaultProps,
+        selected: false,
+        disable: false,
+        value: null,
+        style: {},
+        isLabel: false,
+        isSubOption: false,
+        isMultiple: false
     }
 
     constructor(props: OptionProps) {
@@ -28,7 +28,8 @@ class Option extends KZUIComponent<OptionProps> {
         this.autoBind('handleClick');
     }
 
-    handleClick() {
+    handleClick(e) {
+        e.stopPropagation();
         if (this.props.disabled) {
             return
         }
