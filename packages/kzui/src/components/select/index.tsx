@@ -206,6 +206,8 @@ const Select:React.FC<SelectProps> = ({
             maxHeight: `${maxHeight}px`,
         };
     }
+
+    const width = wrpRef.current?.offsetWidth || style?.width || 200
     
     return (
         <div
@@ -225,11 +227,11 @@ const Select:React.FC<SelectProps> = ({
                     setExpand(visible)
                 }}
                 trigger='click'
-                tipStyle={{ padding: 0, width: style?.width || 200, minWidth: 'auto' }}
+                tipStyle={{ padding: 0, width, minWidth: 'auto' }}
                 theme='light'
                 style={{ width: "100%", height: '100%', display: 'block' }}
                 tip={(
-                    <div className={optionsPanelCls} style={{ ...finalPopoverStyle, display: expand ? 'block' : 'none', width: style?.width || 200 }}>
+                    <div className={optionsPanelCls} style={{ ...finalPopoverStyle, display: expand ? 'block' : 'none', width }}>
                         <div className={`${clsPrefix}-options`}>
                             {options?.map((option, index) => (
                                 <Option
