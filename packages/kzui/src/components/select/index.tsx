@@ -27,7 +27,7 @@ interface SelectProps {
     onLoadMore?: () => void,
     popoverCls?: string,
     popoverStyle?: React.CSSProperties,
-    initialExpand: boolean,
+    initialExpand?: boolean,
     mode?: 'multiple',
     className?: string
     style?: React.CSSProperties
