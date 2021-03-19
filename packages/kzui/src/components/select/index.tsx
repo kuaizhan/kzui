@@ -1,6 +1,5 @@
-import  * as React from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
-import KZUIComponent, { baseDefaultProps } from '../base/component';
 import Icon from '../icon/index';
 import PopTip from '../poptip/index';
 import Option from './Option';
@@ -8,10 +7,10 @@ import './style.less';
 import { UiSizeType, OptionListType } from '../../../types/base';
 
 interface onChangeArg {
-  name: string
-  value: any | any[]
-  selectedText: string | string[]
-  text: string
+    name: string
+    value: any | any[]
+    selectedText: string | string[]
+    text: string
 }
 
 interface SelectProps {
@@ -29,118 +28,126 @@ interface SelectProps {
     popoverCls?: string,
     popoverStyle?: React.CSSProperties,
     initialExpand: boolean,
-    mode?: 'multiple'
+    mode?: 'multiple',
+    className?: string
+    style?: React.CSSProperties
 }
 
-interface SelectStates {
-    value?: any | Array<any>
-    expand?: boolean
-    selectedText?: string | Array<string>
-}
+const clsPrefix = 'kui-select';
 
-class Select extends KZUIComponent<SelectProps, SelectStates> {
-    wrp: React.RefObject<HTMLDivElement>;
+const Select:React.FC<SelectProps> = ({
+    defaultText = '请选择',
+    value = null,
+    name = '',
+    disabled = false,
+    options = [],
+    onChange = null,
+    maxHeight = null,
+    hasMore = false,
+    onLoadMore = null,
+    onExpand = null,
+    popoverCls = '',
+    popoverStyle = {},
+    size = '',
+    initialExpand = false,
+    mode = null,
+    className = '',
+    style = {},
+}) => {
+    const [expand, setExpand] = React.useState(initialExpand)
+    const [selectedData, setSelectedData] = React.useState<{
+        selectedValue: SelectProps['value'],
+        selectedText: string | Array<string>
+    }>({
+        selectedValue: null,
+        selectedText: ''
+    })
+    const { selectedText, selectedValue}  = selectedData
 
-    static defaultProps = {
-        ...baseDefaultProps,
-        defaultText: '请选择',
-        value: null,
-        name: '',
-        disabled: false,
-        options: [],
-        onChange: null,
-        maxHeight: null,
-        hasMore: false,
-        onLoadMore: null,
-        onExpand: null,
-        popoverCls: '',
-        popoverStyle: {},
-        size: '',
-        initialExpand: false,
-        mode: null,
-    }
+    const [inLoadMore, setInLoadMore] = React.useState(false)
 
-    constructor(props) {
-        super(props);
-        this.autoBind('handleSelect', 'handleBlur', 'handleLoadMore', 'handleClick');
-        this.wrp = React.createRef<HTMLDivElement>()
-    }
+    const wrpRef = React.useRef<HTMLDivElement>()
 
-    initStateFromProps(props) {
-        let selectedText = props.defaultText;
-        let value = props.value;
-        const initialExpand = props.initialExpand;
-        const selected = props.options.filter(item => (
-            props.mode === 'multiple' ? props.value?.indexOf(item.value) > -1 : item.value === props.value
+    React.useEffect(() => {
+        let changeSelectedText: string | Array<any> = defaultText;
+
+        const selected = options.filter(item => (
+            mode === 'multiple' ? value?.indexOf(item.value) > -1 : item.value === value
         ));
         if (selected.length > 0) {
-            if (props.mode == 'multiple') {
-                selectedText = selected.map(item => item.text)
-                value = selected.map(item => item.value)
+            if (mode == 'multiple') {
+                changeSelectedText = selected.map(item => item.text) as string[]
             } else {
-                selectedText = selected[0].text;
-                value = selected[0].value;
+                changeSelectedText = selected[0].text as string;
             }
         }
 
-        console.log(selectedText, 'selectedText')
-        
-        return {
-            expand: initialExpand || false,
-            value,
-            selectedText,
-        };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const { options, value, mode } = nextProps
-        const selected = options.filter(item => (mode === 'multiple' ? value?.indexOf(item.value) > -1 : item.value === value))
-        let newSelectedText = this.props.defaultText
-        if (selected.length > 0) {
-            newSelectedText = mode === 'multiple' ? selected.map(item => item.text) : selected[0].text;
+        if (value === selectedValue) {
+            return
+        } else {
+            setSelectedData({
+                selectedValue: value,
+                selectedText: changeSelectedText,
+            })
         }
-        this.setState({
-            selectedText: newSelectedText,
-            value
-        })
-    }
 
-    handleClick() {
-        if (this.props.disabled) {
+    },[])
+
+    React.useEffect(() => {
+        setExpand(initialExpand)
+    }, [])
+
+    React.useEffect(() =>{
+        const selected = options.filter(item => (mode === 'multiple' ? value?.indexOf(item.value) > -1 : item.value === value));
+        let newSelectedText: string | string[] = defaultText;
+    
+        if (selected.length > 0) {
+            newSelectedText = mode === 'multiple' ? selected.map(item => item.text) as string[] : selected[0].text as string;
+        }
+        setSelectedData({
+            selectedText: newSelectedText,
+            selectedValue: value
+        })
+    }, [value])
+
+    React.useEffect(() => {
+        if (inLoadMore) {
+            setExpand(true)
+            setInLoadMore(false)
+        }
+    }, [inLoadMore])
+
+    function handleClick() {
+        if (disabled) {
             return;
         }
-        const { expand } = this.state;
-        this.wrp.current.focus();
+        wrpRef.current?.focus();
 
-        this.setState({
-            expand: !expand,
-        }, () => {
-            if (!expand && this.props.onExpand) {
-                this.props.onExpand();
-            }
-        });
+        console.log('on Click ---expand', expand)
+        setExpand(!expand)
+        if (!expand) {
+            onExpand?.();
+        }
     }
 
-    handleBlur(e) {
-        if (e.relatedTarget && this.wrp.current.contains(e.relatedTarget)) {
+    function handleBlur(e) {
+        if (e.relatedTarget && wrpRef.current?.contains(e.relatedTarget)) {
             e.preventDefault();
             return;
         }
-        this.setState({
-            expand: false,
-        });
+        setExpand(false)
     }
 
-    handleSelect(selected) {  // TODO value是否需要完全受控
-        let selectedText = selected.text
-        let selectedValue = selected.value
+    function handleSelect(selected) {  // TODO value是否需要完全受控
+        let _selectedText = selected.text;
+        let _selectedValue = selected.value;
 
-        this.setState((state) => {
-            if (this.props.mode === 'multiple') {
-                if (Array.isArray(state.selectedText) && Array.isArray(state.value)) {
-                    const valueIndex = state.value.indexOf(selected.value)
-                    let textArr = [...state.selectedText]
-                    let valueArr = [...state.value]
+        setSelectedData(({ selectedText, selectedValue }) => {
+            if (mode === 'multiple') {
+                if (Array.isArray(selectedText) && Array.isArray(selectedValue)) {
+                    const valueIndex = selectedValue.indexOf(selected.value)
+                    let textArr = [...selectedText]
+                    let valueArr = [...selectedValue]
                     // 已选中的改为未选中
                     if (valueIndex > -1) {
                         textArr.splice(valueIndex, 1)
@@ -149,149 +156,132 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                         textArr.push(selected.text)
                         valueArr.push(selected.value)
                     }
-                    selectedValue = valueArr
-                    selectedText = textArr
+                    _selectedValue = valueArr
+                    _selectedText = textArr
                 } else {
-                    selectedText = [selected.text]
-                    selectedValue = [selected.value]
+                    _selectedText = [selected.text]
+                    _selectedValue = [selected.value]
                 }
+            } 
+
+            onChange?.({
+                name: name,
+                value: _selectedValue,
+                selectedText: _selectedText,
+                text: selected.text,
+            });
+            return {
+                selectedValue: _selectedValue,
+                selectedText: _selectedText,
             }
-            return ({
-                selectedText: selectedText,
-                value: selectedValue,
-                expand: this.props.mode === 'multiple',
-            })
-        }, () => {
-            if (this.props.onChange) {
-                this.props.onChange({
-                    name: this.props.name,
-                    value: this.state.value,
-                    selectedText: this.state.selectedText,
-                    text: selected.text,
-                });
-            }
-        });
-        
+        })
+
+        if (mode !== 'multiple') {
+            setExpand(false)
+        }
     }
 
-    handleLoadMore() {
-        const { onLoadMore } = this.props;
-        if (onLoadMore === null) return;
-        this.wrp.current.focus();
-        setTimeout(() => {
-            this.setState({ expand: true });
-        }, 50)
+    function handleLoadMore() {
+        if (!onLoadMore) return;
+        // wrpRef.current?.focus();
+        setInLoadMore(true)
         onLoadMore();
     }
 
-    render() {
-        const clsPrefix = 'kui-select';
-        const {
-            className,
-            style,
-            disabled,
-            size,
-            popoverCls,
-            popoverStyle,
-            maxHeight,
-            mode,
-            options,
-        } = this.props;
-        const { expand, selectedText } = this.state;
-        const cls = classNames(clsPrefix, {
-            [`${clsPrefix}-expand`]: expand,
-            [`${clsPrefix}-disabled`]: disabled,
-            [`${clsPrefix}-${size}`]: !!size,
-        }, className);
+    const cls = classNames(clsPrefix, {
+        [`${clsPrefix}-expand`]: expand,
+        [`${clsPrefix}-disabled`]: disabled,
+        [`${clsPrefix}-${size}`]: !!size,
+    }, className);
 
-        const optionsPanelCls = classNames(popoverCls, `${clsPrefix}-options-panel`);
+    const optionsPanelCls = classNames(popoverCls, `${clsPrefix}-options-panel`);
 
-        let finalPopoverStyle = {
+    let finalPopoverStyle = {
+        ...popoverStyle,
+    };
+
+    if (maxHeight) {
+        finalPopoverStyle = {
             ...popoverStyle,
+            maxHeight: `${maxHeight}px`,
         };
-
-        if (maxHeight) {
-            finalPopoverStyle = {
-                ...popoverStyle,
-                maxHeight: `${maxHeight}px`,
-            };
-        }
-
-        console.log(expand, 'expand')
-        
-        return (
-            <div
-                ref={this.wrp}
-                className={cls}
-                style={style}
-                role="button"
-                tabIndex={0}
-                onClick={this.handleClick}
-            >
-                <PopTip
-                    isPopover
-                    placement='bottom-left'
-                    visible={expand}
-                    onVisibleChange={visible => this.setState({ expand: visible })}
-                    trigger='click'
-                    tipStyle={{ padding: 0, width: style?.width || 200, minWidth: 'auto' }}
-                    theme='light'
-                    style={{ width: "100%", height: '100%', display: 'block' }}
-                    tip={(
-                        <div className={optionsPanelCls} style={{ ...finalPopoverStyle, display: expand ? 'block' : 'none', width: style?.width || 200 }}>
-                            <div className={`${clsPrefix}-options`}>
-                                {options?.map((option, index) => (
+    }
+    
+    return (
+        <div
+            ref={wrpRef}
+            className={cls}
+            style={style}
+            role="button"
+            tabIndex={0}
+            onClick={handleClick}
+        >
+            <PopTip
+                isPopover
+                placement='bottom-left'
+                visible={expand}
+                onVisibleChange={visible => {
+                    console.log('poptip on visible', visible)
+                    setExpand(visible)
+                }}
+                trigger='click'
+                tipStyle={{ padding: 0, width: style?.width || 200, minWidth: 'auto' }}
+                theme='light'
+                style={{ width: "100%", height: '100%', display: 'block' }}
+                tip={(
+                    <div className={optionsPanelCls} style={{ ...finalPopoverStyle, display: expand ? 'block' : 'none', width: style?.width || 200 }}>
+                        <div className={`${clsPrefix}-options`}>
+                            {options?.map((option, index) => (
+                                <Option
+                                    key={`option-${index}`}
+                                    value={option.value}
+                                    selected={mode === 'multiple' ? ((selectedValue || []).indexOf(option.value) > -1) : selectedValue === option.value}
+                                    onClick={handleSelect}
+                                    disabled={option.disabled}
+                                    isLabel={option.isLabel}
+                                    isSubOption={option.isSubOption}
+                                    isMultiple={mode === 'multiple'}
+                                >
+                                    {option.text}
+                                </Option>
+                            ))}
+                            { options.length === 0 && (
+                                <Option style={{ color: '#9b9b9b' }}>
+                                    没有内容
+                                </Option>
+                            )}
+                            {
+                                hasMore ?
                                     <Option
-                                        key={`option-${index}`}
-                                        value={option.value}
-                                        selected={mode === 'multiple' ? ((this.state.value || []).indexOf(option.value) > -1) : this.state.value === option.value}
-                                        onClick={this.handleSelect}
-                                        disabled={option.disabled}
-                                        isLabel={option.isLabel}
-                                        isSubOption={option.isSubOption}
-                                        isMultiple={mode === 'multiple'}
+                                        style={{ color: '#9b9b9b' }}
+                                        value=""
+                                        onClick={handleLoadMore}
                                     >
-                                        {option.text}
-                                    </Option>
-                                ))}
-                                { this.props.options.length === 0 && (
-                                    <Option style={{ color: '#9b9b9b' }}>
-                                        没有内容
-                                    </Option>
-                                )}
-                                {
-                                    this.props.hasMore ?
-                                        <Option
-                                            style={{ color: '#9b9b9b' }}
-                                            value=""
-                                            onClick={this.handleLoadMore}
-                                        >
-                                            点击加载更多
-                                        </Option> : null
-                                }
-                            </div>
-                        </div>
-                    )}
-                >
-                    <div className={`${clsPrefix}-selected`} tabIndex={0} onBlur={this.handleBlur}>
-                        <div className={classNames(`${clsPrefix}-selected-title`, {[`${clsPrefix}-selected-title--multiple`] : mode === 'multiple'})}>
-                            {mode === 'multiple' ? 
-                                (Array.isArray(selectedText) ? 
-                                    selectedText.map((text, index) => (
-                                        index == selectedText.length - 1 ? ` ${text}` : ` ${text} |`
-                                    )) : selectedText
-                                )
-                                : selectedText 
+                                        点击加载更多
+                                    </Option> : null
                             }
                         </div>
-                        <div className={`${clsPrefix}-indicator`}>
-                            <Icon type="nav-pull-down" />
-                        </div>
                     </div>
-                </PopTip>
-            </div>
-        );
-    }
+                )}
+            >
+                <div className={`${clsPrefix}-selected`} tabIndex={0} onBlur={handleBlur}>
+                    <div className={classNames(`${clsPrefix}-selected-title`, {[`${clsPrefix}-selected-title--multiple`] : mode === 'multiple'})}>
+                        {mode === 'multiple' ? 
+                            (Array.isArray(selectedText) ? 
+                                selectedText.map((text, index) => (
+                                    index == selectedText.length - 1 ? ` ${text}` : ` ${text} |`
+                                )) : selectedText
+                            )
+                            : selectedText 
+                        }
+                    </div>
+                    <div className={`${clsPrefix}-indicator`}>
+                        <Icon type="nav-pull-down" />
+                    </div>
+                </div>
+            </PopTip>
+        </div>
+    )
 }
 
 export default Select;

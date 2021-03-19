@@ -8,47 +8,52 @@
 
 
 import React, { useState } from 'react';
-import { notification } from '@kzui/core';
-import Select from './fc.tsx';
+import { notification, Select } from '@kzui/core';
+
 const initOptions = [
-	{value: 1, text: '1'},
-	{value: 2, text: '2'},
-	{value: 3, text: '3'}
+  {value: 1, text: '1'},
+  {value: 2, text: '2'},
+  {value: 3, text: '3', isLabel: true },
 ]
 
-const [options, setOptions] = useState(initOptions)
-const [selected, setSelected] = useState([])
-const [initialExpand, setInitialExpand] = useState(false)
+const demo = () => {
+  const [options, setOptions] = useState(initOptions)
+  const [selected, setSelected] = useState([])
+  const [initialExpand, setInitialExpand] = useState(false)
 
-function handleLoadMore() {
-  const newOptions = [...initOptions, {
-    value: 4,
-    text: '4',
-  }]
-  setOptions(newOptions)
-}
+  function handleLoadMore() {
+    const newOptions = [...initOptions, {
+      value: 4,
+      text: '4',
+      isSubOption: true
+    }]
+    setOptions(newOptions)
+  }
 
-console.log(selected, 'selected');
+  console.log(selected, 'selected');
 
-export default () => (
-  <Select 
-    defaultText= '请选择'
-    value={selected}
-    options={options}
-    onChange={(e) => {
-      setSelected(e.value)
-      notification.success(JSON.stringify(e))
-    }}
-    disabled={false}
-    initialExpand={initialExpand}
-    size='large'
-    onExpand={() => console.log('onExpand')}
-    hasMore
-    onLoadMore={handleLoadMore}
-    mode='multiple'
-    style={{ width: 300 }}
-  />
-);
+  return (
+    <Select 
+      defaultText= '请选择'
+      value={selected}
+      options={options}
+      onChange={(e) => {
+        setSelected(e.value)
+        notification.success(JSON.stringify(e))
+      }}
+      disabled={false}
+      initialExpand={initialExpand}
+      size='large'
+      onExpand={() => console.log('onExpand')}
+      hasMore
+      onLoadMore={handleLoadMore}
+      mode='multiple'
+      style={{ width: 300 }}
+    />
+  )
+};
+
+export default demo
 ```
 
 ## 属性

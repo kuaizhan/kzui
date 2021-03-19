@@ -4,7 +4,7 @@ import KZUIComponent, { baseDefaultProps } from '../base/component';
 import { OptionType, valueType } from '../../../types/base/index';
 
 interface OptionProps extends Partial<OptionType> {
-  onClick?: ({ value, text }: { value: valueType, text: string | React.ReactNode }) => void
+    onClick?: ({ value, text }: { value: valueType, text: string | React.ReactNode }) => void
 }
 
 class Option extends KZUIComponent<OptionProps> {
@@ -30,7 +30,7 @@ class Option extends KZUIComponent<OptionProps> {
 
     handleClick(e) {
         e.stopPropagation();
-        if (this.props.disabled) {
+        if (this.props.disabled || this.props.isLabel) {
             return
         }
         if (this.props.onClick) {
