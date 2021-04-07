@@ -107,3 +107,4 @@ export default () => {
 | curPage | 当前页面，页面从 1 开始 | number | 1 | 是 |
 | onPageChange | 页码改变事件 | (value: number) => void | - | 否 |
 | position | 分页的位置 | `left` \| `center` \| `right` |  `center` | 否
+| size | 分页尺寸 | `normal` \| `small` | `normal` | 否

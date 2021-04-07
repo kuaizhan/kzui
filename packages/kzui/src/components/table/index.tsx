@@ -23,6 +23,7 @@ export interface PaginationProps {
   curPage: number //当前页面，页面从 1 开始
   onPageChange?: (value: number) => void //页码改变事件
   position?: 'left' | 'center' | 'right' // 分页的位置， 默认"center"
+  size?: 'normal' | 'small'
 }
 
 export interface TableProps {

@@ -2,12 +2,15 @@
 @import '../base/index.less';
 @css-prefix-pager: ~"@{css-prefix}-pager";
 
+@cube-edge: 32px;
+@cube-edge-small: 24px;
+
 .@{css-prefix-pager} {
     &-page-button {
         display: inline-block;
-        min-width: 32px;
-        height: 32px;
-        line-height: 32px;
+        min-width: @cube-edge;
+        height: @cube-edge;
+        line-height: @cube-edge;
         text-align: center;
         margin-right: 8px;
         border-radius: 4px;
@@ -34,6 +37,25 @@
 
     &-next {
         margin-right: 0;
+    }
+
+    &--small {
+        & .@{css-prefix-pager}-page-button {
+            border: none;
+            background-color: transparent;
+            min-width: @cube-edge-small;
+            height: @cube-edge-small;
+            line-height: @cube-edge-small;
+            margin-right: 4px;
+        }
+
+        & .@{css-prefix-pager}-page-button.@{css-prefix-pager}-cur {
+            background-color: @color-theme;
+        }
+
+        & .@{css-prefix-pager}-page-input {
+            height: @cube-edge-small;
+        }
     }
 
 

@@ -7,34 +7,37 @@ import Icon from '../icon/index';
 import './style.less';
 
 export interface PagerProps {
-  totalPage: number //总页数,
-  curPage: number //当前页面，页面从 1 开始
-  onPageChange?: (value: number) => void //页码改变事件
+    totalPage: number //总页数,
+    curPage: number //当前页面，页面从 1 开始
+    onPageChange?: (value: number) => void //页码改变事件
+    size?: 'normal' | 'small'
 }
 
 interface PagerStates {
-  curPage: number
+    curPage: number
 }
 
 interface PageButtonProps {
-  cur: boolean
-  num: number
-  className: string,
-  disabled: boolean,
-  children: React.ReactNode,
-  onClick: (props: Partial<PageButtonProps>) => void,
+    cur: boolean
+    num: number
+    className: string,
+    disabled: boolean,
+    children: React.ReactNode,
+    onClick: (props: Partial<PageButtonProps>) => void,
+    size?: 'normal' | 'small'
 }
 
 const PAGE_PRE_LEVEL = 5;
 const clsPrefix = 'kui-pager';
 
 const PageButton: React.FC<Partial<PageButtonProps>> = (props = {
-  cur: false,
-  num: 1,
-  className: '',
-  disabled: false,
-  children: null,
-  onClick: () => null,
+    cur: false,
+    num: 1,
+    className: '',
+    disabled: false,
+    children: null,
+    onClick: () => null,
+    size: 'normal'
 }) => {
     const { cur, num, className, disabled } = props;
     const onClick = () => {
@@ -63,10 +66,9 @@ const JumpPageButton:React.FC<{
     totalPage: number,
     onConfirm: (props: { num: number }) => void
 }> = ({ totalPage, onConfirm }) => {
-    let inputValue = '';
-    const handleKeyPress = (e) => {
+    const handleKeyPress = (e) => { 
         if (e.keyCode === 13) {
-            const num = parseInt(inputValue, 10);
+            const num = parseInt(e.target.value, 10);
 
             if (isNaN(num) || num > totalPage || num < 1) return;
             onConfirm({ num });
@@ -76,9 +78,7 @@ const JumpPageButton:React.FC<{
         <div className={`${clsPrefix}-jump-page-button`}>
             <span>前往</span>
             <Input
-                value={inputValue}
                 onKeyPress={handleKeyPress}
-                onChange={({ value }) => { inputValue = value; }}
                 className={`${clsPrefix}-page-input`}
             />
             <span>页</span>
@@ -88,8 +88,8 @@ const JumpPageButton:React.FC<{
 
 class Pager extends KZUIComponent<PagerProps, PagerStates> {
     static defaultProps = {
-      ...baseDefaultProps,
-      onPageChange: () => null
+        ...baseDefaultProps,
+        onPageChange: () => null
     }
 
     constructor(props) {
@@ -108,6 +108,7 @@ class Pager extends KZUIComponent<PagerProps, PagerStates> {
         });
     }
     handleClick({ num }) {
+        console.log(num, 'handle click')
         this.handlePageChange(num);
     }
 
@@ -152,9 +153,9 @@ class Pager extends KZUIComponent<PagerProps, PagerStates> {
     }
 
     render() {
-        const { className, style, totalPage, children } = this.props;
+        const { className, style, totalPage, children, size } = this.props;
         const { curPage } = this.state;
-        const cls = classNames(clsPrefix, className);
+        const cls = classNames(clsPrefix, className, { [`${clsPrefix}--small`]: size === 'small' } );
         const buttons = this.getButtons();
 
         if (totalPage === 0) {
@@ -176,7 +177,12 @@ class Pager extends KZUIComponent<PagerProps, PagerStates> {
                     </PageButton>
                     {buttons.map(
                         num => (
-                            <PageButton key={`page-button-${num}`} num={num} cur={num === curPage} onClick={this.handleClick} />
+                            <PageButton
+                                key={`page-button-${num}`}
+                                num={num}
+                                cur={num === curPage}
+                                onClick={this.handleClick}
+                            />
                         ),
                     )}
                     <PageButton
