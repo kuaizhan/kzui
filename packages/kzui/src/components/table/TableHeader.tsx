@@ -1,17 +1,39 @@
 import * as React from 'react';
-import { ColumnsProps } from './index';
+import classNames from 'classnames';
+import Checkbox from '../checkbox';
+import { ColumnsProps, TableProps } from './index';
 
 const clsPrefix = 'kui-new-table';
 
 const TableHeader:React.FC<{
   columns: ColumnsProps[]
   style?: React.CSSProperties
+  rowSelectable?: boolean
+  rowSelection?: TableProps['rowSelection']
+  selectedAll?: boolean
+  partialSelected?: boolean
+  onSelectAllClick?: () => void
+  selectAllDisable?: boolean
 }> = ({
   columns = [],
-  style = {}
+  style = {},
+  rowSelectable,
+  rowSelection,
+  selectedAll,
+  partialSelected,
+  onSelectAllClick,
+  selectAllDisable,
 }) => {
+  const  { type = 'checkbox' } = rowSelection || {}
   return (
     <thead className={`${clsPrefix}__header`}>
+        {
+          rowSelectable ? <th className={classNames(`${clsPrefix}__header-cell`, {[`${clsPrefix}__select-all-cell`]: rowSelectable })}>
+            { type === 'checkbox' && 
+              <Checkbox disabled={selectAllDisable} checked={selectedAll}  partialChecked={partialSelected} onChange={onSelectAllClick}/>
+            }
+          </th> : null
+        }
         {
             columns?.map(column => (
                 column.colSpan !== 0 ? (

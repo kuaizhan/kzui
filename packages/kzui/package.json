@@ -6,7 +6,8 @@
     "@kzui/font": "^0.3.1",
     "@kzui/hooks": "^0.3.29",
     "@kzui/utils": "^0.3.29",
-    "classnames": "^2.2.5"
+    "classnames": "^2.2.5",
+    "immer": "^9.0.1"
   },
   "peerDependencies": {
     "react": "^16.12.0",

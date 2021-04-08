@@ -4,6 +4,7 @@ import Pager from '../pager';
 import Empty from '../empty';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
+import produce from 'immer'
 import './style.less';
 
 // https://ant.design/components/table-cn/#components-table-demo-colspan-rowspan 行合并、列合并的例子
@@ -26,6 +27,16 @@ export interface PaginationProps {
   size?: 'normal' | 'small'
 }
 
+export interface RowSelectionProps {
+    selectionKey?: string // 根据行数据中的哪个字段来表示该行被选中
+    selectedRowKeys: any[]   // 选中行的 data[selectionKey] 的集合
+    onChange?: (value: {
+        selectedRowKeys: RowSelectionProps['selectedRowKeys'],
+        selectedRows: TableProps['dataSource'] // 选中行的全部数据
+    }) => void
+    type?: 'checkbox' | 'radio'
+    maxSelect?: number
+}
 export interface TableProps {
     columns?: Array<ColumnsProps>, // 每一列的属性
     dataSource?: Array<any> // 数据源
@@ -40,6 +51,8 @@ export interface TableProps {
     onRowClick?: (arg?: any) => void // 行点击事件
     showHeader?: boolean
     stripe?: boolean // 是否使用隔行样式
+    rowSelection?: RowSelectionProps // 行选择配置
+    rowSelectable?: boolean // 是否开启行选择
 }
 
 const clsPrefix = 'kui-new-table';
@@ -57,8 +70,16 @@ const Table:React.FC<TableProps> = ({
     children = null,
     onRowClick = () => null,
     showHeader = true,
-    stripe = false
+    stripe = false,
+    rowSelectable = false,
+    rowSelection = {
+        type: 'checkbox', 
+        selectionKey: 'key',
+        selectedRowKeys: [],
+    }
 }) => {
+    const { selectionKey = 'key', selectedRowKeys = [], maxSelect, type = 'checkbox' } = rowSelection || {}
+    const [selectedRows, setSelectedRows] = React.useState([]);
     const { pageSize, curPage } = typeof pagination === 'object' && pagination;
     const _dataSource = (
         typeof pagination === 'object' &&
@@ -78,6 +99,54 @@ const Table:React.FC<TableProps> = ({
         [`${clsPrefix}--tb-layout-${tableLayout}`],
     )
 
+    function handleOnSelect(index, rowKey, checked) {
+        if (!rowSelectable) return
+        let newSelectedRowKeys = []
+        let newSelectedRows = []
+        // 单选
+        if (type === 'radio') {
+            newSelectedRowKeys = [rowKey]
+            newSelectedRows = [dataSource[index]]
+        }
+
+        //多选
+        if (type === 'checkbox') {
+            newSelectedRowKeys = produce(selectedRowKeys || [], draftState => {
+                const originIndex = selectedRowKeys?.indexOf(rowKey)
+                if (checked && originIndex < 0) {
+                    draftState.push(rowKey)
+                } else {
+                    draftState.splice(originIndex, 1)
+                }
+            })
+            newSelectedRows = produce(selectedRows || [], draftState => {
+                const originIndex = selectedRows?.findIndex(row => row[selectionKey] === rowKey)
+                if (checked && originIndex < 0) {
+                    draftState.push(dataSource[index])
+                } else {
+                    draftState.splice(originIndex, 1)
+                }
+            })
+        }
+
+        setSelectedRows(newSelectedRows)
+
+        rowSelection?.onChange?.({
+            selectedRowKeys: newSelectedRowKeys,
+            selectedRows: newSelectedRows,
+        })
+    }
+
+    function handleSelectAll() {
+        const _selectedRowKeys = dataSource?.length === selectedRows?.length ? [] : dataSource?.map(item => item[selectionKey])
+        const _selectedRows = dataSource?.length === selectedRows?.length ? [] : [...dataSource]
+        setSelectedRows(_selectedRows)
+        rowSelection?.onChange?.({
+            selectedRowKeys: _selectedRowKeys,
+            selectedRows: _selectedRows,
+        })
+    }
+
     return (
         <>
             <table className={cls} style={style || {}}>
@@ -85,21 +154,33 @@ const Table:React.FC<TableProps> = ({
                     <>
                         {
                             showHeader ? (
-                              <TableHeader columns={columns} style={headerStyle} />
+                                <TableHeader
+                                    columns={columns}
+                                    style={headerStyle}
+                                    rowSelectable={rowSelectable}
+                                    rowSelection={rowSelection}
+                                    onSelectAllClick={handleSelectAll}
+                                    selectedAll={dataSource?.length === selectedRowKeys?.length}
+                                    partialSelected={selectedRowKeys?.length > 0 && dataSource?.length !== selectedRowKeys?.length}
+                                    selectAllDisable={typeof maxSelect === 'number' ? dataSource?.length > maxSelect : false}
+                                />
                             ) : null
                         }
                         <TableBody
-                          columns={columns}
-                          dataSource={_dataSource}
-                          style={bodyStyle}
-                          onRowClick={onRowClick}
-                          stripe={stripe}
+                            columns={columns}
+                            dataSource={_dataSource}
+                            style={bodyStyle}
+                            onRowClick={onRowClick}
+                            stripe={stripe}
+                            rowSelectable={rowSelectable}
+                            rowSelection={rowSelection}
+                            onSelect={handleOnSelect}
                         />
                     </>
                 )}
             </table>
             {
-              !dataSource.length && !children && <Empty />
+                !dataSource.length && !children && <Empty />
             }
             {pagination && (
                 <div

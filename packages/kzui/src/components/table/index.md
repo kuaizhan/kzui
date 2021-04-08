@@ -6,7 +6,7 @@
 /**
  * title: 基本用法
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { Table } from '@kzui/core';
 export default () => {
     const pseudoColumns = [
@@ -19,11 +19,21 @@ export default () => {
             title: 'col 2',
             key: 'col 2',
             dataIndex: 'two',
+            render: ({ item }) => {
+                const [value, setValue] = useState(0)
+                return <p onClick={() => setValue(value + 1)}>{value}</p>
+            }
         },
         {
             title: 'col 3',
             key: 'col 3',
             dataIndex: 'three',
+            render: ({ data, item }) => {
+                return { 
+                    children: <p>{item}666</p>,
+                    props: { colSpan: 2 }
+                }
+            }
         }
     ];
 
@@ -31,34 +41,50 @@ export default () => {
         {
             one: '1',
             two: '1',
-            three: '2'
+            three: '2',
+            key: 1,
         },
         {
             one: '2',
             two: '2',
-            three: '3'
+            three: '3',
+            key: 2,
         },
         {
             one: '3',
             two: '3',
-            three: '4'
+            three: '4',
+            key: 3,
         },
         {
             one: '3',
             two: '3',
-            three: '4'
+            three: '4',
+            key: 4,
         },
         {
             one: '3',
             two: '3',
-            three: '4'
+            three: '4',
+            key: 5,
         }
     ];
+
+    const [selectedKeys, setSelectedKeys] = useState([])
     return (
         <Table
             columns={pseudoColumns}
-            dataSource={pseudoDataSource}s
+            dataSource={pseudoDataSource}
             strip
+            rowSelectable
+            rowSelection={{
+                selectedRowKeys: selectedKeys,
+                onChange: ({ selectedRowKeys }) => {
+                    setSelectedKeys(selectedRowKeys)
+                },
+                type: 'radio'
+                // maxSelect: 3
+            }}
         />
     );
 }
@@ -81,7 +107,9 @@ export default () => {
 | children | 覆盖默认的 table 标签内的元素 | React.ReactNode | - | 否 |
 | onRowClick | 行点击事件 | (arg?: any) => void | () => null | 否 |
 | showHeader | 是否展示表头 | boolean | true | 否 |
-
+| stripe | 是否使用隔行样式 | boolean | false | 否 | 
+| rowSelectable | 是否开启行选择 | boolean | false | 否 |
+| rowSelection | 行选择的配置描述，具体项见下表 | [RowSelectionProps](#rowselection)\[] | - | 否 |
 ## Column
 
 列描述数据对象，是 columns 中的一项。
@@ -92,7 +120,7 @@ export default () => {
 | colSpan | 表头列合并,设置为 0 时，不渲染 | number | 1 | 否 |
 | dataIndex | 列数据在数据项中对应的路径，支持通过数组查询嵌套路径 | string | - | 是 |
 | key | React 需要的 key | string | - | 是 |
-| render | 生成复杂数据的渲染函数，参数分别为当前行数据，（当前行的值，如果有 dataIndex 的话)，行索引，@return 里面可以设置表格[行/列合并](#components-table-demo-colspan-rowspan) | Function({ data, item, index }) {} | - | 否 |
+| render | 生成复杂数据的渲染函数，参数分别为当前行数据，（当前行的值，如果有 dataIndex 的话)，行索引，@return 里面可以设置表格行/列合并，看示例) | Function({ data, item, index }) {} | - | 否 |
 | title | 列头显示文字 | string | - | 是 |
 | width | 列宽度 | string\|number | - | 否 |
 
@@ -108,3 +136,15 @@ export default () => {
 | onPageChange | 页码改变事件 | (value: number) => void | - | 否 |
 | position | 分页的位置 | `left` \| `center` \| `right` |  `center` | 否
 | size | 分页尺寸 | `normal` \| `small` | `normal` | 否
+
+## RowSelection
+
+行选择配置。
+
+| 参数 | 说明 | 类型 | 默认值 | 是否必须 |
+| --- | --- | --- | --- | --- |
+| selectionKey | 根据每行数据中的哪个字段来表示该行被选中，相当于选中行id | string | 'key' | 否
+| selectedRowKeys | 选中行的 `data[selectionKey]` 的集合，完全受控 | any[] | [] | 是 |
+| type | 当前页面，页面从 1 开始 | `checkbox` \| `radio` | `checkbox` | 否 |
+| maxSelect | 当 type 为多选时，最多可以选中的行数 | number | - | 否 |
+| onChange | 选中或取消选中行的回调 | (args: { selectedRowKeys: RowSelectionProps['selectedRowKeys'], selectedRows: TableProps['dataSource'] }) => void | - | 否 |
