@@ -13,7 +13,7 @@ export const useHover = (ref: React.RefObject<HTMLElement>) => {
 
     useEffect(() => {
 
-        if (!ref) {
+        if (!ref?.current) {
             return
         }
 

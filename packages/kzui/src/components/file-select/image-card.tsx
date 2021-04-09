@@ -3,7 +3,6 @@
  */
 import * as React from 'react'
 import { useRef } from 'react'
-import { useHover } from '@kzui/hooks'
 import classNames from 'classnames'
 import Icon from '../icon/index'
 import './image-card.less'
@@ -26,7 +25,6 @@ const ImageCard = (props: ImageCardProps) => {
   }
 
   const ref = useRef(null)
-  const hover = useHover(ref)
 
   function handleDelete () {
     props?.onDelete?.()
@@ -42,7 +40,6 @@ const ImageCard = (props: ImageCardProps) => {
       <img className={`${clsPrefix}-thumb`} style={imageStyle} src={url} />
       <div
         className={`${clsPrefix}-cover`}
-        style={{ display: hover ? 'flex' : 'none' }}
       >
         {
           props.onEdit

@@ -4,18 +4,20 @@
 .@{css-prefix}-image-card {
     position: relative;
 
+    &:hover {
+        & .@{css-prefix}-image-card-cover {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
     &-cover {
         display: none;
         .position-center();
         background: rgba(0, 0, 0, 0.5);
         width: 100%;
         height: 100%;
-
-        &:hover {
-            display: flex;
-            align-items: center;
-            justify-content: center
-        }
     }
 
     &-edit {
