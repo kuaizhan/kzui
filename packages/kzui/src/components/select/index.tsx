@@ -97,7 +97,7 @@ const Select:React.FC<SelectProps> = ({
 
     React.useEffect(() => {
         const selected = options?.filter(item => (mode === 'multiple' ? value?.indexOf(item.value) > -1 : item.value === value));
-        let newSelectedText: string | string[] = selectedText;
+        let newSelectedText: string | string[] = defaultText;
     
         if (selected.length > 0) {
             newSelectedText = mode === 'multiple' ?
