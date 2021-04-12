@@ -121,7 +121,8 @@ const TableBody:React.FC<{
                                     style={{ textAlign: item.align, ...style, width: item.width }}
                                     className={`${clsPrefix}__body-cell`}
                                     key={item.key}
-                                    {...(props || {})}
+                                    colSpan={props.colSpan}
+                                    rowSpan={props.rowSpan}
                                 >
                                     {
                                         item.render ? (
