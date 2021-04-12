@@ -115,14 +115,14 @@ const TableBody:React.FC<{
                                     index
                                 }) 
                             // @ts-ignore
-                            const { props, children } = component || {}
+                            const { props = {}, children } = component || {}
                             return  props?.colSpan == 0 ? null : (
                                 <td
                                     style={{ textAlign: item.align, ...style, width: item.width }}
                                     className={`${clsPrefix}__body-cell`}
                                     key={item.key}
-                                    colSpan={props.colSpan}
-                                    rowSpan={props.rowSpan}
+                                    colSpan={props?.colSpan}
+                                    rowSpan={props?.rowSpan}
                                 >
                                     {
                                         item.render ? (
