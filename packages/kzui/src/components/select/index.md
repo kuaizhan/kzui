@@ -7,7 +7,7 @@
  */
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { notification, Select } from '@kzui/core';
 
 const initOptions = [
@@ -18,7 +18,7 @@ const initOptions = [
 
 const demo = () => {
   const [options, setOptions] = useState(initOptions)
-  const [selected, setSelected] = useState([])
+  const [selected, setSelected] = useState()
   const [initialExpand, setInitialExpand] = useState(false)
 
   function handleLoadMore() {
@@ -29,6 +29,12 @@ const demo = () => {
     }]
     setOptions(newOptions)
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSelected(3)
+    }, 3000)
+  }, [])
 
   console.log(selected, 'selected');
 
@@ -47,7 +53,6 @@ const demo = () => {
       onExpand={() => console.log('onExpand')}
       hasMore
       onLoadMore={handleLoadMore}
-      mode='multiple'
       style={{ width: 300 }}
     />
   )

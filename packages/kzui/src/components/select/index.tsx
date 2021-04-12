@@ -69,6 +69,7 @@ const Select:React.FC<SelectProps> = ({
     const wrpRef = React.useRef<HTMLDivElement>()
 
     React.useEffect(() => {
+        // 初始化
         let changeSelectedText: string | Array<any> = defaultText;
 
         const selected = options.filter(item => (
@@ -82,33 +83,32 @@ const Select:React.FC<SelectProps> = ({
             }
         }
 
-        if (value === selectedValue) {
-            return
-        } else {
+        if (value !== selectedValue) {
             setSelectedData({
                 selectedValue: value,
                 selectedText: changeSelectedText,
             })
         }
-
     },[])
 
     React.useEffect(() => {
         setExpand(initialExpand)
     }, [])
 
-    React.useEffect(() =>{
-        const selected = options.filter(item => (mode === 'multiple' ? value?.indexOf(item.value) > -1 : item.value === value));
-        let newSelectedText: string | string[] = defaultText;
+    React.useEffect(() => {
+        const selected = options?.filter(item => (mode === 'multiple' ? value?.indexOf(item.value) > -1 : item.value === value));
+        let newSelectedText: string | string[] = selectedText;
     
         if (selected.length > 0) {
-            newSelectedText = mode === 'multiple' ? selected.map(item => item.text) as string[] : selected[0].text as string;
+            newSelectedText = mode === 'multiple' ?
+                (selected?.map(item => item.text) as string[]) :
+                selected[0].text as string;
         }
         setSelectedData({
             selectedText: newSelectedText,
             selectedValue: value
         })
-    }, [value])
+    }, [value, options])
 
     React.useEffect(() => {
         if (inLoadMore) {
@@ -123,7 +123,6 @@ const Select:React.FC<SelectProps> = ({
         }
         wrpRef.current?.focus();
 
-        console.log('on Click ---expand', expand)
         setExpand(!expand)
         if (!expand) {
             onExpand?.();
@@ -223,7 +222,6 @@ const Select:React.FC<SelectProps> = ({
                 placement='bottom-left'
                 visible={expand}
                 onVisibleChange={visible => {
-                    console.log('poptip on visible', visible)
                     setExpand(visible)
                 }}
                 trigger='click'
