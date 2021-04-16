@@ -28,7 +28,10 @@ const TableHeader:React.FC<{
   return (
     <thead className={`${clsPrefix}__header`}>
         {
-          rowSelectable ? <th className={classNames(`${clsPrefix}__header-cell`, {[`${clsPrefix}__select-all-cell`]: rowSelectable })}>
+          rowSelectable ? <th
+            className={classNames(`${clsPrefix}__header-cell`, {[`${clsPrefix}__select-all-cell`]: rowSelectable })}
+            style={{ ...style }}
+          >
             { type === 'checkbox' && 
               <Checkbox disabled={selectAllDisable} checked={selectedAll}  partialChecked={partialSelected} onChange={onSelectAllClick}/>
             }

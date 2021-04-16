@@ -76,6 +76,7 @@ export default () => {
             columns={pseudoColumns}
             dataSource={pseudoDataSource}
             strip
+            bordered
             rowSelectable
             rowSelection={{
                 selectedRowKeys: selectedKeys,

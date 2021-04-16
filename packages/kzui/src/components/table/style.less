@@ -38,8 +38,21 @@
     }
 
     &--bordered {
-        & th, & td {
+        & td {
             border: 1px solid #ededed;
+        }
+
+        & th {
+            border-top: 1px solid #ededed;
+            border-bottom: 1px solid #ededed;
+        }
+
+        & th:first-child {
+            border-left: 1px solid #ededed;
+        }
+
+        & th:last-child {
+            border-right: 1px solid #ededed;
         }
     }
 
