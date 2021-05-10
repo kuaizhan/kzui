@@ -8,10 +8,10 @@ import './style.less';
 import { UiSizeType, OptionListType } from '../../../types/base';
 
 interface onChangeArg {
-  name: string
-  value: any | any[]
-  selectedText: string | string[]
-  text: string
+    name: string
+    value: any | any[]
+    selectedText: string | string[]
+    text: string
 }
 
 interface SelectProps {
@@ -110,7 +110,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
             return;
         }
         const { expand } = this.state;
-        this.wrp.current.focus();
+        this.wrp.current?.focus();
 
         this.setState({
             expand: !expand,
@@ -122,7 +122,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
     }
 
     handleBlur(e) {
-        if (e.relatedTarget && this.wrp.current.contains(e.relatedTarget)) {
+        if (e.relatedTarget && this.wrp.current?.contains(e.relatedTarget)) {
             e.preventDefault();
             return;
         }
@@ -177,7 +177,7 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
     handleLoadMore() {
         const { onLoadMore } = this.props;
         if (onLoadMore === null) return;
-        this.wrp.current.focus();
+        this.wrp.current?.focus();
         setTimeout(() => {
             this.setState({ expand: true });
         }, 50)
@@ -217,6 +217,8 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
             };
         }
         
+        const width = this.wrp.current?.offsetWidth || style?.width || 200
+
         return (
             <div
                 ref={this.wrp}
@@ -232,11 +234,11 @@ class Select extends KZUIComponent<SelectProps, SelectStates> {
                     visible={expand}
                     onVisibleChange={visible => this.setState({ expand: visible })}
                     trigger='click'
-                    tipStyle={{ padding: 0, width: style?.width || 200, minWidth: 'auto' }}
+                    tipStyle={{ padding: 0, width, minWidth: 'auto' }}
                     theme='light'
                     style={{ width: "100%", height: '100%', display: 'block' }}
                     tip={(
-                        <div className={optionsPanelCls} style={{ ...finalPopoverStyle, display: expand ? 'block' : 'none', width: style?.width || 200 }}>
+                        <div className={optionsPanelCls} style={{ ...finalPopoverStyle, display: expand ? 'block' : 'none', width }}>
                             <div className={`${clsPrefix}-options`}>
                                 {options?.map((option, index) => (
                                     <Option

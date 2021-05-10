@@ -66,6 +66,8 @@ class RadioGroup<T> extends KZUIComponent<RadioGroupProps<T>> {
                             type={type}
                             style={radioStyle}
                             className={option.className}
+                            disabled={option.disabled}
+                            
                         >
                             {option.text}
                         </Radio>

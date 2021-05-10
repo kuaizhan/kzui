@@ -108,7 +108,7 @@ const Select:React.FC<SelectProps> = ({
             selectedText: newSelectedText,
             selectedValue: value
         })
-    }, [value, options])
+    }, [value, options, mode])
 
     React.useEffect(() => {
         if (inLoadMore) {
