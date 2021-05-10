@@ -28,6 +28,8 @@ export class Radio extends KZUIComponent<RadioProps> {
   }
 
   handleClick () {
+    if (this.props.disabled) return;
+
     if (this.props.onClick) {
       this.props.onClick(this.props)
     }

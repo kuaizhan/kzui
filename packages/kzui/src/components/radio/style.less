@@ -74,6 +74,47 @@
             }
         }
     }
+
+    &-disabled {
+        cursor: not-allowed;
+        color: rgba(168, 168, 168, 1);
+
+        &-indicator {
+            background: rgba(237, 236, 240, 1);
+            border: 1px solid @color-input-bd;
+            box-sizing: content-box;
+
+            &:before {
+                background-color: rgba(237, 236, 240, 1);
+                box-sizing: content-box;
+            }
+        }
+
+        &-btn {
+            cursor: not-allowed;
+            color: rgba(0, 0, 0, 0.25);
+            background-color: #f5f5f5;
+
+            &--checked {
+                background-color: #e6e6e6;
+                color: #ffffff;
+            }
+        }
+
+        &-checked {
+            &-indicator {
+                background-color: rgba(255, 255, 255, 1);
+                border-color: @color-theme-darker;
+                box-sizing: content-box;
+
+                &::before {
+                    background-color: @color-theme-darker;
+                    box-sizing: content-box;
+                }
+            }
+        }
+    }
+
 }
 
 .@{css-prefix-radio}-group {

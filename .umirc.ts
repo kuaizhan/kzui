@@ -59,7 +59,8 @@ export default defineConfig({
           'components/select/index.md',
           'components/search-select/index.md',
           'components/search/index.md',
-          'components/switch/index.md'
+          'components/switch/index.md',
+          'components/radio/index.md',
         ],
       },
     ],

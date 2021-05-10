@@ -3,6 +3,36 @@
 
 * RadioGroup
 
+
+```jsx
+/**
+ * title: 复选框基本使用
+ * desc: 这里只展示基本样式
+ * */
+
+import React from 'react';
+import { RadioGroup } from '@kzui/core';
+
+export default () => {
+
+  return (
+    <RadioGroup
+        options={[
+            {
+                value: 'on',
+                text: '开启',
+                disabled: true,
+            },
+            {
+                value: 'off',
+                text: '关闭',
+            }
+        ]}
+    />
+  )
+}
+
+```
 ## RadioGroup 属性
 
 属性名 | 类型 | 描述 | 是否必须 | 默认值 | 字典 |  
