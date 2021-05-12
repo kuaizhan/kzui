@@ -9,7 +9,7 @@
 import React, { useState } from 'react';
 import { Table } from '@kzui/core';
 export default () => {
-    const pseudoColumns = [
+    const columns = [
         {
             title: 'col 1',
             key: 'col 1',
@@ -37,7 +37,7 @@ export default () => {
         }
     ];
 
-    const pseudoDataSource = [
+    const dataSource = [
         {
             one: '1',
             two: '1',
@@ -73,8 +73,8 @@ export default () => {
     const [selectedKeys, setSelectedKeys] = useState([])
     return (
         <Table
-            columns={pseudoColumns}
-            dataSource={pseudoDataSource}
+            columns={columns}
+            dataSource={dataSource}
             strip
             bordered
             rowSelectable
@@ -83,7 +83,7 @@ export default () => {
                 onChange: ({ selectedRowKeys }) => {
                     setSelectedKeys(selectedRowKeys)
                 },
-                type: 'radio'
+                type: 'checkbox'
                 // maxSelect: 3
             }}
         />
