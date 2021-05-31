@@ -36,7 +36,7 @@ class DateRangePicker extends KZUIComponent<
 
   constructor (props) {
     super(props)
-    this.autoBind('handleSelect', 'handleClick', 'handleBlur')
+    this.autoBind('handleSelect', 'handleClick', 'handleBlur', 'handlePopTipVisible')
   }
 
   initStateFromProps (props: DateRangePickerProps): DateRangePickerState {
@@ -167,9 +167,31 @@ class DateRangePicker extends KZUIComponent<
       e.preventDefault()
       return
     }
+    console.log(this.state, 'handleBlur');
     this.setState({
       ...this.state
     })
+  }
+
+  handlePopTipVisible(visible) {
+    if(visible) {
+      this.setState({ expand: visible});
+    } else {
+      const defaultTemp = {
+        expand: false,
+        start: this.props.start,
+        end: this.props.end,
+        result: [
+          [-1, -1],
+          [-1, -1]
+        ] as [[number, number], [number, number]],
+        value: `${this.props.start} ~ ${this.props.end}`,
+        startModify: false,
+        endModify: false,
+        refresh: false
+      }
+      this.setState(defaultTemp)
+    }
   }
 
   render () {
@@ -197,7 +219,7 @@ class DateRangePicker extends KZUIComponent<
         <PopTip
           isPopover
           visible={expand}
-          onVisibleChange={visible => this.setState({ expand: visible })}
+          onVisibleChange={this.handlePopTipVisible}
           theme='light'
           trigger='click'
           className={`${clsPrefix}-date-range-panel`}
