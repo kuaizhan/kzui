@@ -8,7 +8,41 @@
  */
 import React, { useState } from 'react';
 import { Table } from '@kzui/core';
+
+ const originDataSource = [
+    {
+        one: '1',
+        two: '1',
+        three: '2',
+        key: 1,
+    },
+    {
+        one: '2',
+        two: '2',
+        three: '3',
+        key: 2,
+    },
+    {
+        one: '3',
+        two: '3',
+        three: '4',
+        key: 3,
+    },
+    {
+        one: '3',
+        two: '3',
+        three: '4',
+        key: 4,
+    },
+    {
+        one: '3',
+        two: '3',
+        three: '4',
+        key: 5,
+    }
+];
 export default () => {
+    const [dataSource, setDataSource] = useState(originDataSource)
     const columns = [
         {
             title: 'col 1',
@@ -37,56 +71,26 @@ export default () => {
         }
     ];
 
-    const dataSource = [
-        {
-            one: '1',
-            two: '1',
-            three: '2',
-            key: 1,
-        },
-        {
-            one: '2',
-            two: '2',
-            three: '3',
-            key: 2,
-        },
-        {
-            one: '3',
-            two: '3',
-            three: '4',
-            key: 3,
-        },
-        {
-            one: '3',
-            two: '3',
-            three: '4',
-            key: 4,
-        },
-        {
-            one: '3',
-            two: '3',
-            three: '4',
-            key: 5,
-        }
-    ];
-
     const [selectedKeys, setSelectedKeys] = useState([])
     return (
-        <Table
-            columns={columns}
-            dataSource={dataSource}
-            strip
-            bordered
-            rowSelectable
-            rowSelection={{
-                selectedRowKeys: selectedKeys,
-                onChange: ({ selectedRowKeys }) => {
-                    setSelectedKeys(selectedRowKeys)
-                },
-                type: 'checkbox'
-                // maxSelect: 3
-            }}
-        />
+        <div>
+            <Table
+                columns={columns}
+                dataSource={dataSource}
+                strip
+                bordered
+                rowSelectable
+                rowSelection={{
+                    selectedRowKeys: selectedKeys,
+                    onChange: ({ selectedRowKeys }) => {
+                        setSelectedKeys(selectedRowKeys)
+                    },
+                    type: 'checkbox'
+                    // maxSelect: 3
+                }}
+            />
+            <div onClick={() => setDataSource(source => source.slice(0, 4))}>删掉一条数据</div>
+        </div>
     );
 }
 
