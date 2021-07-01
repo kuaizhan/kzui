@@ -51,19 +51,20 @@ class Button extends KZUIComponent<ButtonProps> {
             [`${prefixCls}-${type}`]: true,
             [`${prefixCls}-${size}`]: true,
             [`${prefixCls}-${status}`]: true,
+            [`${prefixCls}-loading`]: loading || status === 'loading',
             [`${prefixCls}-disabled`]: disabled,
             [`${prefixCls}__shadow`]: shadow,
-            [`${prefixCls}-last`]: last
+            [`${prefixCls}-last`]: last,
         }, className);
         // icon button
         let iconEl = null;
         switch (status) {
-        case 'loading':
-            iconEl = <i className={`${prefixCls}-load-icon kz-e-loading-button`} />;
-            break;
-        default:
-            iconEl = null;
-        }
+            case 'loading':
+                iconEl = <i className={`${prefixCls}-load-icon kz-e-loading-button`} />;
+                break;
+            default:
+                iconEl = null;
+            }
 
         if (loading) {
             iconEl = <i className={`${prefixCls}-load-icon kz-e-loading-button`} />;

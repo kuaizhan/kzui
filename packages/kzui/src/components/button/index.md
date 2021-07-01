@@ -53,6 +53,7 @@ export default () => (
   <>
     <Button status="normal">普通按钮</Button>
     <Button status='loading'>加载中...</Button>
+    <Button loading>加载中的另一种写法...</Button>
     <Button disabled>不可点击</Button>
   </>
 );
