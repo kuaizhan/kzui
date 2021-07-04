@@ -269,7 +269,7 @@ export const getStyle = (el, k) => {
             let ret;
             const rupper = /([A-Z]|^ms)/g;
             name = name.replace(rupper, '-$1').toLowerCase();
-            const defaultView = elem.ownerDocument.defaultView;
+            const defaultView = elem.ownerDocument && elem.ownerDocument.defaultView;
             if (!defaultView) {
                 return undefined;
             }

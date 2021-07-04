@@ -104,7 +104,10 @@ const TableBody:React.FC<{
                             //         )
                             //     }
                             // } 
-                            // 简化上面的逻辑，解决 render 中使用 hook 会报错的问题。
+                            // 简化上面的逻辑
+                            // TODO 解决 render 中使用 hook 会报错的问题。
+                            console.log(typeof item.render, 'item render type')
+                            // @ts-ignore
                             const component =
                                 item.render?.(item.dataIndex ? {
                                     data,
@@ -126,7 +129,9 @@ const TableBody:React.FC<{
                                 >
                                     {
                                         item.render ? (
-                                            (children || component)
+                                            // (children || component)
+                                            // @ts-ignore
+                                            children || <item.render data={data} index={index} item={item.dataIndex ? data[item.dataIndex] : null}  /> 
                                         ) : data[item['dataIndex']]
                                     }
                                 </td>

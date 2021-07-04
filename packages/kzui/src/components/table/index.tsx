@@ -12,7 +12,7 @@ export interface ColumnsProps {
   title: string | React.ReactNode,  // 列标题（列表头内容）
   key: string,    // React map 时需要的 key
   dataIndex?: string, // 列数据在数据项中对应的 key
-  render?: (props: {data?: any, item?: any, index?: number}) => React.ReactNode | { children: React.ReactNode, props?: any },   // 生成复杂数据的渲染函数，参数分别为当前行数据，(当前行的值，如果有 dataIndex 的话)行索引，@return 里面可以设置表格行/列合并
+  render?: React.FC<{data?: any, item?: any, index?: number}> | ((props: {data?: any, item?: any, index?: number}) => React.ReactNode | { children: React.ReactNode, props?: any }),   // 生成复杂数据的渲染函数，参数分别为当前行数据，(当前行的值，如果有 dataIndex 的话)行索引，@return 里面可以设置表格行/列合并
   align?: 'left' | 'center' | 'right',    // TODO 设置列的对齐方式
   colSpan?: number, // 表头列合并,设置为 0 时，不渲染
   width?: string | number, // 列宽度
