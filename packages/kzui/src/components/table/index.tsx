@@ -53,6 +53,7 @@ export interface TableProps {
     stripe?: boolean // 是否使用隔行样式
     rowSelection?: RowSelectionProps // 行选择配置
     rowSelectable?: boolean // 是否开启行选择
+    tbodyMaxHeight?: number | string // 实现表头固定，内容滚动效果，设置 tbody 最大高度
 }
 
 const clsPrefix = 'kui-new-table';
@@ -76,7 +77,8 @@ const Table:React.FC<TableProps> = ({
         type: 'checkbox', 
         selectionKey: 'key',
         selectedRowKeys: [],
-    }
+    },
+    tbodyMaxHeight,
 }) => {
     const { selectionKey = 'key', selectedRowKeys = [], maxSelect, type = 'checkbox' } = rowSelection || {}
     const [selectedRows, setSelectedRows] = React.useState([]);
@@ -196,7 +198,7 @@ const Table:React.FC<TableProps> = ({
 
     return (
         <>
-            <table className={cls} style={style || {}}>
+            <div className={cls} style={style || {}}>
                 {children || (
                     <>
                         {
@@ -222,10 +224,11 @@ const Table:React.FC<TableProps> = ({
                             rowSelectable={rowSelectable}
                             rowSelection={rowSelection}
                             onSelect={handleSelect}
+                            tbodyMaxHeight={tbodyMaxHeight}
                         />
                     </>
                 )}
-            </table>
+            </div>
             {
                 !dataSource.length && !children && <Empty />
             }
