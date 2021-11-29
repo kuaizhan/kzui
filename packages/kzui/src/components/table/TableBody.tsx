@@ -64,47 +64,8 @@ const TableBody:React.FC<{
                                 </td>
                             ) : null
                         }
-                        {columns?.map((item) => {
-                            // if (item.render) {
-                            //     const component =
-                            //         item.render( item.dataIndex ? {
-                            //             data,
-                            //             item: data[item.dataIndex],
-                            //             index
-                            //         } : {
-                            //             data,
-                            //             index
-                            //         }) 
-                            //     // @ts-ignore
-                            //     const { children, props } = component || {}
-                            //     console.log(props, 'render children props?')
-                            //     if (children !== undefined) {
-                            //         if (props?.colSpan === 0) {
-                            //             return null;
-                            //         }
-                            //         return (
-                            //             <td
-                            //                 style={{ textAlign: item.align, ...style, width: item.width }}
-                            //                 className={`${clsPrefix}__body-cell`}
-                            //                 key={item.key}
-                            //                 {...(props || {})}
-                            //             >
-                            //                 {children}
-                            //             </td>
-                            //         );
-                            //     } else {
-                            //         return (
-                            //             <td
-                            //                 style={{ textAlign: item.align, ...style, width: item.width }}
-                            //                 className={`${clsPrefix}__body-cell`}
-                            //                 key={item.key}
-                            //             >
-                            //                 {component}
-                            //             </td>
-                            //         )
-                            //     }
-                            // } 
-                            // 简化上面的逻辑，解决 render 中使用 hook 会报错的问题。
+                        {columns?.map((item, index) => {
+                            // 简化之前的逻辑，解决 render 中使用 hook 会报错的问题。
                             const component =
                                 item.render?.(item.dataIndex ? {
                                     data,
@@ -120,7 +81,7 @@ const TableBody:React.FC<{
                                 <td
                                     style={{ textAlign: item.align, ...style, width: item.width }}
                                     className={`${clsPrefix}__body-cell`}
-                                    key={item.key}
+                                    key={`${item.key}${index}`}
                                     colSpan={props?.colSpan}
                                     rowSpan={props?.rowSpan}
                                 >

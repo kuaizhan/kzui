@@ -33,7 +33,7 @@ const TableHeader:React.FC<{
             style={{ ...style }}
           >
             { type === 'checkbox' && 
-              <Checkbox disabled={selectAllDisable} checked={selectedAll} onChange={onSelectAllClick}/>
+                <Checkbox disabled={selectAllDisable} checked={selectedAll} onChange={onSelectAllClick}/>
             }
           </th> : null
         }

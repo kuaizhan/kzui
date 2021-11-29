@@ -41,6 +41,7 @@ export default defineConfig({
           'components/dialog/index.md',
           'components/spin/index.md',
           'components/poptip/index.md',
+          'components/popover/index.md',
           'components/pop-confirm/index.md',
           'components/table/index.md',
           'components/tab/index.md'

@@ -99,7 +99,24 @@ const Table:React.FC<TableProps> = ({
         [`${clsPrefix}--tb-layout-${tableLayout}`],
     )
 
-    function handleOnSelect(index, rowKey, checked) {
+    React.useEffect(() => {
+        if (selectedRowKeys?.length !== selectedRows?.length) {
+            console.log(selectedRowKeys, selectedRows, '外部改变 selectedRowKeys，改变 selectedRows')
+            if (selectedRows?.length > selectedRowKeys?.length) {
+                setSelectedRows(selectedRows?.filter(row => selectedRowKeys.indexOf(row[selectionKey]) > -1))
+            } else {
+                const newSelectedRows = [...selectedRows]
+                selectedRowKeys.forEach(rowKey => {
+                    if (!selectedRows.find(row => row[selectionKey] === rowKey)) {
+                        newSelectedRows.push(dataSource?.find(item => item[selectionKey] === rowKey))
+                    }
+                })
+                setSelectedRows(newSelectedRows)
+            }
+        }
+    }, [selectedRowKeys])
+
+    function handleSelect(index, rowKey, checked) {
         if (!rowSelectable) return
         let newSelectedRowKeys = []
         let newSelectedRows = []
@@ -130,21 +147,51 @@ const Table:React.FC<TableProps> = ({
         }
 
         setSelectedRows(newSelectedRows)
-
         rowSelection?.onChange?.({
             selectedRowKeys: newSelectedRowKeys,
             selectedRows: newSelectedRows,
         })
     }
 
+    const dataSourceSelectedLength = React.useMemo(() => {
+        return dataSource?.reduce((dataSourceSelectedLength, item) => {
+            if (selectedRowKeys.indexOf(item[selectionKey]) > -1) {
+                dataSourceSelectedLength += 1
+            }
+            return dataSourceSelectedLength
+        }, 0)
+    }, [dataSource, selectedRowKeys, selectionKey])
+    const isSelectedAll = dataSourceSelectedLength === dataSource?.length
+    // 选择要考虑到多页数据的情况
     function handleSelectAll() {
-        const _selectedRowKeys = dataSource?.length === selectedRows?.length ? [] : dataSource?.map(item => item[selectionKey])
-        const _selectedRows = dataSource?.length === selectedRows?.length ? [] : [...dataSource]
-        setSelectedRows(_selectedRows)
-        rowSelection?.onChange?.({
-            selectedRowKeys: _selectedRowKeys,
-            selectedRows: _selectedRows,
-        })
+        if (isSelectedAll) {
+            // 应该在 selectedRows、selectedRowKeys 里去掉当前 datasource 的items
+            setSelectedRows(selectedRows => {
+                const filteredSelectedRows = selectedRows.filter(item => !dataSource.find(dataItem => dataItem[selectionKey] === item[selectionKey]))
+                const _selectedRowKeys = filteredSelectedRows.map(item => item[selectionKey])
+                rowSelection?.onChange?.({
+                    selectedRowKeys: _selectedRowKeys,
+                    selectedRows: filteredSelectedRows,
+                })
+                return filteredSelectedRows 
+            })
+        } else {
+            setSelectedRows(selectedRows => {
+                const filledSelectedRow = [...selectedRows]
+                const filledSelectedRowKeys = [...selectedRowKeys]
+                dataSource?.forEach(dataItem => {
+                    if (selectedRowKeys.indexOf(dataItem[selectionKey]) === -1) {
+                        filledSelectedRow.push(dataItem)
+                        filledSelectedRowKeys.push(dataItem[selectionKey])
+                    }
+                })
+                rowSelection?.onChange?.({
+                    selectedRowKeys: filledSelectedRowKeys,
+                    selectedRows: filledSelectedRow,
+                })
+                return filledSelectedRow
+            })
+        }
     }
 
     return (
@@ -160,8 +207,8 @@ const Table:React.FC<TableProps> = ({
                                     rowSelectable={rowSelectable}
                                     rowSelection={rowSelection}
                                     onSelectAllClick={handleSelectAll}
-                                    selectedAll={dataSource?.length === selectedRowKeys?.length}
-                                    partialSelected={selectedRowKeys?.length > 0 && dataSource?.length !== selectedRowKeys?.length}
+                                    selectedAll={isSelectedAll}
+                                    // partialSelected={selectedRowKeys?.length > 0 && dataSource?.length !== selectedRowKeys?.length}
                                     selectAllDisable={typeof maxSelect === 'number' ? dataSource?.length > maxSelect : false}
                                 />
                             ) : null
@@ -174,7 +221,7 @@ const Table:React.FC<TableProps> = ({
                             stripe={stripe}
                             rowSelectable={rowSelectable}
                             rowSelection={rowSelection}
-                            onSelect={handleOnSelect}
+                            onSelect={handleSelect}
                         />
                     </>
                 )}

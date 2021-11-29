@@ -4,40 +4,12 @@
 
 ```jsx
 /**
- * title: 基本用法
+ * title: 使用行选择
  */
 import React, { useState } from 'react';
 import { Table } from '@kzui/core';
-export default () => {
-    const columns = [
-        {
-            title: 'col 1',
-            key: 'col 1',
-            dataIndex: 'one',
-        },
-        {
-            title: 'col 2',
-            key: 'col 2',
-            dataIndex: 'two',
-            render: ({ item }) => {
-                const [value, setValue] = useState(0)
-                return <p onClick={() => setValue(value + 1)}>{value}</p>
-            }
-        },
-        {
-            title: 'col 3',
-            key: 'col 3',
-            dataIndex: 'three',
-            render: ({ data, item }) => {
-                return { 
-                    children: <p>{item}666</p>,
-                    props: { colSpan: 2 }
-                }
-            }
-        }
-    ];
 
-    const dataSource = [
+const pageOneData = [
         {
             one: '1',
             two: '1',
@@ -68,7 +40,80 @@ export default () => {
             three: '4',
             key: 5,
         }
+    ]
+
+const pageTwoData = [
+        {
+            one: '11',
+            two: '111',
+            three: '222',
+            key: 6,
+        },
+        {
+            one: '22',
+            two: '222',
+            three: '3333',
+            key: 7,
+        },
+        {
+            one: '3222',
+            two: '3333',
+            three: '4444',
+            key: 8,
+        },
+        {
+            one: '3666',
+            two: '3666',
+            three: '4666',
+            key: 9,
+        },
+        {
+            one: '37',
+            two: '37',
+            three: '47',
+            key: 10,
+        }
+    ]
+export default () => {
+    const [curPage, setCurPage] = useState(1)
+    const [dataSource, setDataSource] = useState(pageOneData)
+    const columns = [
+        {
+            title: 'col 1',
+            key: 'col 1',
+            dataIndex: 'one',
+        },
+        {
+            title: 'col 2',
+            key: 'col 2',
+            dataIndex: 'two',
+            render: ({ item }) => {
+                const [value, setValue] = useState(0)
+                return <p onClick={() => setValue(value + 1)}>{value}</p>
+            }
+        },
+        {
+            title: 'col 3',
+            key: 'col 3',
+            dataIndex: 'three',
+            colSpan: 2,
+            render: ({ data, item }) => {
+                return { 
+                    children: <p>{item}666</p>,
+                    props: { colSpan: 2 }
+                }
+            }
+        }
     ];
+
+    React.useEffect(() => {
+        if (curPage === 2) {
+            setDataSource(pageTwoData)
+        }
+        if (curPage === 1) {
+            setDataSource(pageOneData)
+        }
+    }, [curPage])
 
     const [selectedKeys, setSelectedKeys] = useState([])
     return (
@@ -77,6 +122,11 @@ export default () => {
             dataSource={dataSource}
             strip
             bordered
+            pagination={{
+                curPage,
+                onPageChange: setCurPage,
+                totalPage: 2,
+            }}
             rowSelectable
             rowSelection={{
                 selectedRowKeys: selectedKeys,

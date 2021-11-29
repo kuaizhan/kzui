@@ -49,6 +49,7 @@ import prompt from './components/prompt/index';
 import notification from './components/notification/index';
 import Empty from './components/empty/index';
 import PopTip from './components/poptip/index'
+import Popover from './components/popover';
 
 // build时移除
 import './style/index.less';
@@ -106,5 +107,6 @@ export {
     prompt,
     notification,
     Empty,
-    PopTip
+    PopTip,
+    Popover
 };
