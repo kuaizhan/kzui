@@ -136,6 +136,7 @@ export default () => {
                 type: 'checkbox'
                 // maxSelect: 3
             }}
+            tbodyMaxHeight={300}
         />
     );
 }
@@ -161,6 +162,7 @@ export default () => {
 | stripe | 是否使用隔行样式 | boolean | false | 否 | 
 | rowSelectable | 是否开启行选择 | boolean | false | 否 |
 | rowSelection | 行选择的配置描述，具体项见下表 | [RowSelectionProps](#rowselection)\[] | - | 否 |
+| tbodyMaxHeight | 实现表头固定，内容滚动效果，设置 tbody 最大高度 | number \|string | - | 否 
 ## Column
 
 列描述数据对象，是 columns 中的一项。
